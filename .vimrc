@@ -125,29 +125,30 @@ func H2Add()
 endfunc
 autocmd BufNewFile,BufRead *.Md set filetype=markdown
 "Markdown快捷键   ——来自一位Typora用户
-autocmd Filetype markdown inoremap /f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
-autocmd Filetype markdown inoremap /1 #<Space><Enter><++><Esc>:call H1Add()<CR>:let g:h2counter=0<CR>kA
-autocmd Filetype markdown inoremap /2 ##<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap /3 ###<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap /4 ####<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap /5 #####<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap /c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
-autocmd Filetype markdown inoremap /q $$<Enter><Enter> \tag{<C-R>=h1counter<C-M>-<C-R>=H2Add()<C-M>}$$<Enter><BS><++><Esc>2kA
-autocmd Filetype markdown inoremap /e $$<++><Esc>F$i
-autocmd Filetype markdown inoremap /m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
-autocmd Filetype markdown inoremap /b ****<++><Esc>F*hi
-autocmd Filetype markdown inoremap /u <u></u><++><Esc>F/i<Left>
-autocmd Filetype markdown inoremap /i **<++><Esc>F*i
-autocmd Filetype markdown inoremap /d ~~~~<++><Esc>F~hi
-autocmd Filetype markdown inoremap /s ``<++><Esc>F`i
+let mapleader = "/"
+autocmd Filetype markdown inoremap <Leader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
+autocmd Filetype markdown inoremap <Leader>1 #<Space><Enter><++><Esc>:call H1Add()<CR>:let g:h2counter=0<CR>kA
+autocmd Filetype markdown inoremap <Leader>2 ##<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <Leader>3 ###<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <Leader>4 ####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <Leader>5 #####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <Leader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
+autocmd Filetype markdown inoremap <Leader>q $$<Enter><Enter> \tag{<C-R>=h1counter<C-M>-<C-R>=H2Add()<C-M>}$$<Enter><BS><++><Esc>2kA
+autocmd Filetype markdown inoremap <Leader>e $$<++><Esc>F$i
+autocmd Filetype markdown inoremap <Leader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
+autocmd Filetype markdown inoremap <Leader>b ****<++><Esc>F*hi
+autocmd Filetype markdown inoremap <Leader>u <u></u><++><Esc>F/i<Left>
+autocmd Filetype markdown inoremap <Leader>i **<++><Esc>F*i
+autocmd Filetype markdown inoremap <Leader>d ~~~~<++><Esc>F~hi
+autocmd Filetype markdown inoremap <Leader>s ``<++><Esc>F`i
 autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Up>
 autocmd Filetype markdown inoremap <expr> <F12> ListSub()
-autocmd Filetype markdown imap /n [^<C-R>=ListAdd()<C-M><Esc>Go[^<C-R>=Listcounter<C-M><Right>: <++><Esc><C-o>f]a
-autocmd Filetype markdown inoremap /p ![](<++>)<++><Esc>F]i
-autocmd Filetype markdown inoremap /a [](<++>)<++><Esc>F]i
-autocmd Filetype markdown inoremap /l --------<Enter>
-autocmd Filetype markdown inoremap // &emsp;<Esc>a
-autocmd Filetype markdown inoremap /<CR> <br><Esc>a
+autocmd Filetype markdown imap <Leader>n [^<C-R>=ListAdd()<C-M><Esc>Go[^<C-R>=Listcounter<C-M><Right>: <++><Esc><C-o>f]a
+autocmd Filetype markdown inoremap <Leader>p ![](<++>)<++><Esc>F]i
+autocmd Filetype markdown inoremap <Leader>a [](<++>)<++><Esc>F]i
+autocmd Filetype markdown inoremap <Leader>l --------<Enter>
+autocmd Filetype markdown inoremap <Leader>/ &emsp;<Esc>a
+autocmd Filetype markdown inoremap <Leader><CR> <br><Esc>a
 "==============================================================================================="
 "vundle插件管理"
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
