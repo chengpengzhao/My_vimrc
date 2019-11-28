@@ -4,10 +4,8 @@ syntax enable
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,gbk,latin1
-
 "设置数字为十进制，防止<C-a><C-x>修改时出现不希望的结果
 set nrformats=
-
 "依文件类型设置自动缩进
 filetype plugin on
 filetype indent on
@@ -104,7 +102,9 @@ nnoremap <buffer> <F9> :exec '!python3' shellescape(@%, 1)<cr>
 "超级用户权限编辑
 cnoremap sw w !sudo tee >/dev/null %
 
-
+let mapleader = ","
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 "==============================================================================================="
 autocmd Filetype markdown let Listcounter=0 |let h1counter=0 |let h2counter=0
 func ListAdd()
@@ -125,30 +125,30 @@ func H2Add()
 endfunc
 autocmd BufNewFile,BufRead *.Md set filetype=markdown
 "Markdown快捷键   ——来自一位Typora用户
-let mapleader = "/"
-autocmd Filetype markdown inoremap <Leader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
-autocmd Filetype markdown inoremap <Leader>1 #<Space><Enter><++><Esc>:call H1Add()<CR>:let g:h2counter=0<CR>kA
-autocmd Filetype markdown inoremap <Leader>2 ##<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <Leader>3 ###<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <Leader>4 ####<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <Leader>5 #####<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <Leader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
-autocmd Filetype markdown inoremap <Leader>q $$<Enter><Enter> \tag{<C-R>=h1counter<C-M>-<C-R>=H2Add()<C-M>}$$<Enter><BS><++><Esc>2kA
-autocmd Filetype markdown inoremap <Leader>e $$<++><Esc>F$i
-autocmd Filetype markdown inoremap <Leader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
-autocmd Filetype markdown inoremap <Leader>b ****<++><Esc>F*hi
-autocmd Filetype markdown inoremap <Leader>u <u></u><++><Esc>F/i<Left>
-autocmd Filetype markdown inoremap <Leader>i **<++><Esc>F*i
-autocmd Filetype markdown inoremap <Leader>d ~~~~<++><Esc>F~hi
-autocmd Filetype markdown inoremap <Leader>s ``<++><Esc>F`i
+let maplocalleader = "/"
+autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
+autocmd Filetype markdown inoremap <localLeader>1 #<Space><Enter><++><Esc>:call H1Add()<CR>:let g:h2counter=0<CR>kA
+autocmd Filetype markdown inoremap <localLeader>2 ##<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>3 ###<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>4 ####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>5 #####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
+autocmd Filetype markdown inoremap <localLeader>q $$<Enter><Enter> \tag{<C-R>=h1counter<C-M>-<C-R>=H2Add()<C-M>}$$<Enter><BS><++><Esc>2kA
+autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
+autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
+autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi
+autocmd Filetype markdown inoremap <localLeader>u <u></u><++><Esc>F/i<Left>
+autocmd Filetype markdown inoremap <localLeader>i **<++><Esc>F*i
+autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
+autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Up>
 autocmd Filetype markdown inoremap <expr> <F12> ListSub()
-autocmd Filetype markdown imap <Leader>n [^<C-R>=ListAdd()<C-M><Esc>Go[^<C-R>=Listcounter<C-M><Right>: <++><Esc><C-o>f]a
-autocmd Filetype markdown inoremap <Leader>p ![](<++>)<++><Esc>F]i
-autocmd Filetype markdown inoremap <Leader>a [](<++>)<++><Esc>F]i
-autocmd Filetype markdown inoremap <Leader>l --------<Enter>
-autocmd Filetype markdown inoremap <Leader>/ &emsp;<Esc>a
-autocmd Filetype markdown inoremap <Leader><CR> <br><Esc>a
+autocmd Filetype markdown imap <Leader>n [^<localC-R>=ListAdd()<C-M><Esc>Go[^<C-R>=Listcounter<C-M><Right>: <++><Esc><C-o>f]a
+autocmd Filetype markdown inoremap <localLeader>p ![](<++>)<++><Esc>F]i
+autocmd Filetype markdown inoremap <localLeader>a [](<++>)<++><Esc>F]i
+autocmd Filetype markdown inoremap <localLeader>l --------<Enter>
+autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
+autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
 "==============================================================================================="
 "vundle插件管理"
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
