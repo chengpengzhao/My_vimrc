@@ -106,24 +106,43 @@ cnoremap sw w !sudo tee >/dev/null %
 
 
 "==============================================================================================="
+autocmd Filetype markdown let Listcounter=0 |let h1counter=0 |let h2counter=0
+func ListAdd()
+    let g:Listcounter += 1
+    return g:Listcounter . ''
+endfunc
+func ListSub()
+    let g:Listcounter -= 1
+    return ''
+endfunc
+func H1Add()
+    let g:h1counter += 1
+    return g:h1counter . ''
+endfunc
+func H2Add()
+    let g:h2counter += 1
+    return g:h2counter . ''
+endfunc
 autocmd BufNewFile,BufRead *.Md set filetype=markdown
 "Markdown快捷键   ——来自一位Typora用户
-autocmd Filetype markdown inoremap /f <Esc>/<++><CR>:nohlsearch<CR>c4l
-autocmd Filetype markdown inoremap /1 #<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap /f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
+autocmd Filetype markdown inoremap /1 #<Space><Enter><++><Esc>:call H1Add()<CR>:let g:h2counter=0<CR>kA
 autocmd Filetype markdown inoremap /2 ##<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap /3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap /4 ####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap /5 #####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap /c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
-autocmd Filetype markdown inoremap /m $$<Enter><Enter> \tag{<++>}$$<Enter><++><Esc>2kA
+autocmd Filetype markdown inoremap /q $$<Enter><Enter> \tag{<C-R>=h1counter<C-M>-<C-R>=H2Add()<C-M>}$$<Enter><BS><++><Esc>2kA
 autocmd Filetype markdown inoremap /e $$<++><Esc>F$i
-autocmd Filetype markdown inoremap /q $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
+autocmd Filetype markdown inoremap /m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
 autocmd Filetype markdown inoremap /b ****<++><Esc>F*hi
 autocmd Filetype markdown inoremap /u <u></u><++><Esc>F/i<Left>
 autocmd Filetype markdown inoremap /i **<++><Esc>F*i
 autocmd Filetype markdown inoremap /d ~~~~<++><Esc>F~hi
 autocmd Filetype markdown inoremap /s ``<++><Esc>F`i
-autocmd Filetype markdown inoremap /n [^]:<++><Esc>F]i
+autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Up>
+autocmd Filetype markdown inoremap <expr> <F12> ListSub()
+autocmd Filetype markdown imap /n [^<C-R>=ListAdd()<C-M><Esc>Go[^<C-R>=Listcounter<C-M><Right>: <++><Esc><C-o>f]a
 autocmd Filetype markdown inoremap /p ![](<++>)<++><Esc>F]i
 autocmd Filetype markdown inoremap /a [](<++>)<++><Esc>F]i
 autocmd Filetype markdown inoremap /l --------<Enter>
