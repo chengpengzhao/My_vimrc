@@ -81,8 +81,6 @@ nnoremap  qq    :q!<CR>
 "宏名称统一用a，简化按键
 nnoremap  @  @a
 
-"快速输入命令
-noremap <space> :
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 "插入模式下移动光标
@@ -102,28 +100,35 @@ nnoremap <buffer> <F9> :exec '!python3' shellescape(@%, 1)<cr>
 "超级用户权限编辑
 cnoremap sw w !sudo tee >/dev/null %
 
-let mapleader = ","
+let mapleader = " "
+"快速编辑vim配置文件"
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+"给单词加双引号"
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+"删除括号内的文字dp"
+onoremap p i(
 "==============================================================================================="
 autocmd Filetype markdown let Listcounter=0 |let h1counter=0 |let h2counter=0
-func ListAdd()
-    let g:Listcounter += 1
-    return g:Listcounter . ''
-endfunc
-func ListSub()
-    let g:Listcounter -= 1
-    return ''
-endfunc
-func H1Add()
-    let g:h1counter += 1
-    return g:h1counter . ''
-endfunc
-func H2Add()
-    let g:h2counter += 1
-    return g:h2counter . ''
-endfunc
-autocmd BufNewFile,BufRead *.Md set filetype=markdown
+augroup myfunction
+    func ListAdd()
+        let g:Listcounter += 1
+        return g:Listcounter . ''
+    endfunc
+    func ListSub()
+        let g:Listcounter -= 1
+        return ''
+    endfunc
+    func H1Add()
+        let g:h1counter += 1
+        return g:h1counter . ''
+    endfunc
+    func H2Add()
+        let g:h2counter += 1
+        return g:h2counter . ''
+    endfunc
+    autocmd BufNewFile,BufRead *.Md set filetype=markdown
+augroup END
 "Markdown快捷键   ——来自一位Typora用户
 let maplocalleader = "/"
 autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
