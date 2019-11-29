@@ -1,13 +1,14 @@
 syntax enable
-" status line settings ---------------------- {{{
+set foldmethod=marker
+"status line settings{{{
 "总是显示状态栏"
 set laststatus=2
 function! HighlightSearch()
-  if &hls
-    return 'H'
-  else
-    return ''
-  endif
+    if &hls
+        return 'H'
+    else
+        return ''
+    endif
 endfunction
 function! Buf_total_num()
     return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
@@ -99,9 +100,8 @@ set clipboard=unnamedplus
 set dictionary+=/usr/share/dict/engspchk-dict
 set completeopt+=noinsert
 inoremap <C-@> <C-x><C-k>
-
 "==============================================================================================="
-"快捷键相关：
+"快捷键相关{{{
 let mapleader = ","
 "映射上下左右的光标移动
 noremap  <Space> :
@@ -152,8 +152,9 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 "删除括号内的文字dp"
 onoremap p i(
+"}}}
 "==============================================================================================="
-" markdown functions---------------------- {{{
+" markdown settings---------------------- {{{
 autocmd Filetype markdown let Listcounter=0 |let h1counter=0 |let h2counter=0
 augroup myfunction
     function! ListAdd()
@@ -174,7 +175,6 @@ augroup myfunction
     endfunction
     autocmd BufNewFile,BufRead *.Md set filetype=markdown
 augroup END
-" }}}
 "Markdown快捷键   ——来自一位Typora用户
 let maplocalleader = "/"
 autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
@@ -200,8 +200,9 @@ autocmd Filetype markdown inoremap <localLeader>a [](<++>)<++><Esc>F]i
 autocmd Filetype markdown inoremap <localLeader>l --------<Enter>
 autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
 autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
+" }}}
 "==============================================================================================="
-"vundle插件管理"
+"vundle插件管理{{{
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
 set nocompatible              " 去除VI一致性,必须要添加
 filetype off                  " 必须要添加
@@ -251,7 +252,9 @@ filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和
 " vim +BundleInstall! +BundleClean +q
 " 查阅 :h vundle 获取更多细节和wiki以及FAQ
 " 将你自己对非插件片段放在这行之后
+" }}}
 "==============================================================================================="
+" markdown-preview settings{{{
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
 let g:mkdp_auto_start = 0
@@ -331,9 +334,7 @@ let g:mkdp_port = ''
 " preview page title
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
+"}}}
 "==============================================================================================="
 "显示缩进"
 let g:indent_guides_enable_on_vim_startup = 1
-
-let g:ibus#layout = 'xkb:us::eng'
-let g:ibus#engine = 'sunpinyin'
