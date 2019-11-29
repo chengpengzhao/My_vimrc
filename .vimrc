@@ -1,4 +1,7 @@
 syntax enable
+set background=dark
+set wrap
+set textwidth=0
 set foldmethod=marker
 "status line settings{{{
 "总是显示状态栏"
@@ -9,9 +12,6 @@ function! HighlightSearch()
     else
         return ''
     endif
-endfunction
-function! Buf_total_num()
-    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 endfunction
 function! File_size(f)
     let l:size = getfsize(expand(a:f))
@@ -93,7 +93,7 @@ set smartcase
 set infercase
 
 "设置文件间复制粘贴，访问系统剪切板
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 
 "单词自动补全功能,写博客时用"
 ""set dictionary+=/usr/share/dict/american-english
@@ -155,36 +155,23 @@ onoremap p i(
 "}}}
 "==============================================================================================="
 " markdown settings---------------------- {{{
-autocmd Filetype markdown let Listcounter=0 |let h1counter=0 |let h2counter=0
-augroup myfunction
-    function! ListAdd()
-        let g:Listcounter += 1
-        return g:Listcounter . ''
-    endfunction
-    function! ListSub()
-        let g:Listcounter -= 1
-        return ''
-    endfunction
-    function! H1Add()
-        let g:h1counter += 1
-        return g:h1counter . ''
-    endfunction
-    function! H2Add()
-        let g:h2counter += 1
-        return g:h2counter . ''
-    endfunction
-    autocmd BufNewFile,BufRead *.Md set filetype=markdown
-augroup END
-"Markdown快捷键   ——来自一位Typora用户
+function! Count(pattern)
+  let l:cnt = 0
+  silent! exe '1,.s/' . a:pattern . '/\=execute(''let l:cnt += 1'')/gn'
+  return l:cnt
+endfunction
+autocmd BufNewFile,BufRead *.Md set filetype=markdown
+"Markdown快捷键   
 let maplocalleader = "/"
 autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
-autocmd Filetype markdown inoremap <localLeader>1 #<Space><Enter><++><Esc>:call H1Add()<CR>:let g:h2counter=0<CR>kA
+autocmd Filetype markdown inoremap <localLeader>1 #<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>2 ##<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>4 ####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>5 #####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
-autocmd Filetype markdown inoremap <localLeader>q $$<Enter><Enter> \tag{<C-R>=h1counter<C-M>-<C-R>=H2Add()<C-M>}$$<Enter><BS><++><Esc>2kA
+autocmd Filetype markdown inoremap <expr> <localLeader><F11> Count('^# \+')
+autocmd Filetype markdown imap <localLeader>q $$<Enter><Enter> \tag{<localLeader><F11>-<localLeader><F11>$$<Enter><BS><++><Esc>2kA
 autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
 autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
 autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi
@@ -193,8 +180,8 @@ autocmd Filetype markdown inoremap <localLeader>i **<++><Esc>F*i
 autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
 autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Up>
-autocmd Filetype markdown inoremap <expr> <F12> ListSub()
-autocmd Filetype markdown imap <Leader>n [^<localC-R>=ListAdd()<C-M><Esc>Go[^<C-R>=Listcounter<C-M><Right>: <++><Esc><C-o>f]a
+autocmd Filetype markdown inoremap <expr> <localLeader><F12> eval(Count('\[\^\d\+\]')+1)
+autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12><Esc>ya[Go<C-O>p: <++><Esc><C-o>f]a
 autocmd Filetype markdown inoremap <localLeader>p ![](<++>)<++><Esc>F]i
 autocmd Filetype markdown inoremap <localLeader>a [](<++>)<++><Esc>F]i
 autocmd Filetype markdown inoremap <localLeader>l --------<Enter>
@@ -338,3 +325,6 @@ let g:mkdp_page_title = '「${name}」'
 "==============================================================================================="
 "显示缩进"
 let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0 
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
