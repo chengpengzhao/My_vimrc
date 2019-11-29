@@ -1,6 +1,49 @@
 syntax enable
-
+" status line settings ---------------------- {{{
+"总是显示状态栏"
+set laststatus=2
+function! HighlightSearch()
+  if &hls
+    return 'H'
+  else
+    return ''
+  endif
+endfunction
+function! Buf_total_num()
+    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+endfunction
+function! File_size(f)
+    let l:size = getfsize(expand(a:f))
+    if l:size == 0 || l:size == -1 || l:size == -2
+        return ''
+    endif
+    if l:size < 1024
+        return l:size.' bytes'
+    elseif l:size < 1024*1024
+        return printf('%.1f', l:size/1024.0).'K'
+    elseif l:size < 1024*1024*1024
+        return printf('%.1f', l:size/1024.0/1024.0) . 'M'
+    else
+        return printf('%.1f', l:size/1024.0/1024.0/1024.0) . 'G'
+    endif
+endfunction
+"状态栏格式设置"
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\ %{&spelllang}\\|\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c%)%*
+"上面是总的设置
+"set statusline+=%1*\ %F\ %*
+"set statusline+=%2*\ %{File_size(@%)}\ %*
+"set statusline+=%3*\ %m%r%w%y\ %*
+"set statusline+=%6*\ %{&spelllang}\\|\%{HighlightSearch()}\  "语言 & 是否高亮，H表示高亮?
+"set statusline+=%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*
+"set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c%)%*
 "解决乱码问题
+hi User1 cterm=bold ctermfg=232 ctermbg=179
+hi User2 cterm=None ctermfg=214 ctermbg=242
+hi User3 cterm=bold ctermfg=15 ctermbg=9
+hi User4 cterm=None ctermfg=16 ctermbg=33
+hi User5 cterm=None ctermfg=11 ctermbg=240
+" }}}
+"==============================================================================================="
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,gbk,latin1
@@ -59,7 +102,9 @@ inoremap <C-@> <C-x><C-k>
 
 "==============================================================================================="
 "快捷键相关：
+let mapleader = ","
 "映射上下左右的光标移动
+noremap  <Space> :
 noremap  i   k
 noremap  j   h
 noremap  k  j
@@ -74,7 +119,7 @@ noremap E   $
 
 
 "文件保存与退出
-nnoremap <C-w>  :w<CR>
+nnoremap <Leader>w  :w<CR>
 nnoremap  qw    :wq<CR>
 nnoremap  qq    :q!<CR>
 
@@ -100,7 +145,6 @@ nnoremap <buffer> <F9> :exec '!python3' shellescape(@%, 1)<cr>
 "超级用户权限编辑
 cnoremap sw w !sudo tee >/dev/null %
 
-let mapleader = " "
 "快速编辑vim配置文件"
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -109,26 +153,28 @@ nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 "删除括号内的文字dp"
 onoremap p i(
 "==============================================================================================="
+" markdown functions---------------------- {{{
 autocmd Filetype markdown let Listcounter=0 |let h1counter=0 |let h2counter=0
 augroup myfunction
-    func ListAdd()
+    function! ListAdd()
         let g:Listcounter += 1
         return g:Listcounter . ''
-    endfunc
-    func ListSub()
+    endfunction
+    function! ListSub()
         let g:Listcounter -= 1
         return ''
-    endfunc
-    func H1Add()
+    endfunction
+    function! H1Add()
         let g:h1counter += 1
         return g:h1counter . ''
-    endfunc
-    func H2Add()
+    endfunction
+    function! H2Add()
         let g:h2counter += 1
         return g:h2counter . ''
-    endfunc
+    endfunction
     autocmd BufNewFile,BufRead *.Md set filetype=markdown
 augroup END
+" }}}
 "Markdown快捷键   ——来自一位Typora用户
 let maplocalleader = "/"
 autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
