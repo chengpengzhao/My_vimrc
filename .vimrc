@@ -155,23 +155,35 @@ onoremap p i(
 "}}}
 "==============================================================================================="
 " markdown settings---------------------- {{{
-function! Count(pattern)
+function! Count(pattern,startline)
   let l:cnt = 0
-  silent! exe '1,.s/' . a:pattern . '/\=execute(''let l:cnt += 1'')/gn'
+  silent! exe a:startline . ',.s/' . a:pattern . '/\=execute(''let l:cnt += 1'')/gn'
   return l:cnt
+endfunction
+function! Findtitle()
+    for i in range(line('.'))
+        if matchstr(getline(line('.')-i),'^# \+')!=#''
+            let l:latesttitleline=line('.')-i
+            break
+        else
+            let l:latesttitleline=line('.')
+        endif
+    endfor
+    return l:latesttitleline
 endfunction
 autocmd BufNewFile,BufRead *.Md set filetype=markdown
 "Markdown快捷键   
 let maplocalleader = "/"
 autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
-autocmd Filetype markdown inoremap <localLeader>1 #<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <localLeader>2 ##<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <localLeader>3 ###<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <localLeader>4 ####<Space><Enter><++><Esc>kA
-autocmd Filetype markdown inoremap <localLeader>5 #####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>1 <ESC>o#<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>2 <ESC>o##<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>3 <ESC>o###<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>4 <ESC>o####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <localLeader>5 <ESC>o#####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
-autocmd Filetype markdown inoremap <expr> <localLeader><F11> Count('^# \+')
-autocmd Filetype markdown imap <localLeader>q $$<Enter><Enter> \tag{<localLeader><F11>-<localLeader><F11>$$<Enter><BS><++><Esc>2kA
+autocmd Filetype markdown inoremap <expr> <localLeader><F11> Count('^# \+',1)
+autocmd Filetype markdown inoremap <expr> <Leader><localLeader><F11> Count(' \\tag{\d\+-\d\+}',Findtitle())+1
+autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11><Right>$$<Enter><BS><++><Esc>2iA
 autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
 autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
 autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi
@@ -180,7 +192,7 @@ autocmd Filetype markdown inoremap <localLeader>i **<++><Esc>F*i
 autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
 autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Up>
-autocmd Filetype markdown inoremap <expr> <localLeader><F12> eval(Count('\[\^\d\+\]')+1)
+autocmd Filetype markdown inoremap <expr> <localLeader><F12> eval(Count('\[\^\d\+\]',1)+1)
 autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12><Esc>ya[Go<C-O>p: <++><Esc><C-o>f]a
 autocmd Filetype markdown inoremap <localLeader>p ![](<++>)<++><Esc>F]i
 autocmd Filetype markdown inoremap <localLeader>a [](<++>)<++><Esc>F]i
