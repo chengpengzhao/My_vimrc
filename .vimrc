@@ -104,6 +104,8 @@ inoremap <C-@> <C-x><C-k>
 "==============================================================================================="
 "快捷键相关{{{
 let mapleader = ","
+noremap <C-y> "+y
+noremap yy m1V"+y`1
 "映射上下左右的光标移动
 noremap  <Space> :
 noremap  i   k
@@ -118,7 +120,6 @@ noremap E   $
 
 
 
-
 "文件保存与退出
 nnoremap <Leader>w  :w<CR>
 nnoremap  qw    :wq<CR>
@@ -129,7 +130,7 @@ nnoremap  @  @a
 
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-"插入模式下移动光标
+"插入模式下移动光标     
 inoremap <C-i> <up>
 inoremap <C-j> <left>
 inoremap <C-l> <right>
@@ -137,11 +138,11 @@ inoremap <C-k> <down>
 inoremap <C-d> <Delete>
 
 "自动插入完整括号
-inoremap ( ()<Left>
-inoremap（ （）<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap " ""<Left>
+""inoremap ( ()<Left>
+""inoremap（ （）<Left>
+""inoremap [ []<Left>
+""inoremap { {}<Left>
+""inoremap " ""<Left>
 nnoremap <buffer> <F9> :exec '!python3' shellescape(@%, 1)<cr>
 "超级用户权限编辑
 cnoremap sw w !sudo tee >/dev/null %
@@ -184,7 +185,7 @@ autocmd Filetype markdown inoremap <localLeader>5 <ESC>o#####<Space><Enter><++><
 autocmd Filetype markdown inoremap <localLeader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
 autocmd Filetype markdown inoremap <expr> <localLeader><F11> Count('^# \+',1)
 autocmd Filetype markdown inoremap <expr> <Leader><localLeader><F11> Count(' \\tag{\d\+-\d\+}',Findtitle())+1
-autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11><Right>$$<Enter><BS><++><Esc>2iA
+autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11>}$$<Enter><BS><++><Esc>2iA
 autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
 autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
 autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi
@@ -194,10 +195,10 @@ autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
 autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Up>
 autocmd Filetype markdown inoremap <expr> <localLeader><F12> eval(Count('\[\^\d\+\]',1)+1)
-autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12><Esc>ya[Go<C-O>p: <++><Esc><C-o>f]a
-autocmd Filetype markdown inoremap <localLeader>p ![](<++>)<++><Esc>F]i
-autocmd Filetype markdown inoremap <localLeader>a [](<++>)<++><Esc>F]i
-autocmd Filetype markdown inoremap <localLeader>l --------<Enter>
+autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<C-O>p: <++><Esc><C-o>f]a
+autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
+autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
+autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
 autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
 autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
 " }}}
@@ -218,7 +219,16 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'iamcco/markdown-preview.nvim'
 Plugin 'chengpengzhao/vim-OpenFoam-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
-
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+if has('nvim')
+  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plugin 'Shougo/deoplete.nvim'
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 " 以下范例用来支持不同格式的插件安装.
 " 请将安装插件的命令放在vundle#begin和vundle#end之间.
 " Github上的插件
@@ -341,3 +351,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<S-tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-l>"
+let g:UltiSnipsJumpBackwardTrigger="<C-j>"      
