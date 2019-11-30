@@ -99,6 +99,7 @@ set infercase
 ""set dictionary+=/usr/share/dict/american-english
 set dictionary+=/usr/share/dict/engspchk-dict
 set completeopt+=noinsert
+"Ctrl+Space单词补全"
 inoremap <C-@> <C-x><C-k>
 "==============================================================================================="
 "快捷键相关{{{
