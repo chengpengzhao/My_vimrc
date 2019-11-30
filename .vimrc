@@ -1,8 +1,3 @@
-syntax enable
-set background=dark
-set wrap
-set textwidth=0
-set foldmethod=marker
 "status line settings{{{
 "总是显示状态栏"
 set laststatus=2
@@ -37,7 +32,6 @@ set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\ %{&spel
 "set statusline+=%6*\ %{&spelllang}\\|\%{HighlightSearch()}\  "语言 & 是否高亮，H表示高亮?
 "set statusline+=%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*
 "set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c%)%*
-"解决乱码问题
 hi User1 cterm=bold ctermfg=232 ctermbg=179
 hi User2 cterm=None ctermfg=214 ctermbg=242
 hi User3 cterm=bold ctermfg=15 ctermbg=9
@@ -45,6 +39,19 @@ hi User4 cterm=None ctermfg=16 ctermbg=33
 hi User5 cterm=None ctermfg=11 ctermbg=240
 " }}}
 "==============================================================================================="
+"基础设置{{{
+syntax enable
+set background=dark
+"不自动分行
+set wrap
+set textwidth=0
+"切换是否拼写检查
+nnoremap <F3> : setlocal spell!<CR>
+set spelllang=nl,en_gb
+inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
+"设置标记
+set foldmethod=marker
+"解决乱码问题
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,gbk,latin1
@@ -53,12 +60,12 @@ set nrformats=
 "依文件类型设置自动缩进
 filetype plugin on
 filetype indent on
-"显示当前的行号列号：
+"显示当前的行号(相对)：
 set number
 set relativenumber
 ""set ruler
 ""autocmd InsertEnter * :set norelativenumber "插入模式下撤下相对行号
-""autocmd InsertLeave * :set relativenumber   "普通模式下加上相对行号            
+""autocmd InsertLeave * :set relativenumber   "普通模式下加上相对行号
 
 "需要记住多少次历史操作
 set history=1000
@@ -69,14 +76,22 @@ set wildmode=longest:list,full
 
 set noswapfile " 不要生成swap文件，当buffer被丢弃的时候隐藏它
 
+set showcmd
+set showmode
+set autoindent
 set showmatch " 高亮显示匹配的括号
 set incsearch " 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
 set hlsearch "高亮搜索结果
+"显示行尾多余空格
+set listchars=tab:»■,trail:■
+set list
 
 "将制表符扩展为空格
 set expandtab
 "设置编辑时制表符占用空格数
 set tabstop=4
+"tab转空格
+set expandtab
 "设置格式化时制表符占用空格数
 set shiftwidth=4
 "让 vim 把连续数量的空格视为一个制表符
@@ -101,6 +116,7 @@ set dictionary+=/usr/share/dict/engspchk-dict
 set completeopt+=noinsert
 "Ctrl+Space单词补全"
 inoremap <C-@> <C-x><C-k>
+"}}}
 "==============================================================================================="
 "快捷键相关{{{
 let mapleader = ","
@@ -346,12 +362,14 @@ let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 "}}}
 "==============================================================================================="
+"其他插件设置{{{
 "显示缩进"
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<S-tab>"
-let g:UltiSnipsJumpForwardTrigger="<C-l>"
-let g:UltiSnipsJumpBackwardTrigger="<C-j>"      
+let g:UltiSnipsExpandTrigger="<localLeader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"      
+"}}}
