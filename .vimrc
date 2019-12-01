@@ -58,6 +58,7 @@ inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 "inoremap <C-o> <C-x><C-s>
 "设置标记
 set foldmethod=marker
+set foldenable
 "解决乱码问题
 set encoding=utf-8
 set termencoding=utf-8
@@ -209,7 +210,7 @@ autocmd Filetype markdown inoremap <localLeader>c ```<Enter><++><Enter>```<Enter
 autocmd Filetype markdown inoremap <expr> <localLeader><F11> Count('^# \+',1)
 autocmd Filetype markdown inoremap <expr> <Leader><localLeader><F11> Count(' \\tag{\d\+-\d\+}',Findtitle())+1
 autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11>}$$<Enter><BS><++><Esc>2iA
-autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
+"autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
 autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
 autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi
 autocmd Filetype markdown inoremap <localLeader>u <u></u><++><Esc>F/i<Left>
@@ -381,7 +382,6 @@ let g:UltiSnipsExpandTrigger="<localLeader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 "Vim-markdown设置
-set nofoldenable
 let g:vim_markdown_conceal = 0
 let g:tex_conceal = ""
 let g:vim_markdown_conceal_code_blocks = 0

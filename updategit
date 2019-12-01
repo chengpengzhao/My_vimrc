@@ -1,0 +1,10 @@
+#!/bin/bash
+cd ~/Desktop
+cp ~/.vimrc ./My_vimrc/.vimrc
+cp ~/.vim/UltiSnips/markdown.snippets ./My_vimrc/markdown.snippets
+cd My_vimrc/
+git add -A
+echo -n  "please enter a commit ->"
+read  commit
+git commit -m "$commit"
+git push
