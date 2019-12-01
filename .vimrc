@@ -49,6 +49,7 @@ set conceallevel=2
 set wrap
 set textwidth=0
 "切换是否拼写检查
+setlocal spell
 nnoremap <F3> : setlocal spell!<CR>
 set spelllang=en_us,en_gb,cjk
 nnoremap [ [s
@@ -57,8 +58,8 @@ inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 "don't break undo with next left/right cursor *i_CTRL-G_U* movement (but only if the cursor stays within same the line)
 "inoremap <C-o> <C-x><C-s>
 "设置标记
-set foldmethod=marker
 set foldenable
+set foldmethod=marker
 "解决乱码问题
 set encoding=utf-8
 set termencoding=utf-8
@@ -155,7 +156,7 @@ nnoremap  @  @a
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 "插入模式下移动光标     
-inoremap <C-i> <up>
+"inoremap <C-i> <up>
 inoremap <C-j> <left>
 inoremap <C-l> <right>
 inoremap <C-k> <down>
@@ -378,7 +379,7 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<localLeader><tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 "Vim-markdown设置
@@ -393,4 +394,3 @@ let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_strikethrough = 0
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_math = 1
-"}}}
