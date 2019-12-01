@@ -42,6 +42,9 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 "基础设置{{{
 syntax enable
 set background=dark
+set shortmess=a
+set cmdheight=2
+set conceallevel=2
 "不自动分行
 set wrap
 set textwidth=0
@@ -87,7 +90,7 @@ set showmatch " 高亮显示匹配的括号
 set incsearch " 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
 set hlsearch "高亮搜索结果
 "显示行尾多余空格
-set listchars=tab:»■,trail:■
+set listchars=tab:»-,trail:■
 set list
 
 "将制表符扩展为空格
@@ -241,6 +244,7 @@ Plugin 'chengpengzhao/vim-OpenFoam-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+Plugin 'plasticboy/vim-markdown'
 if has('nvim')
   Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -375,5 +379,18 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<localLeader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"      
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+"Vim-markdown设置
+set nofoldenable
+let g:vim_markdown_conceal = 0
+let g:tex_conceal = ""
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_toc_autofit = 1
+let g:vim_markdown_folding_level = 1
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_strikethrough = 0
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_math = 1
 "}}}
