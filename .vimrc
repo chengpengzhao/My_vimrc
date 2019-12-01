@@ -47,8 +47,12 @@ set wrap
 set textwidth=0
 "切换是否拼写检查
 nnoremap <F3> : setlocal spell!<CR>
-set spelllang=nl,en_gb
+set spelllang=en_us,en_gb,cjk
+nnoremap [ [s
+nnoremap ] ]s
 inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
+"don't break undo with next left/right cursor *i_CTRL-G_U* movement (but only if the cursor stays within same the line)
+"inoremap <C-o> <C-x><C-s>
 "设置标记
 set foldmethod=marker
 "解决乱码问题
@@ -119,9 +123,9 @@ inoremap <C-@> <C-x><C-k>
 "}}}
 "==============================================================================================="
 "快捷键相关{{{
+"inoremap <silent> $$ $$<C-R>=UltiSnips#Anon(':latex:\`$1\`', '$$')<cr>
 let mapleader = ","
 noremap <C-y> "+y
-noremap yy m1V"+y`1
 "映射上下左右的光标移动
 noremap  <Space> :
 noremap  i   k
