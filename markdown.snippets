@@ -174,14 +174,20 @@ snippet '([Oo])me' "omega" wrA
 \\`!p snip.rv = match.group(1)`mega
 endsnippet
 #========================}}}
+context "math()"
+snippet '([Oo])me' "omega" wrA
 snippet sum "sum" w
 \sum_{n=${1:1}}^{${2:\infty}} ${3:a_n z^n}
 endsnippet
 
+context "math()"
+snippet '([Oo])me' "omega" wrA
 snippet \\ "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet 
 
+context "math()"
+snippet '([Oo])me' "omega" wrA
 snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)\\' "Fraction" wrA
 \\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
