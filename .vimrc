@@ -24,14 +24,14 @@ function! File_size(f)
     endif
 endfunction
 "状态栏格式设置"
-set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\ %{&spelllang}\\|\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c%)%*
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\ %{&spelllang}\\|\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
 "上面是总的设置
 "set statusline+=%1*\ %F\ %*
 "set statusline+=%2*\ %{File_size(@%)}\ %*
 "set statusline+=%3*\ %m%r%w%y\ %*
 "set statusline+=%6*\ %{&spelllang}\\|\%{HighlightSearch()}\  "语言 & 是否高亮，H表示高亮?
 "set statusline+=%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*
-"set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c%)%*
+"set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&FENC).((EXISTS(\"+BOMB\")\ &&\ &BOMB)?\",b\":\"\").\"\ \|\"}\ %-14.(ROW:%L/%l\(%P%%)\ COL:%C%)%*
 hi User1 cterm=bold ctermfg=232 ctermbg=179
 hi User2 cterm=None ctermfg=214 ctermbg=242
 hi User3 cterm=bold ctermfg=15 ctermbg=9
@@ -41,6 +41,7 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 "==============================================================================================="
 "基础设置{{{
 syntax enable
+"自动保存
 set background=dark
 set shortmess=a
 set cmdheight=2
@@ -128,7 +129,6 @@ inoremap <C-@> <C-x><C-k>
 "}}}
 "==============================================================================================="
 "快捷键相关{{{
-"inoremap <silent> $$ $$<C-R>=UltiSnips#Anon(':latex:\`$1\`', '$$')<cr>
 let mapleader = ","
 noremap <C-y> "+y
 "映射上下左右的光标移动
@@ -247,6 +247,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'plasticboy/vim-markdown'
+Plugin '907th/vim-auto-save'
 if has('nvim')
   Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -394,3 +395,6 @@ let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_strikethrough = 0
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_math = 1
+"autosave
+let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save_events = ["InsertLeave"]
