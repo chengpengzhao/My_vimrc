@@ -133,11 +133,11 @@ let mapleader = ","
 noremap <C-y> "+y
 "映射上下左右的光标移动
 noremap  <Space> :
-noremap  i   k
-noremap  j   h
-noremap  k  j
-noremap  gk  gj
-noremap  gi  gk
+"noremap  i   k
+"noremap  j   h
+"noremap  k  j
+"noremap  gk  gj
+"noremap  gi  gk
 
 "行光标移动
 noremap H   ^
@@ -248,6 +248,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'plasticboy/vim-markdown'
 Plugin '907th/vim-auto-save'
+Plugin 'scrooloose/nerdtree'
 if has('nvim')
   Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -398,3 +399,45 @@ let g:vim_markdown_math = 1
 "autosave
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_events = ["InsertLeave"]
+"NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeWinSize = 30
+let NERDTreeShowBookmarks = 1
+"高亮当前行
+let NERDTreeHighlightCursorline = 1
+"从NERDTree打开文件后自动关闭NERDTree
+let NERDTreeQuitOnOpen = 1
+"显示隐藏文件
+"let g:NERDTreeShowHidden = 0
+"忽略特定文件和目录
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
+            \ '\.o$', '\.so$', '\.egg$', '^\.git$', '__pycache__', '\.DS_Store' ]
+"显示行号
+let NERDTreeShowLineNumbers = 1
+let NERDTreeAutoCenter = 1
+"自动打开NERDTree
+"autocmd vimenter * NERDTree
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
