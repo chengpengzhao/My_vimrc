@@ -246,7 +246,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'plasticboy/vim-markdown'
 Plugin '907th/vim-auto-save'
 Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'Yggdroot/LeaderF'
 if has('nvim')
   Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
