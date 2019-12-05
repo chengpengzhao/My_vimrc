@@ -132,7 +132,7 @@ inoremap <C-@> <C-x><C-k>
 let mapleader = ","
 noremap <C-y> "+y
 "映射上下左右的光标移动
-noremap  <Space> :
+noremap  <Space> :!
 "noremap  i   k
 "noremap  j   h
 "noremap  k  j
@@ -142,7 +142,6 @@ noremap  <Space> :
 "行光标移动
 noremap H   ^
 noremap E   $
-
 
 
 "文件保存与退出
@@ -247,6 +246,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'plasticboy/vim-markdown'
 Plugin '907th/vim-auto-save'
 Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
 if has('nvim')
   Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -411,7 +411,7 @@ let NERDTreeHighlightCursorline = 1
 "从NERDTree打开文件后自动关闭NERDTree
 let NERDTreeQuitOnOpen = 1
 "显示隐藏文件
-let g:NERDTreeShowHidden = 1
+"let g:NERDTreeShowHidden = 1
 "忽略特定文件和目录
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
             \ '\.o$', '\.so$', '\.egg$', '^\.git$', '__pycache__', '\.DS_Store' ]
