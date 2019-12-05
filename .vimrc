@@ -50,7 +50,7 @@ set conceallevel=2
 set wrap
 set textwidth=0
 "切换是否拼写检查
-setlocal spell
+"setlocal spell
 nnoremap <F3> : setlocal spell!<CR>
 set spelllang=en_us,en_gb,cjk
 nnoremap [ [s
@@ -156,12 +156,10 @@ nnoremap  @  @a
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 "插入模式下移动光标     
-"inoremap <C-i> <up>
-inoremap <C-j> <left>
-inoremap <C-l> <right>
-inoremap <C-k> <down>
-inoremap <C-d> <Delete>
-
+inoremap <C-k> <C-o>gk
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+inoremap <C-j> <C-o>gj
 "自动插入完整括号
 ""inoremap ( ()<Left>
 ""inoremap（ （）<Left>
@@ -413,7 +411,7 @@ let NERDTreeHighlightCursorline = 1
 "从NERDTree打开文件后自动关闭NERDTree
 let NERDTreeQuitOnOpen = 1
 "显示隐藏文件
-"let g:NERDTreeShowHidden = 0
+let g:NERDTreeShowHidden = 1
 "忽略特定文件和目录
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
             \ '\.o$', '\.so$', '\.egg$', '^\.git$', '__pycache__', '\.DS_Store' ]
