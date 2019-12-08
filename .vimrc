@@ -1,6 +1,7 @@
 "status line settings{{{
 "总是显示状态栏"
 set laststatus=2
+"显示当前搜索时是否高亮
 function! HighlightSearch()
     if &hls
         return 'H'
@@ -8,6 +9,7 @@ function! HighlightSearch()
         return ''
     endif
 endfunction
+"文件大小计算
 function! File_size(f)
     let l:size = getfsize(expand(a:f))
     if l:size == 0 || l:size == -1 || l:size == -2
@@ -25,13 +27,20 @@ function! File_size(f)
 endfunction
 "状态栏格式设置"
 set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\ %{&spelllang}\\|\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
-"上面是总的设置
+"上面是总的设置，位置可能有所变化
+"文件位置
 "set statusline+=%1*\ %F\ %*
+"文件大小
 "set statusline+=%2*\ %{File_size(@%)}\ %*
+"文件修改状态及文件名
 "set statusline+=%3*\ %m%r%w%y\ %*
-"set statusline+=%6*\ %{&spelllang}\\|\%{HighlightSearch()}\  "语言 & 是否高亮，H表示高亮?
+""语言 & 是否高亮，H表示高亮?
+"set statusline+=%6*\ %{&spelllang}\\|\%{HighlightSearch()}\  
+"光标当前区域类型，写博客时能很容易分辨当前区域为数学或代码或...
 "set statusline+=%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*
+"文件类型、编码、当前行列、总字数
 "set statusline+=%=%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&FENC).((EXISTS(\"+BOMB\")\ &&\ &BOMB)?\",b\":\"\").\"\ \|\"}\ %-14.(ROW:%L/%l\(%P%%)\ COL:%C%)%*
+"设置各区域颜色
 hi User1 cterm=bold ctermfg=232 ctermbg=179
 hi User2 cterm=None ctermfg=214 ctermbg=242
 hi User3 cterm=bold ctermfg=15 ctermbg=9
@@ -41,7 +50,7 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 "==============================================================================================="
 "基础设置{{{
 syntax enable
-"自动保存
+
 set background=dark
 set shortmess=a
 set cmdheight=2
@@ -398,8 +407,10 @@ let g:vim_markdown_math = 1
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_events = ["InsertLeave"]
 "NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"vim不指定文件名时，自动打开NERDTree
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
