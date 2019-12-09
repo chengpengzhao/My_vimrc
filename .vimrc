@@ -151,7 +151,9 @@ inoremap <C-@> <C-x><C-k>
 let mapleader = ","
 noremap <C-y> "+y
 "映射上下左右的光标移动
-noremap  <Space> :!
+noremap  <Space> :
+"打开OpenFOAM相关文件时为了方便输入命令加了下面这个映射
+autocmd Filetype foam256* noremap  <Space> :!
 "noremap  i   k
 "noremap  j   h
 "noremap  k  j

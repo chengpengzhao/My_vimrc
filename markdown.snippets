@@ -180,7 +180,7 @@ snippet sum "sum" w
 endsnippet
 
 context "math()"
-snippet \\ "Fraction" iA
+snippet \\ "Fraction" i
 \\frac{$1}{$2}$0
 endsnippet 
 
@@ -192,12 +192,23 @@ endsnippet
 
 context "math()"
 snippet '(\(|\[)' "left beackets" irA
-\\left`!p snip.rv = match.group(1)` 
+\\left`!p snip.rv = match.group(1)`
 endsnippet 
 context "math()"
 snippet '(\)|\])' "right beackets" irA
-\\right`!p snip.rv = match.group(1)` 
+\\right`!p snip.rv = match.group(1)`
 endsnippet 
+
+snippet ali "Aligned" bA
+\begin{aligned}
+	${1:${VISUAL}}
+\end{aligned}
+endsnippet
+
+context "math()"
+snippet sq "\sqrt{}" iA
+\sqrt{${1:${VISUAL}}} $0
+endsnippet
 #}}}
 #=================================================================================================
 
