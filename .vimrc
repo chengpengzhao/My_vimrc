@@ -52,22 +52,29 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 syntax enable
 
 set background=dark
+"下面两行是有次vim出问题，每次打开都有按下Enter时设置的，好像没啥用
 set shortmess=a
 set cmdheight=2
+"让隐藏字符完全隐藏,好像是哪个插件要设置的（Snippets？)
 set conceallevel=2
 "不自动分行
 set wrap
 set textwidth=0
-"切换是否拼写检查
-"setlocal spell
+"切换是否拼写检查,markdown默认开启，F3切换
+autocmd Filetype markdown setlocal spell
 nnoremap <F3> : setlocal spell!<CR>
 set spelllang=en_us,en_gb,cjk
+"方便拼写检查在单词间跳转
 nnoremap [ [s
 nnoremap ] ]s
+"来自那位用Vim上课记笔记的大佬，insert模式<C-o>自动更正前一个单词
+"zg 	把当前单词添加到拼写文件中    
+"zw 	把当前单词从拼写文件中删除    
+"z= 	为当前单词提供更正建议    
+"插入模式下使用 <Ctrl-x>-s 获得的自动补全单词列表 
 inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
-"don't break undo with next left/right cursor *i_CTRL-G_U* movement (but only if the cursor stays within same the line)
-"inoremap <C-o> <C-x><C-s>
-"设置标记
+"<c-g>u的含义 ：don't break undo with next left/right cursor *i_CTRL-G_U* movement (but only if the cursor stays within same the line)
+"设置标记，三个{定义为标记，可用za折叠展开
 set foldenable
 set foldmethod=marker
 "解决乱码问题
@@ -95,13 +102,16 @@ set wildmode=longest:list,full
 
 set noswapfile " 不要生成swap文件，当buffer被丢弃的时候隐藏它
 
+"这三个好像没啥效果，默认就开着？先放这反正不碍事
 set showcmd
 set showmode
 set autoindent
+
 set showmatch " 高亮显示匹配的括号
 set incsearch " 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
 set hlsearch "高亮搜索结果
-"显示行尾多余空格
+
+"显示行尾多余空格与tab符号
 set listchars=tab:»-,trail:■
 set list
 
@@ -126,10 +136,10 @@ set ignorecase
 set smartcase
 set infercase
 
-"设置文件间复制粘贴，访问系统剪切板
+"设置文件间复制粘贴，访问系统剪切板(这个还是算了，会托慢Vim反应速度）
 "set clipboard=unnamedplus
 
-"单词自动补全功能,写博客时用"
+"单词自动补全功能,写博客时用,自定义词典可参考网上教程
 ""set dictionary+=/usr/share/dict/american-english
 set dictionary+=/usr/share/dict/engspchk-dict
 set completeopt+=noinsert
@@ -168,6 +178,7 @@ inoremap <C-k> <C-o>gk
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-j> <C-o>gj
+inoremap <C-d> <Delete>
 "自动插入完整括号
 ""inoremap ( ()<Left>
 ""inoremap（ （）<Left>
@@ -216,7 +227,7 @@ autocmd Filetype markdown inoremap <localLeader>5 <ESC>o#####<Space><Enter><++><
 autocmd Filetype markdown inoremap <localLeader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
 autocmd Filetype markdown inoremap <expr> <localLeader><F11> Count('^# \+',1)
 autocmd Filetype markdown inoremap <expr> <Leader><localLeader><F11> Count(' \\tag{\d\+-\d\+}',Findtitle())+1
-autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11>}$$<Enter><BS><++><Esc>2iA
+autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11>}$$<Enter><BS><++><Esc>2kA
 "autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
 autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
 autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi

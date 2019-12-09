@@ -86,92 +86,92 @@ endsnippet
 priority 1000
 context "math()"
 snippet '([Aa])lp' "alpha" wrA
-\\`!p snip.rv = match.group(1)`lpha 
+\\`!p snip.rv = match.group(1)`lpha
 endsnippet
 priority 1000
 context "math()"
-snippet '([Bb])et' "beta" wrA
-\\`!p snip.rv = match.group(1)`eta 
+snippet '([Bb])et' "beta" wr
+\\`!p snip.rv = match.group(1)`eta
 endsnippet
 context "math()"
 snippet '([Gg])am' "gamma" wrA
-\\`!p snip.rv = match.group(1)`amma 
+\\`!p snip.rv = match.group(1)`amma
 endsnippet
 context "math()"
 snippet '([Dd])el' "delta" wrA
-\\`!p snip.rv = match.group(1)`elta 
+\\`!p snip.rv = match.group(1)`elta
 endsnippet
 context "math()"
 snippet '([Ee])ps' "epsilon" wrA
-\\`!p snip.rv = match.group(1)`psilon 
+\\`!p snip.rv = match.group(1)`psilon
 endsnippet
 context "math()"
 snippet '([Zz])et' "zeta" wrA
-\\`!p snip.rv = match.group(1)`eta 
+\\`!p snip.rv = match.group(1)`eta
 endsnippet
 context "math()"
 snippet '([Nn])u' "nu" wrA
-\\`!p snip.rv = match.group(1)`u 
+\\`!p snip.rv = match.group(1)`u
 endsnippet
 context "math()"
 snippet '([Xx])i' "xi" wrA
-\\`!p snip.rv = match.group(1)`i 
+\\`!p snip.rv = match.group(1)`i
 endsnippet
 context "math()"
 snippet '([Pp])i' "pi" wrA
-\\`!p snip.rv = match.group(1)`i 
+\\`!p snip.rv = match.group(1)`i
 endsnippet
 context "math()"
 snippet '([Rr])ho' "rho" wrA
-\\`!p snip.rv = match.group(1)`ho 
+\\`!p snip.rv = match.group(1)`ho
 endsnippet
 context "math()"
 snippet '([Ss])ig' "sigma" wrA
-\\`!p snip.rv = match.group(1)`igma 
+\\`!p snip.rv = match.group(1)`igma
 endsnippet
 context "math()"
 snippet '([Ee])ta' "eta" wrA
-\\`!p snip.rv = match.group(1)`ta 
+\\`!p snip.rv = match.group(1)`ta
 endsnippet
 context "math()"
 snippet '([Tt])he' "theta" wrA
-\\`!p snip.rv = match.group(1)`heta 
+\\`!p snip.rv = match.group(1)`heta
 endsnippet
 context "math()"
 snippet '([Kk])ap' "kappa" wrA
-\\`!p snip.rv = match.group(1)`appa 
+\\`!p snip.rv = match.group(1)`appa
 endsnippet
 context "math()"
 snippet '([Ll])am' "lambda" wrA
-\\`!p snip.rv = match.group(1)`ambda 
+\\`!p snip.rv = match.group(1)`ambda
 endsnippet
 context "math()"
 snippet '([Mm])u' "mu" wrA
-\\`!p snip.rv = match.group(1)`u 
+\\`!p snip.rv = match.group(1)`u
 endsnippet
 context "math()"
 snippet '([Tt])au' "tau" wrA
-\\`!p snip.rv = match.group(1)`au 
+\\`!p snip.rv = match.group(1)`au
 endsnippet
 context "math()"
 snippet '([Uu])ps' "upsilon" wrA
-\\`!p snip.rv = match.group(1)`psilon 
+\\`!p snip.rv = match.group(1)`psilon
 endsnippet
 context "math()"
 snippet '([Pp])hi' "phi" wrA
-\\`!p snip.rv = match.group(1)`hi 
+\\`!p snip.rv = match.group(1)`hi
 endsnippet
 context "math()"
 snippet '([Cc])hi' "chi" wrA
-\\`!p snip.rv = match.group(1)`hi 
+\\`!p snip.rv = match.group(1)`hi
 endsnippet
 context "math()"
 snippet '([Pp])si' "psi" wrA
-\\`!p snip.rv = match.group(1)`si 
+\\`!p snip.rv = match.group(1)`si
 endsnippet
 context "math()"
 snippet '([Oo])me' "omega" wrA
-\\`!p snip.rv = match.group(1)`mega 
+\\`!p snip.rv = match.group(1)`mega
 endsnippet
 #========================}}}
 context "math()"
@@ -188,6 +188,16 @@ context "math()"
 snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)\\' "Fraction" wrA
 \\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
+
+
+context "math()"
+snippet '(\(|\[)' "left beackets" irA
+\\left`!p snip.rv = match.group(1)` 
+endsnippet 
+context "math()"
+snippet '(\)|\])' "right beackets" irA
+\\right`!p snip.rv = match.group(1)` 
+endsnippet 
 #}}}
 #=================================================================================================
 
