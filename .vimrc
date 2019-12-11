@@ -148,64 +148,72 @@ inoremap <C-@> <C-x><C-k>
 "}}}
 "==============================================================================================="
 "快捷键相关{{{
+"定义全局<Leader>
 let mapleader = ","
+"普通模式用<C-y>复制到系统剪切板，<C-y>y也可用
 noremap <C-y> "+y
-"映射上下左右的光标移动
+"空格快速进入命令模式
 noremap  <Space> :
-"打开OpenFOAM相关文件时为了方便输入命令加了下面这个映射
+"打开OpenFOAM相关文件时为了方便输入命令加了下面这个映射,!表示输入系统shell命令
 autocmd Filetype foam256* noremap  <Space> :!
+
+"映射上下左右的光标移动,刚开始用着还行，但和一些插件快捷键冲突，而且i本身是进入插入模式，不改为好
 "noremap  i   k
 "noremap  j   h
 "noremap  k  j
 "noremap  gk  gj
 "noremap  gi  gk
 
-"行光标移动
+"行光标移动,这个挺方便的，header与end，也没见有冲突
 noremap H   ^
 noremap E   $
 
 
-"文件保存与退出
+"文件保存与退出quick write ,quick quit的缩写，很实用
 nnoremap <Leader>w  :w<CR>
 nnoremap  qw    :wq<CR>
 nnoremap  qq    :q!<CR>
 
-"宏名称统一用a，简化按键
+"宏名称统一用a，简化按键,qa开始记录，q结束，再按@即可
 nnoremap  @  @a
-
+"模仿shell快捷键
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-"插入模式下移动光标     
+"插入模式下移动光标 <C-o>g表示是按屏幕行移动
 inoremap <C-k> <C-o>gk
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-j> <C-o>gj
+"向后删除 *为向前删除，shell通用
 inoremap <C-d> <Delete>
-"自动插入完整括号
+"自动插入完整括号,用了一段时间，加了snippet插件后发现不自动补全比较好
 ""inoremap ( ()<Left>
 ""inoremap（ （）<Left>
 ""inoremap [ []<Left>
 ""inoremap { {}<Left>
 ""inoremap " ""<Left>
+"F9允许python3直接执行当前.py文件
 nnoremap <buffer> <F9> :exec '!python3' shellescape(@%, 1)<cr>
-"超级用户权限编辑
+"超级用户权限编辑，出现权限不够无法保存时命令模式输入sw即可
 cnoremap sw w !sudo tee >/dev/null %
 
-"快速编辑vim配置文件"
+"快速编辑vim配置文件,在其他文件界面里呼出配置文件，并方便地source以立即适用改动
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-"给单词加双引号"
+"给单词加双引号,好像是vimscript教程里的一个命令，用处不太大
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-"删除括号内的文字dp"
+"删除括号内的文字dp,同上，没啥太多用
 onoremap p i(
 "}}}
 "==============================================================================================="
 " markdown settings---------------------- {{{
+" 计算某个pattern从startline到光标处出现的次数
 function! Count(pattern,startline)
   let l:cnt = 0
   silent! exe a:startline . ',.s/' . a:pattern . '/\=execute(''let l:cnt += 1'')/gn'
   return l:cnt
 endfunction
+"计算markdown中一级标题出现的次数，用来给公式自动编号
 function! Findtitle()
     for i in range(line('.'))
         if matchstr(getline(line('.')-i),'^# \+')!=#''
@@ -217,28 +225,44 @@ function! Findtitle()
     endfor
     return l:latesttitleline
 endfunction
+".Md文件也能被识别为markdown
 autocmd BufNewFile,BufRead *.Md set filetype=markdown
-"Markdown快捷键   
+"Markdown快捷键
+"定义本地<Leader>键
 let maplocalleader = "/"
+"寻找标记，实现光标快速跳转
 autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
+"h1~h5标题
 autocmd Filetype markdown inoremap <localLeader>1 <ESC>o#<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>2 <ESC>o##<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>3 <ESC>o###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>4 <ESC>o####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <localLeader>5 <ESC>o#####<Space><Enter><++><Esc>kA
+"代码块
 autocmd Filetype markdown inoremap <localLeader>c ```<Enter><++><Enter>```<Enter><++><Enter><Esc>4kA
+"辅助实现自动编号,特意找了平时不用的键
 autocmd Filetype markdown inoremap <expr> <localLeader><F11> Count('^# \+',1)
 autocmd Filetype markdown inoremap <expr> <Leader><localLeader><F11> Count(' \\tag{\d\+-\d\+}',Findtitle())+1
-autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11>}$$<Enter><BS><++><Esc>2kA
-"autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
-autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
-autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi
-autocmd Filetype markdown inoremap <localLeader>u <u></u><++><Esc>F/i<Left>
-autocmd Filetype markdown inoremap <localLeader>i **<++><Esc>F*i
-autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
-autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
-autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Up>
 autocmd Filetype markdown inoremap <expr> <localLeader><F12> eval(Count('\[\^\d\+\]',1)+1)
+"行间公式，带自动编号
+autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11>}$$<Enter><BS><++><Esc>2kA
+"行内公式，由snippets取代，不再用这里的定义，快捷键不变
+"autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
+"也是公式，基本不用
+autocmd Filetype markdown inoremap <localLeader>m $$\begin{equation}<Enter><Enter>\end{equation}$$<Enter><++><Esc>2kA
+"粗体
+autocmd Filetype markdown inoremap <localLeader>b ****<++><Esc>F*hi
+"下划线
+autocmd Filetype markdown inoremap <localLeader>u <u></u><++><Esc>F/i<Left>
+"斜体
+autocmd Filetype markdown inoremap <localLeader>i **<++><Esc>F*i
+"删除线
+autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
+"行内代码
+autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
+"插入时间戳
+autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
+"插入自动编号的引用
 autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Esc>pA: <++><Esc><C-o>f]a
 autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
 autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
@@ -261,6 +285,7 @@ call vundle#begin()
 " 让vundle管理插件版本,必须
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'iamcco/markdown-preview.nvim'
+"用的自己fork的版本，做了点小改动让界面看起来更舒服
 Plugin 'chengpengzhao/vim-OpenFoam-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'SirVer/ultisnips'
