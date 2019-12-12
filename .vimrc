@@ -264,10 +264,15 @@ autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 autocmd Filetype markdown inoremap <F2> <Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
 "插入自动编号的引用
 autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Esc>pA: <++><Esc><C-o>f]a
+"插入图片，自动复制剪切板网址
 autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
+"插入地址，使用前确保剪切板已复制url
 autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
+"分隔线
 autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
+"空格符号
 autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
+"空行
 autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
 " }}}
 "==============================================================================================="
@@ -284,16 +289,24 @@ call vundle#begin()
 
 " 让vundle管理插件版本,必须
 Plugin 'VundleVim/Vundle.vim'
+"markdown实时预览
 Plugin 'iamcco/markdown-preview.nvim'
 "用的自己fork的版本，做了点小改动让界面看起来更舒服
 Plugin 'chengpengzhao/vim-OpenFoam-syntax'
+"高亮显示行头缩进
 Plugin 'nathanaelkane/vim-indent-guides'
+"超级强大的插件，两个配合使用；第一个为引擎，第二个为snippets集合，自定义功能很棒！
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+"让vim支持很多markdown显示，我基本不用这些功能，安装只因为它能识别markdown中的公式区域，方便snippets使用
 Plugin 'plasticboy/vim-markdown'
+"自动保存插件，免得每次退出编辑模式都要按下保存
 Plugin '907th/vim-auto-save'
+"文件目录树显示插件，非常强大！！！
 Plugin 'scrooloose/nerdtree'
+"强大的文件搜索插件，快速定位文件
 Plugin 'Yggdroot/LeaderF'
+"自动补全插件，很好用，安装也很方便。可能需要安装：pip3 install --user pynvim
 if has('nvim')
   Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -301,7 +314,9 @@ else
   Plugin 'roxma/nvim-yarp'
   Plugin 'roxma/vim-hug-neovim-rpc'
 endif
+"配置自动补全打开文件即启动
 let g:deoplete#enable_at_startup = 1
+"=======================================================================================
 " 以下范例用来支持不同格式的插件安装.
 " 请将安装插件的命令放在vundle#begin和vundle#end之间.
 " Github上的插件
@@ -420,7 +435,7 @@ let g:mkdp_page_title = '「${name}」'
 "}}}
 "==============================================================================================="
 "其他插件设置{{{
-"显示缩进"
+"显示缩进,自定义颜色
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
