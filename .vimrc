@@ -50,8 +50,22 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 "==============================================================================================="
 "基础设置{{{
 syntax enable
-
+" 去除VI一致性,必须要添加
+set nocompatible
+" 解决插入模式下delete/backspce键失效问题(Mac用户)
+set backspace=2
+set autoread		" auto read when file is changed from outside
+set showmatch " 高亮显示匹配的括号
+set showmode		" Show current mode
+set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
+set wildmenu            " wild char completion menu
+" auto reload vimrc when editing it
+autocmd! bufwritepost .vimrc source ~/.vimrc
+"外观设置
 set background=dark
+set t_Co=256          " 256 color mode
+set cursorline        " highlight current line
+highlight CursorLine          guibg=#003853 ctermbg=8  gui=none cterm=none
 "下面两行是有次vim出问题，每次打开都有按下Enter时设置的，好像没啥用
 set shortmess=a
 set cmdheight=2
@@ -89,7 +103,7 @@ filetype indent on
 "显示当前的行号(相对)：
 set number
 set relativenumber
-""set ruler
+"set ruler 有自定义状态栏后，标尺不再需要
 ""autocmd InsertEnter * :set norelativenumber "插入模式下撤下相对行号
 ""autocmd InsertLeave * :set relativenumber   "普通模式下加上相对行号
 
@@ -107,9 +121,9 @@ set showcmd
 set showmode
 set autoindent
 
-set showmatch " 高亮显示匹配的括号
 set incsearch " 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
 set hlsearch "高亮搜索结果
+set autoread		" auto read when file is changed from outside
 
 "显示行尾多余空格与tab符号
 set listchars=tab:»-,trail:■
@@ -278,7 +292,6 @@ autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
 "==============================================================================================="
 "vundle插件管理{{{
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
-set nocompatible              " 去除VI一致性,必须要添加
 filetype off                  " 必须要添加
 
 " 设置包括vundle和初始化相关的runtime path
@@ -484,12 +497,12 @@ let NERDTreeShowLineNumbers = 1
 let NERDTreeAutoCenter = 1
 "自动打开NERDTree
 "autocmd vimenter * NERDTree
+
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
-
 call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
