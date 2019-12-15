@@ -48,6 +48,8 @@ hi User4 cterm=None ctermfg=16 ctermbg=33
 hi User5 cterm=None ctermfg=11 ctermbg=240
 " }}}
 "==============================================================================================="
+"设置F9进入粘贴模式
+set pastetoggle=<F9>
 "基础设置{{{
 syntax enable
 " 去除VI一致性,必须要添加
