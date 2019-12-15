@@ -48,12 +48,12 @@ hi User4 cterm=None ctermfg=16 ctermbg=33
 hi User5 cterm=None ctermfg=11 ctermbg=240
 " }}}
 "==============================================================================================="
-"设置F9进入粘贴模式
-set pastetoggle=<F9>
 "基础设置{{{
 syntax enable
 " 去除VI一致性,必须要添加
 set nocompatible
+"激活/取消paste模式，粘贴出现自动缩进时用
+set pastetoggle=<F9>
 " 解决插入模式下delete/backspce键失效问题(Mac用户)
 set backspace=2
 set autoread		" auto read when file is changed from outside
@@ -116,6 +116,7 @@ set history=1000
 set wildmenu
 set wildmode=longest:list,full
 
+set nobackup		" no *~ backup files
 set noswapfile " 不要生成swap文件，当buffer被丢弃的时候隐藏它
 
 "这三个好像没啥效果，默认就开着？先放这反正不碍事
@@ -151,6 +152,7 @@ set smartindent
 set ignorecase
 set smartcase
 set infercase
+set smarttab		" insert tabs on the start of a line according to context
 
 "设置文件间复制粘贴，访问系统剪切板(这个还是算了，会托慢Vim反应速度）
 "set clipboard=unnamedplus
