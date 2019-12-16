@@ -47,15 +47,21 @@ hi User3 cterm=bold ctermfg=15 ctermbg=9
 hi User4 cterm=None ctermfg=16 ctermbg=33
 hi User5 cterm=None ctermfg=11 ctermbg=240
 " }}}
-"==============================================================================================="
+"=========================================================================="
 "基础设置{{{
-syntax enable
+syntax on
+"Automatically enable mouse usage
+set mouse=a
+"Hide the mouse cursor while typing
+set mousehide
+
 " 去除VI一致性,必须要添加
 set nocompatible
 "激活/取消paste模式，粘贴出现自动缩进时用
 set pastetoggle=<F9>
 " 解决插入模式下delete/backspce键失效问题(Mac用户)
 set backspace=2
+
 set autoread		" auto read when file is changed from outside
 set showmatch " 高亮显示匹配的括号
 set showmode		" Show current mode
@@ -63,14 +69,17 @@ set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
 set wildmenu            " wild char completion menu
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
+
 "外观设置
 set background=dark
 set t_Co=256          " 256 color mode
-set cursorline        " highlight current line
-highlight CursorLine          guibg=#003853 ctermbg=8  gui=none cterm=none
+set cursorline        " 显示cursorline但最好不要高亮，容易把其他高亮覆盖掉
 "下面两行是有次vim出问题，每次打开都有按下Enter时设置的，好像没啥用
-set shortmess=a
+set shortmess=filmnrxoOtT       " Abbrev. of messages (avoids 'hit enter')
 set cmdheight=2
+
+ " the cursor can be positioned where there is no actual character
+set virtualedit=all
 "让隐藏字符完全隐藏,好像是哪个插件要设置的（Snippets？)
 set conceallevel=2
 "不自动分行
@@ -120,9 +129,9 @@ set nobackup		" no *~ backup files
 set noswapfile " 不要生成swap文件，当buffer被丢弃的时候隐藏它
 
 "这三个好像没啥效果，默认就开着？先放这反正不碍事
-set showcmd
-set showmode
-set autoindent
+set showcmd     " Show partial commands in status line and selected characters/lines in visual mode
+set showmode     " Display the current mode
+set autoindent   " Indent at the same level of the previous line
 
 set incsearch " 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
 set hlsearch "高亮搜索结果
@@ -164,7 +173,7 @@ set completeopt+=noinsert
 "Ctrl+Space单词补全"
 inoremap <C-@> <C-x><C-k>
 "}}}
-"==============================================================================================="
+"=========================================================================="
 "快捷键相关{{{
 "定义全局<Leader>
 let mapleader = ","
@@ -223,7 +232,7 @@ nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 "删除括号内的文字dp,同上，没啥太多用
 onoremap p i(
 "}}}
-"==============================================================================================="
+"=========================================================================="
 " markdown settings---------------------- {{{
 " 计算某个pattern从startline到光标处出现的次数
 function! Count(pattern,startline)
@@ -293,7 +302,7 @@ autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
 "空行
 autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
 " }}}
-"==============================================================================================="
+"=========================================================================="
 "vundle插件管理{{{
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
 filetype off                  " 必须要添加
@@ -368,7 +377,7 @@ filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和
 " 查阅 :h vundle 获取更多细节和wiki以及FAQ
 " 将你自己对非插件片段放在这行之后
 " }}}
-"==============================================================================================="
+"=========================================================================="
 " markdown-preview settings{{{
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
@@ -450,7 +459,7 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
 "}}}
-"==============================================================================================="
+"=========================================================================="
 "其他插件设置{{{
 "显示缩进,自定义颜色
 let g:indent_guides_enable_on_vim_startup = 1

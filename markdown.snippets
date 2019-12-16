@@ -185,7 +185,7 @@ snippet \\ "Fraction" i
 endsnippet 
 
 context "math()"
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)\\' "Fraction" wrA
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)\\' "Fraction" wr
 \\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
 
@@ -226,13 +226,23 @@ snippet * "times" i
 endsnippet
 
 context "math()"
-snippet dot "dot" iA
+snippet dot "dot" i
 \\cdot
 endsnippet
 
 context "math()"
 snippet ~= "~=" iA
 \\approx
+endsnippet
+
+context "math()"
+snippet dp "partial" i
+\\partial 
+endsnippet
+
+context "math()"
+snippet d "mathrm d" i
+\\mathrm{d} 
 endsnippet
 #}}}
 #=================================================================================================
