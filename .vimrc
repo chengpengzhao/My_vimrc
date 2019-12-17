@@ -61,12 +61,11 @@ set nocompatible
 set pastetoggle=<F9>
 " 解决插入模式下delete/backspce键失效问题(Mac用户)
 set backspace=2
-
+"将工作目录自动切换到正在编辑的文件的目录。
+set autochdir
 set autoread		" auto read when file is changed from outside
 set showmatch " 高亮显示匹配的括号
 set showmode		" Show current mode
-set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
-set wildmenu            " wild char completion menu
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
@@ -82,7 +81,7 @@ set cmdheight=2
 set virtualedit=all
 "让隐藏字符完全隐藏,好像是哪个插件要设置的（Snippets？)
 set conceallevel=2
-"不自动分行
+"不自动分行(但可以分行显示）
 set wrap
 set textwidth=0
 "切换是否拼写检查,markdown默认开启，F3切换
@@ -106,6 +105,8 @@ set foldmethod=marker
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,gbk,latin1
+set langmenu=zh_CN.UTF-8
+set helplang=cn
 "设置数字为十进制，防止<C-a><C-x>修改时出现不希望的结果
 set nrformats=
 "依文件类型设置自动缩进
@@ -122,16 +123,16 @@ set relativenumber
 set history=1000
 
 "命令模式下，底部操作指令按下 Tab 键自动补全。第一次按下 Tab，会显示所有匹配的操作指令的清单；第二次按下 Tab，会依次选择各个指令。
-set wildmenu
+set wildmenu        " wild char completion menu
 set wildmode=longest:list,full
-
+set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
 set nobackup		" no *~ backup files
 set noswapfile " 不要生成swap文件，当buffer被丢弃的时候隐藏它
-
+"保留撤销历史，使得重新打开一个文件，可以撤销上一次编辑时的操作。
+set undofile
 "这三个好像没啥效果，默认就开着？先放这反正不碍事
 set showcmd     " Show partial commands in status line and selected characters/lines in visual mode
 set showmode     " Display the current mode
-set autoindent   " Indent at the same level of the previous line
 
 set incsearch " 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
 set hlsearch "高亮搜索结果
@@ -146,23 +147,28 @@ set expandtab
 "设置编辑时制表符占用空格数
 set tabstop=4
 "tab转空格
-set expandtab
+"set expandtab
 "设置格式化时制表符占用空格数
 set shiftwidth=4
 "让 vim 把连续数量的空格视为一个制表符
 set softtabstop=4
-
 "开启自动缩进
-set ai
+set autoindent   " Indent at the same level of the previous line
 "开启智能对齐
 set smartindent
-
+"设置命令行的高度
+set cmdheight=1
 "设置大小写不敏感/当前为大写字母时调整为敏感/自动改动字母大小写
 set ignorecase
 set smartcase
 set infercase
 set smarttab		" insert tabs on the start of a line according to context
 
+"虽然不知道有啥用但help里面推荐设置默认的magic
+set magic
+
+"在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
+set lazyredraw
 "设置文件间复制粘贴，访问系统剪切板(这个还是算了，会托慢Vim反应速度）
 "set clipboard=unnamedplus
 
