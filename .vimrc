@@ -54,6 +54,8 @@ syntax on
 set mouse=a
 "Hide the mouse cursor while typing
 set mousehide
+"有时候在windows下编写的python脚本在linux下不能运行，因为^M的原因,设置格式为unix能够自动清除多余的^M
+set fileformat=unix
 
 " 去除VI一致性,必须要添加
 set nocompatible
@@ -155,7 +157,7 @@ set softtabstop=4
 "开启自动缩进
 set autoindent   " Indent at the same level of the previous line
 "开启智能对齐
-set smartindent
+"set smartindent
 "设置命令行的高度
 set cmdheight=1
 "设置大小写不敏感/当前为大写字母时调整为敏感/自动改动字母大小写
