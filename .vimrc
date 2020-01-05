@@ -49,6 +49,12 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 " }}}
 "=========================================================================="
 "基础设置{{{
+if exists('$SHELL')
+    set shell=$SHELL
+else
+    set shell=/bin/sh
+endif
+
 syntax on
 "Automatically enable mouse usage
 set mouse=a
@@ -62,12 +68,12 @@ set nocompatible
 "激活/取消paste模式，粘贴出现自动缩进时用
 set pastetoggle=<F9>
 " 解决插入模式下delete/backspce键失效问题(Mac用户)
-set backspace=2
+set backspace=indent,eol,start
 "将工作目录自动切换到正在编辑的文件的目录。
 set autochdir
-set autoread		" auto read when file is changed from outside
+set autoread        " auto read when file is changed from outside
 set showmatch " 高亮显示匹配的括号
-set showmode		" Show current mode
+set showmode        " Show current mode
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
@@ -80,7 +86,8 @@ set shortmess=filmnrxoOtT       " Abbrev. of messages (avoids 'hit enter')
 set cmdheight=2
 
  " the cursor can be positioned where there is no actual character
-set virtualedit=all
+"set virtualedit=all
+set virtualedit=block
 "让隐藏字符完全隐藏,好像是哪个插件要设置的（Snippets？)
 set conceallevel=2
 "不自动分行(但可以分行显示）
@@ -94,9 +101,9 @@ set spelllang=en_us,en_gb,cjk
 nnoremap [ [s
 nnoremap ] ]s
 "来自那位用Vim上课记笔记的大佬，insert模式<C-o>自动更正前一个单词
-"zg 	把当前单词添加到拼写文件中    
-"zw 	把当前单词从拼写文件中删除    
-"z= 	为当前单词提供更正建议    
+"zg     把当前单词添加到拼写文件中    
+"zw     把当前单词从拼写文件中删除    
+"z=     为当前单词提供更正建议    
 "插入模式下使用 <Ctrl-x>-s 获得的自动补全单词列表 
 inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 "<c-g>u的含义 ：don't break undo with next left/right cursor *i_CTRL-G_U* movement (but only if the cursor stays within same the line)
@@ -109,12 +116,14 @@ set termencoding=utf-8
 set fileencodings=utf-8,gbk,latin1
 set langmenu=zh_CN.UTF-8
 set helplang=cn
+set ttyfast        "a fast terminal connection.
 "设置数字为十进制，防止<C-a><C-x>修改时出现不希望的结果
 set nrformats=
 "依文件类型设置自动缩进
 filetype plugin on
 filetype indent on
 "显示当前的行号(相对)：
+set ruler
 set number
 set relativenumber
 "set ruler 有自定义状态栏后，标尺不再需要
@@ -127,8 +136,8 @@ set history=1000
 "命令模式下，底部操作指令按下 Tab 键自动补全。第一次按下 Tab，会显示所有匹配的操作指令的清单；第二次按下 Tab，会依次选择各个指令。
 set wildmenu        " wild char completion menu
 set wildmode=longest:list,full
-set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
-set nobackup		" no *~ backup files
+set wildchar=<TAB>  " start wild expansion in the command line using <TAB>
+set nobackup        " no *~ backup files
 set noswapfile " 不要生成swap文件，当buffer被丢弃的时候隐藏它
 "保留撤销历史，使得重新打开一个文件，可以撤销上一次编辑时的操作。
 set undofile
@@ -138,7 +147,11 @@ set showmode     " Display the current mode
 
 set incsearch " 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
 set hlsearch "高亮搜索结果
-set autoread		" auto read when file is changed from outside
+set autoread        " auto read when file is changed from outside
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 "显示行尾多余空格与tab符号
 set listchars=tab:»-,trail:■
@@ -152,8 +165,8 @@ set tabstop=4
 "set expandtab
 "设置格式化时制表符占用空格数
 set shiftwidth=4
-"让 vim 把连续数量的空格视为一个制表符
-set softtabstop=4
+" 关闭softtabstop 永远不要将空格和tab混合输入
+set softtabstop=0
 "开启自动缩进
 set autoindent   " Indent at the same level of the previous line
 "开启智能对齐
@@ -164,7 +177,7 @@ set cmdheight=1
 set ignorecase
 set smartcase
 set infercase
-set smarttab		" insert tabs on the start of a line according to context
+set smarttab        " insert tabs on the start of a line according to context
 
 "虽然不知道有啥用但help里面推荐设置默认的magic
 set magic
@@ -377,7 +390,7 @@ filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和
 "
 " 常用的命令
 " :PluginList       - 列出所有已配置的插件
-" :PluginInstall  	 - 安装插件,追加 `!` 用以更新或使用 :PluginUpdate
+" :PluginInstall     - 安装插件,追加 `!` 用以更新或使用 :PluginUpdate
 " :PluginSearch foo - 搜索 foo ; 追加 `!` 清除本地缓存
 " :PluginClean      - 清除未使用插件,需要确认; 追加 `!` 自动批准移除未使用插件
 "通过命令行直接安装 vim +PluginInstall +qall
@@ -443,16 +456,7 @@ let g:mkdp_browserfunc = ''
 "   relative: mean the cursor position alway show at the relative positon of the preview page
 " hide_yaml_meta: if hide yaml metadata, default is 1
 " sequence_diagrams: js-sequence-diagrams options
-let g:mkdp_preview_options = {
-            \ 'mkit': {},
-            \ 'katex': {},
-            \ 'uml': {},
-            \ 'maid': {},
-            \ 'disable_sync_scroll': 0,
-            \ 'sync_scroll_type': 'middle',
-            \ 'hide_yaml_meta': 1,
-            \ 'sequence_diagrams': {}
-            \ }
+let g:mkdp_preview_options = { 'mkit': {}, 'katex': {}, 'uml': {}, 'maid': {}, 'disable_sync_scroll': 0, 'sync_scroll_type': 'middle', 'hide_yaml_meta': 1, 'sequence_diagrams': {} }
 
 " use a custom markdown style must be absolute path
 let g:mkdp_markdown_css = ''
@@ -511,8 +515,7 @@ let NERDTreeQuitOnOpen = 1
 "显示隐藏文件
 "let g:NERDTreeShowHidden = 1
 "忽略特定文件和目录
-let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
-            \ '\.o$', '\.so$', '\.egg$', '^\.git$', '__pycache__', '\.DS_Store' ]
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '__pycache__', '\.DS_Store' ]
 "显示行号
 let NERDTreeShowLineNumbers = 1
 let NERDTreeAutoCenter = 1
@@ -537,3 +540,61 @@ call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+"开启自动缩进
+set autoindent   " Indent at the same level of the previous line
+"开启智能对齐
+"set smartindent
+"设置命令行的高度
+set cmdheight=1
+"设置大小写不敏感/当前为大写字母时调整为敏感/自动改动字母大小写
+set ignorecase
+set smartcase
+set infercase
+set smarttab        " insert tabs on the start of a line according to context
+
+"虽然不知道有啥用但help里面推荐设置默认的magic
+set magic
+
+"在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
+set lazyredraw
+"设置文件间复制粘贴，访问系统剪切板(这个还是算了，会托慢Vim反应速度）
+"set clipboard=unnamedplus
+
+"单词自动补全功能,写博客时用,自定义词典可参考网上教程
+""set dictionary+=/usr/share/dict/american-english
+set dictionary+=/usr/share/dict/engspchk-dict
+set completeopt+=noinsert
+"Ctrl+Space单词补全"
+inoremap <C-@> <C-x><C-k>
+"}}}
+"=========================================================================="
+"" Autocmd Rules{{{
+
+"" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
+augroup vimrc-sync-fromstart
+  autocmd!
+  autocmd BufEnter * :syntax sync maxlines=200
+augroup END
+
+"" Remember cursor position
+augroup vimrc-remember-cursor-position
+  autocmd!
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
+
+"" txt
+augroup vimrc-wrapping
+  autocmd!
+  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+augroup END
+
+"" make/cmake
+augroup vimrc-make-cmake
+  autocmd!
+  autocmd FileType make setlocal noexpandtab
+  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+augroup END
+
+set autoread
+"}}}
+"=========================================================================="
