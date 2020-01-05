@@ -540,32 +540,6 @@ call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
-"开启自动缩进
-set autoindent   " Indent at the same level of the previous line
-"开启智能对齐
-"set smartindent
-"设置命令行的高度
-set cmdheight=1
-"设置大小写不敏感/当前为大写字母时调整为敏感/自动改动字母大小写
-set ignorecase
-set smartcase
-set infercase
-set smarttab        " insert tabs on the start of a line according to context
-
-"虽然不知道有啥用但help里面推荐设置默认的magic
-set magic
-
-"在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
-set lazyredraw
-"设置文件间复制粘贴，访问系统剪切板(这个还是算了，会托慢Vim反应速度）
-"set clipboard=unnamedplus
-
-"单词自动补全功能,写博客时用,自定义词典可参考网上教程
-""set dictionary+=/usr/share/dict/american-english
-set dictionary+=/usr/share/dict/engspchk-dict
-set completeopt+=noinsert
-"Ctrl+Space单词补全"
-inoremap <C-@> <C-x><C-k>
 "}}}
 "=========================================================================="
 "" Autocmd Rules{{{
