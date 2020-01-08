@@ -67,6 +67,11 @@ silent! colorscheme molokai
 "开启高亮
 syntax on
 
+"允许针对每个文件进行文件级别的设置
+"用法举例：# vim:set et sw=4 ts=4:
+set modeline
+set modelines=10
+
 " 光标样式
 set gcr=a:blinkon0
 
