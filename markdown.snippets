@@ -1,12 +1,12 @@
 # vim:set foldenable foldmethod=marker:
-# Functions{{{
+
 # 定义math区域，snippets只在该区域生效，要求Vim能识别当前区域（安装Vim-markdown等插件）
 # i 表示片段可在句中被触发。默认是只有在前面有多个空格或者在行首时才会被触发。
 # A 表示片段会被自动触发
 # w 表示片段只会在关键词为单独单词的情况下被触发
 # r 表示关键词使用正则表达式。正则表达式必须用 两个引号' '包围
 # b 表示只有在一行的开头才会被触发
-
+# Functions{{{
 global !p
 texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C',
 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS',
@@ -85,8 +85,6 @@ endsnippet
 #=================================================================================================
 # LaTeX公式部分：
 
-
-
 # *****************************************************************************
 # 上下标{{{
 
@@ -107,6 +105,19 @@ context "math()"
 snippet '([^\s])\^([^\s\{\}])' "superscript" wrA
 `!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`$1}
 endsnippet
+
+# 平均数（上方一横）
+context "math()"
+snippet 'avg\((.*)\)' "average" wrA
+\\overline{`!p snip.rv = match.group(1)`}
+endsnippet
+
+# 矢量符号
+context "math()"
+snippet 'vec\((.*)\)' "vector" wrA
+\\boldsymbol{`!p snip.rv = match.group(1)`}
+endsnippet
+
 #}}}
 # *****************************************************************************
 # 希腊字母{{{
@@ -133,6 +144,13 @@ endsnippet
 context "math()"
 snippet '([Dd])el' "delta" wr
 \\`!p snip.rv = match.group(1)`elta
+endsnippet
+
+# Δ*Δ
+context "math()"
+context "math()"
+snippet 'nab' "nabla" wr
+\\nabla
 endsnippet
 
 # Ε ε
@@ -256,12 +274,17 @@ snippet '([Oo])me' "omega" wr
 endsnippet
 #========================}}}
 # *****************************************************************************
-# 常用运算符{{{1
+# 常用运算符{{{
 
 # 累加符号
 context "math()"
 snippet sum "sum" w
-\sum_{ ${1:n=${2:1}} }^{${3:\infty}} ${4:a_n z^n}
+\sum_{ ${1:} }^{ ${2:} } ${3:}
+endsnippet
+# 连乘符号
+context "math()"
+snippet prod "prod" w
+\prod_{ ${1:} }^{ ${2:} } ${3:}
 endsnippet
 # *****************************************************************************
 #分号
@@ -270,13 +293,13 @@ snippet \\ "Fraction" i
 \\frac{$1}{$2}$0
 endsnippet
 # *****************************************************************************
-# 括号(加上left right使括号更美观)
+# 括号(加上left right使括号更美观，要求前面有一个空格)
 context "math()"
-snippet '(\(|\[|\{)' "left beackets" irA
+snippet '\s(\(|\[|\{)' "left beackets" irA
 \\left`!p snip.rv = match.group(1)`
 endsnippet 
 context "math()"
-snippet '(\)|\]|\})' "right beackets" irA
+snippet '\s(\)|\]|\})' "right beackets" irA
 \\right`!p snip.rv = match.group(1)`
 endsnippet 
 # *****************************************************************************
@@ -286,6 +309,15 @@ snippet ali "Aligned" i
 \begin{aligned}
     ${1:${VISUAL}}
 \end{aligned}
+endsnippet
+
+# 矩阵 &对齐 \\换行
+snippet matrix "matrix" i
+\left[
+\begin{matrix}
+    ${1:${VISUAL}}
+\end{matrix}
+\right]
 endsnippet
 # *****************************************************************************
 #根号
@@ -315,7 +347,7 @@ snippet ~= "≈" iA
 \\approx
 endsnippet
 # *****************************************************************************
-# 
+# 乘除积分微分
 context "math()"
 snippet * "times" i
 \\times
@@ -327,33 +359,51 @@ snippet dot "dot" i
 endsnippet
 
 context "math()"
+snippet deg "degree" i
+^{\\circ}
+endsnippet
+# 偏导符号
+context "math()"
 snippet dp "partial" i
 \\partial 
 endsnippet
 
-#context "math()"
-#snippet d "mathrm d" i
-#\\mathrm{d}
-#endsnippet
+# 导数符号以及其他非斜体
+context "math()"
+snippet `([a-zA-Z])M` "mathrm xxx" ir
+\\mathrm{`!p snip.rv = match.group(1)`}
+endsnippet
+
+# 积分(o表示封闭积分)
+context "math()"
+snippet `(o?i+)nt` "integerate" ir
+\\`!p snip.rv = match.group(1)`nt_{ ${1:} }^{ ${2:} } ${3:}
+endsnippet
 #}}}
 # *****************************************************************************
+# 标准函数{{{
 
+# 基本三角函数
+context "math()"
+snippet `((?:arc)?(?:(?:cosh?)|(?:sinh?)|(?:coth?)|(?:tanh?)))` "三角函数" irA
+\\`!p snip.rv = match.group(1)`
+endsnippet
 
-
-
-
-
-
-
-
-
-
+# 其他
+context "math()"
+snippet `((?:(?:lg)|(?:ln)|(?:log)|(?:sec)|(?:csc)|(?:max)|(?:min)))` "标准函数" irA
+\\`!p snip.rv = match.group(1)`
+endsnippet
+#}}}
 
 
 
 
 #=================================================================================================
+# 其他
+# {{{
 
+# 插入一个box
 snippet box "Box"
 `!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
 │ $1 │
@@ -361,32 +411,7 @@ snippet box "Box"
 $0
 endsnippet
 
-
-snippet beg "begin{} / end{}" bA
-\begin{$1}
-    $0
-\end{$1}
-endsnippet
-
-
-
-
-
-priority 1000
-snippet '^.*\)\\' "() Fraction" wrA
-`!p
-stripped = match.string[:-1]
-depth = 0
-i = len(stripped) - 1
-while True:
-    if stripped[i] == ')': depth += 1
-    if stripped[i] == '(': depth -= 1
-    if depth == 0: break;
-    i -= 1
-snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
-`{$1}$0
-endsnippet
-
+# 插入一个python脚本区域，内部写算式可以直接求得值
 snippet sympy "sympy block " w
 sympy $1 sympy$0
 endsnippet
@@ -405,30 +430,4 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
     .replace('}', ')') + ')')
 `
 endsnippet
-
-
-priority 10
-context "math()"
-snippet "bar" "bar" riA
-\overline{$1}$0
-endsnippet
-
-priority 100
-snippet "([a-zA-Z])bar" "bar" riA
-\overline{`!p snip.rv=match.group(1)`}
-endsnippet
-
-priority 10
-context "math()"
-snippet "hat" "hat" riA
-\hat{$1}$0
-endsnippet
-
-priority 100
-snippet "([a-zA-Z])hat" "hat" riA
-\hat{`!p snip.rv=match.group(1)`}
-endsnippet
-
-snippet "(\\?\w+)(,\.|\.,)" "Vector postfix" riA
-\vec{`!p snip.rv=match.group(1)`}
-endsnippet
+#}}}
