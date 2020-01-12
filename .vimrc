@@ -162,7 +162,7 @@ inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 "设置标记，三个{定义为标记，可用za折叠展开
 set foldenable
 set foldmethod=marker
-
+autocmd FileType c,cpp,python set foldmethod=indent
 "解决乱码问题
 set encoding=utf-8
 set termencoding=utf-8
@@ -252,7 +252,7 @@ set smartcase
 set infercase
 set smarttab        " insert tabs on the start of a line according to context
 
-"虽然不知道有啥用但help里面推荐设置默认的magic
+"虽然不知道有啥用但help里面推荐设置默认的magic(正则表达式相关)
 set magic
 
 "在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
@@ -277,7 +277,7 @@ inoremap <C-@> <C-x><C-k>
 let mapleader = ","
 
 "设置ESC切换搜索结果是否高亮
-"noremap <Esc> :set hlsearch!<CR><Esc>
+cnoremap hl  set hlsearch!
 
 "buffer前后跳转
 noremap <Leader>j :bnext<CR>
@@ -461,8 +461,8 @@ Plug 'iamcco/markdown-preview.nvim'
 "用的自己fork的版本，做了点小改动让界面看起来更舒服
 Plug 'chengpengzhao/vim-OpenFoam-syntax'
 
-"高亮显示行头缩进
-Plug 'nathanaelkane/vim-indent-guides'
+"显示缩进
+Plug 'Yggdroot/indentLine'
 "超级强大的插件，两个配合使用；第一个为引擎，第二个为snippets集合，自定义功能很棒！
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -576,11 +576,11 @@ let g:mkdp_page_title = '「${name}」'
 "其他插件设置{{{
 
 "*****************************************************************************
-"indent显示缩进,自定义颜色
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0 
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+" indentline
+
+let g:indentLine_enabled = 1
+let g:indentLine_color_term = 202
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 "*****************************************************************************
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -696,11 +696,11 @@ noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 "" Functions{{{
 "*****************************************************************************
 if !exists('*s:setupWrapping')
-  function s:setupWrapping()
-    set wrap
-    set wm=2
-    set textwidth=79
-  endfunction
+    function s:setupWrapping()
+        set wrap
+        set wm=2
+        set textwidth=79
+    endfunction
 endif
 "*****************************************************************************
 "" Autocmd Rules
@@ -782,9 +782,6 @@ augroup vimrc-python
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
-" indentline if等语句的代码块连接线
-let g:indentLine_color_term = 239
-let g:indentLine_char = '¦' " 设置连接线的形状 , ¦, ┆, │, ⎸, or ▏
 
 "}}}
 "=========================================================================="
