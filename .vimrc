@@ -162,7 +162,7 @@ inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 "设置标记，三个{定义为标记，可用za折叠展开
 set foldenable
 set foldmethod=marker
-autocmd FileType c,cpp,python set foldmethod=indent
+autocmd FileType c,cpp,python set foldmethod=indent nofoldenable
 "解决乱码问题
 set encoding=utf-8
 set termencoding=utf-8
@@ -772,16 +772,6 @@ augroup vimrc-javascript
   autocmd!
   autocmd FileType javascript setl tabstop=4|setl shiftwidth=4|setl expandtab softtabstop=4
 augroup END
-
-" python
-" vim-python
-augroup vimrc-python
-  autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
-
 
 "}}}
 "=========================================================================="
