@@ -277,11 +277,16 @@ inoremap <C-@> <C-x><C-k>
 let mapleader = ","
 
 "设置ESC切换搜索结果是否高亮
-noremap <Esc> :set hlsearch!<CR><Esc>
+"noremap <Esc> :set hlsearch!<CR><Esc>
 
 "buffer前后跳转
 noremap <Leader>j :bnext<CR>
 noremap <Leader>k :bpre<CR>
+
+"Tabs，各窗口间切换
+nnoremap <Tab>j gt
+nnoremap <Tab>k gT
+nnoremap <silent> <S-t> :tabnew<CR>
 
 "普通模式用<C-y>复制到系统剪切板，<C-y>y也可用
 noremap <C-y> "+y
@@ -339,12 +344,6 @@ cnoremap sw w !sudo tee >/dev/null %
 "快速编辑vim配置文件,在其他文件界面里呼出配置文件，并方便地source以立即适用改动
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-
-"给单词加双引号,好像是vimscript教程里的一个命令，用处不太大
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-
-"删除括号内的文字dp,同上，没啥太多用
-onoremap p i(
 
 "}}}
 "=========================================================================="
