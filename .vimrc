@@ -8,7 +8,7 @@ function! HighlightSearch()
     if &hls
         return 'H'
     else
-        return ''
+        return 'noH'
     endif
 endfunction
 "文件大小计算
@@ -30,7 +30,7 @@ function! File_size(f)
 endfunction
 
 "状态栏格式设置"
-set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\ %{&spelllang}\\|\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
 "上面是总的设置，位置可能有所变化
 
 "文件位置
@@ -56,54 +56,10 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 "=========================================================================="
 "基础设置{{{
 
-"加入一段配置使得Vim能够映射Alt键 (Alt用M表示，如Alt+x = <M-x>)
-function! Terminal_MetaMode(mode)
-    set ttimeout
-    if $TMUX != ''
-        set ttimeoutlen=30
-    elseif &ttimeoutlen > 80 || &ttimeoutlen <= 0
-        set ttimeoutlen=80
-    endif
-    if has('nvim') || has('gui_running')
-        return
-    endif
-    function! s:metacode(mode, key)
-        if a:mode == 0
-            exec "set <M-".a:key.">=\e".a:key
-        else
-            exec "set <M-".a:key.">=\e]{0}".a:key."~"
-        endif
-    endfunc
-    for i in range(10)
-        call s:metacode(a:mode, nr2char(char2nr('0') + i))
-    endfor
-    for i in range(26)
-        call s:metacode(a:mode, nr2char(char2nr('a') + i))
-        call s:metacode(a:mode, nr2char(char2nr('A') + i))
-    endfor
-    if a:mode != 0
-        for c in [',', '.', '/', ';', '[', ']', '{', '}']
-            call s:metacode(a:mode, c)
-        endfor
-        for c in ['?', ':', '-', '_']
-            call s:metacode(a:mode, c)
-        endfor
-    else
-        for c in [',', '.', '/', ';', '{', '}']
-            call s:metacode(a:mode, c)
-        endfor
-        for c in ['?', ':', '-', '_']
-            call s:metacode(a:mode, c)
-        endfor
-    endif
-endfunc
-
-call Terminal_MetaMode(0)
-
 "设置功能键超时检测为 50 毫秒，加快vim速度
 set ttimeout ttimeoutlen=50
 
-"ctags 配置
+"ctags 配置，使用：输入 ctags -R生成tag文件
 set tags=./.tags;,.tags
 
 if exists('$SHELL')
@@ -137,7 +93,7 @@ set mousehide
 "有时候在windows下编写的python脚本在linux下不能运行，因为^M的原因,设置格式为unix能够自动清除多余的^M
 set fileformat=unix
 
-"Enable hidden buffers
+"Enable hidden buffers, 不保存修改也能跳转buffers
 set hidden
 
 " 去除VI一致性,必须要添加
@@ -158,8 +114,8 @@ set showmatch " 高亮显示匹配的括号
 
 set showmode        " Show current mode
 
-" auto reload vimrc when editing it
-autocmd! bufwritepost .vimrc source ~/.vimrc
+"让vimrc配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 "Right mouse button pops up a menu
 set mousemodel=popup
@@ -320,6 +276,13 @@ inoremap <C-@> <C-x><C-k>
 "定义全局<Leader>
 let mapleader = ","
 
+"设置ESC切换搜索结果是否高亮
+noremap <Esc> :set hlsearch!<CR><Esc>
+
+"buffer前后跳转
+noremap <Leader>j :bnext<CR>
+noremap <Leader>k :bpre<CR>
+
 "普通模式用<C-y>复制到系统剪切板，<C-y>y也可用
 noremap <C-y> "+y
 
@@ -352,12 +315,11 @@ nnoremap  @  @a
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
-"插入模式下移动光标 <C-o>g表示是按屏幕行移动
-inoremap <C-k> <C-o>gk
+"插入模式下移动光标
+inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
-inoremap <C-j> <C-o>gj
-
+inoremap <C-j> <Down>
 "向后删除 *为向前删除，shell通用
 inoremap <C-d> <Delete>
 
@@ -419,7 +381,8 @@ autocmd BufNewFile,BufRead *.Md set filetype=markdown
 let maplocalleader = "/"
 
 "寻找标记，实现光标快速跳转
-autocmd Filetype markdown inoremap <M-/> <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
+"其中/实际上为Alt+/键的组合，输入方式为先按<C-v>，再Alt-/
+autocmd Filetype markdown inoremap / <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
 
 "h1~h5标题
 autocmd Filetype markdown inoremap <localLeader>1 <ESC>o#<Space><Enter><++><Esc>kA
@@ -526,7 +489,9 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-
+"用于高效操作与括号、引号或html、xml标签相关的配对符号(surrounding)
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 
 " Initialize plugin system
 call plug#end()
@@ -638,7 +603,7 @@ let g:vim_markdown_math = 1
 "*****************************************************************************
 "autosave
 let g:auto_save = 1  " enable AutoSave on Vim startup
-let g:auto_save_events = ["InsertLeave"]
+let g:auto_save_events = ["CursorHold"] " 改为普通模式下光标updatetime时间不动时保存一次，默认4000ms
 "*****************************************************************************
 "NERDTree
 
@@ -824,3 +789,4 @@ let g:indentLine_char = '¦' " 设置连接线的形状 , ¦, ┆, │, ⎸, or 
 
 "}}}
 "=========================================================================="
+
