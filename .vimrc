@@ -56,6 +56,56 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 "=========================================================================="
 "基础设置{{{
 
+"加入一段配置使得Vim能够映射Alt键 (Alt用M表示，如Alt+x = <M-x>)
+function! Terminal_MetaMode(mode)
+    set ttimeout
+    if $TMUX != ''
+        set ttimeoutlen=30
+    elseif &ttimeoutlen > 80 || &ttimeoutlen <= 0
+        set ttimeoutlen=80
+    endif
+    if has('nvim') || has('gui_running')
+        return
+    endif
+    function! s:metacode(mode, key)
+        if a:mode == 0
+            exec "set <M-".a:key.">=\e".a:key
+        else
+            exec "set <M-".a:key.">=\e]{0}".a:key."~"
+        endif
+    endfunc
+    for i in range(10)
+        call s:metacode(a:mode, nr2char(char2nr('0') + i))
+    endfor
+    for i in range(26)
+        call s:metacode(a:mode, nr2char(char2nr('a') + i))
+        call s:metacode(a:mode, nr2char(char2nr('A') + i))
+    endfor
+    if a:mode != 0
+        for c in [',', '.', '/', ';', '[', ']', '{', '}']
+            call s:metacode(a:mode, c)
+        endfor
+        for c in ['?', ':', '-', '_']
+            call s:metacode(a:mode, c)
+        endfor
+    else
+        for c in [',', '.', '/', ';', '{', '}']
+            call s:metacode(a:mode, c)
+        endfor
+        for c in ['?', ':', '-', '_']
+            call s:metacode(a:mode, c)
+        endfor
+    endif
+endfunc
+
+call Terminal_MetaMode(0)
+
+"设置功能键超时检测为 50 毫秒，加快vim速度
+set ttimeout ttimeoutlen=50
+
+"ctags 配置
+set tags=./.tags;,.tags
+
 if exists('$SHELL')
     set shell=$SHELL
 else
@@ -235,6 +285,8 @@ set autoindent   " Indent at the same level of the previous line
 "开启智能对齐
 set smartindent
 
+"设置使用 C/C++ 语言的自动缩进方式
+set cindent
 "设置命令行的高度
 set cmdheight=1
 
@@ -367,7 +419,7 @@ autocmd BufNewFile,BufRead *.Md set filetype=markdown
 let maplocalleader = "/"
 
 "寻找标记，实现光标快速跳转
-autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
+autocmd Filetype markdown inoremap <M-/> <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
 
 "h1~h5标题
 autocmd Filetype markdown inoremap <localLeader>1 <ESC>o#<Space><Enter><++><Esc>kA
