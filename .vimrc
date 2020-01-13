@@ -58,6 +58,7 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 
 "设置功能键超时检测为 50 毫秒，加快vim速度
 set ttimeout ttimeoutlen=50
+set timeout ttimeoutlen=1000
 
 "ctags 配置，使用：输入 ctags -R生成tag文件
 set tags=./.tags;,.tags
@@ -114,8 +115,9 @@ set showmatch " 高亮显示匹配的括号
 
 set showmode        " Show current mode
 
+"不要开启这项！！！会让vim保存几次后变得贼卡,辣鸡设置一个
 "让vimrc配置变更立即生效
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
+"autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 "Right mouse button pops up a menu
 set mousemodel=popup
@@ -132,7 +134,7 @@ set shortmess=filmnrxoOtT       " Abbrev. of messages (avoids 'hit enter')
 set cmdheight=2
 
  " the cursor can be positioned where there is no actual character
-"set virtualedit=all
+"set virtual edit=all
 set virtualedit=block "还是不让光标位置无限制了
 
 "让隐藏字符完全隐藏,好像是哪个插件要设置的（Snippets？)
@@ -142,7 +144,7 @@ set conceallevel=2
 set wrap
 set textwidth=0
 
-"切换是否拼写检查,markdown默认开启，F3切换
+"切换是否拼写检查,markdown默认开启，Fa切换
 autocmd Filetype markdown setlocal spell
 nnoremap <F3> : setlocal spell!<CR>
 set spelllang=en_us,en_gb,cjk
@@ -150,7 +152,6 @@ set spelllang=en_us,en_gb,cjk
 "方便拼写检查在单词间跳转
 nnoremap [ [s
 nnoremap ] ]s
-
 "来自那位用Vim上课记笔记的大佬，insert模式<C-o>自动更正前一个单词
 "zg     把当前单词添加到拼写文件中    
 "zw     把当前单词从拼写文件中删除    
@@ -268,8 +269,8 @@ set completeopt+=noinsert
 
 "Ctrl+Space单词补全"
 "WSL系统中此快捷键不管用，故换成下面一条
-inoremap <C-@> <C-x><C-k>
-
+"inoremap <C-@> <C-x><C-k>
+inoremap <C-f> <C-x><C-k>
 "}}}
 "=========================================================================="
 "快捷键相关{{{
@@ -285,8 +286,9 @@ noremap <Leader>j :bnext<CR>
 noremap <Leader>k :bpre<CR>
 
 "Tabs，各窗口间切换
-nnoremap <Tab>j gt
-nnoremap <Tab>k gT
+"WSL系统可以使用S-tab切换了，故修改为更方便的快捷键
+nnoremap <Tab> gt
+nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
 
 "普通模式用<C-y>复制到系统剪切板，<C-y>y也可用
@@ -326,10 +328,10 @@ inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-j> <Down>
+
 "向后删除 *为向前删除，shell通用
-"在WSL中发现C-8无法删除了，故增加映射<C-i>
+"在WSL中发现C-8(Backspace)无法删除了,只能用backspace
 inoremap <C-d> <Delete>
-autocmd Filetype markdown inoremap <C-i> <Backspace>
 
 "自动插入完整括号,用了一段时间，加了snippet插件后发现不自动补全比较好
 ""inoremap ( ()<Left>
@@ -337,9 +339,6 @@ autocmd Filetype markdown inoremap <C-i> <Backspace>
 ""inoremap [ []<Left>
 ""inoremap { {}<Left>
 ""inoremap " ""<Left>
-
-"F9允许python3直接执行当前.py文件
-nnoremap <buffer> <F9> :exec '!python3' shellescape(@%, 1)<cr>
 
 "超级用户权限编辑，出现权限不够无法保存时命令模式输入sw即可
 cnoremap sw w !sudo tee >/dev/null %
@@ -382,6 +381,8 @@ autocmd BufNewFile,BufRead *.Md set filetype=markdown
 "定义本地<Leader>键
 let maplocalleader = "/"
 
+"减少手的移动，映射回车为<C-/>
+autocmd Filetype markdown inoremap  <CR>
 "寻找标记，实现光标快速跳转
 "其中/实际上为Alt+/键的组合，输入方式为先按<C-v>，再Alt-/
 autocmd Filetype markdown inoremap / <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
@@ -431,11 +432,12 @@ autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<C
 "插入自动编号的引用
 autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Esc>pA: <++><Esc><C-o>f]a
 
+"WSL下Vim无法直接访问Windows剪切板，故无法自动复制网址,改用snippet实现
 "插入图片，自动复制剪切板网址
-autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
-
-"插入地址，使用前确保剪切板已复制url
-autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
+"autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
+"
+""插入地址，使用前确保剪切板已复制url
+"autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
 
 "分隔线
 autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
@@ -444,7 +446,7 @@ autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
 autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
 
 "空行
-autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
+autocmd Filetype markdown imap <localLeader><CR> <br><Esc>a
 
 " }}}
 "=========================================================================="
