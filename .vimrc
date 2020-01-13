@@ -11,6 +11,16 @@ function! HighlightSearch()
         return 'noH'
     endif
 endfunction
+
+"显示当前是否开启了paste模式
+function! HighlightPaste()
+    if &paste
+        return 'P'
+    else
+        return 'noP'
+    endif
+endfunction
+
 "文件大小计算
 
 function! File_size(f)
@@ -30,7 +40,7 @@ function! File_size(f)
 endfunction
 
 "状态栏格式设置"
-set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\%{HighlightSearch()}\|\%{HighlightPaste()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
 "上面是总的设置，位置可能有所变化
 
 "文件位置
@@ -102,7 +112,11 @@ set nocompatible
 
 "激活/取消paste模式，粘贴出现自动缩进时用
 set pastetoggle=<F9>
+"一般关闭paste模式，该模式下有的map会出问题
+set nopaste
+"改用normal模式下<Leader>p切换paste
 
+"inoremap <C-V> <ESC>:set paste<CR>
 " 解决插入模式下delete/backspce键失效问题(Mac用户)
 set backspace=indent,eol,start
 
@@ -278,6 +292,9 @@ inoremap <C-f> <C-x><C-k>
 "定义全局<Leader>
 let mapleader = ","
 
+"进阶，设置粘贴时开启粘贴完自动关闭
+nmap <Leader>p :setlocal paste! paste?<CR>
+
 "设置ESC切换搜索结果是否高亮
 cnoremap hl  set hlsearch!
 
@@ -430,7 +447,7 @@ autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
 
 "插入自动编号的引用
-autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Esc>pA: <++><Esc><C-o>f]a
+autocmd Filetype markdown inoremap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Esc>pA: <++><Esc><C-o>f]a
 
 "WSL下Vim无法直接访问Windows剪切板，故无法自动复制网址,改用snippet实现
 "插入图片，自动复制剪切板网址
@@ -442,12 +459,13 @@ autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Es
 "分隔线
 autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
 
+"这两个该到snippets中实现，因为用的不是很多
 "空格符号
-autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
-
-"空行
-autocmd Filetype markdown imap <localLeader><CR> <br><Esc>a
-
+"autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
+"
+""空行
+"autocmd Filetype markdown imap <localLeader><CR> <br><Esc>a
+"
 " }}}
 "=========================================================================="
 "vim-plug插件管理{{{
@@ -789,9 +807,13 @@ func! GetSelectedText()
     return result
 endfunc
 "if !has("clipboard") && executable("/mnt/c/Windows/System32/clip.exe")
-noremap <silent><C-C> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>
-noremap <silent><C-X> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>gvx
+"复制
+noremap <silent><C-y> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>
+"剪切
+noremap <silent><C-x> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>gvx
+"粘贴<Ctrl+Shift+v>
 "endif
 " }}}
+"=========================================================================="
 "=========================================================================="
 
