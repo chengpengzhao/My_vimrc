@@ -1,4 +1,4 @@
-"tatus line settings{{{
+"status line settings{{{
 
 "总是显示状态栏"
 set laststatus=2
@@ -267,6 +267,7 @@ set dictionary+=/usr/share/dict/engspchk-dict
 set completeopt+=noinsert
 
 "Ctrl+Space单词补全"
+"WSL系统中此快捷键不管用，故换成下面一条
 inoremap <C-@> <C-x><C-k>
 
 "}}}
@@ -326,7 +327,9 @@ inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-j> <Down>
 "向后删除 *为向前删除，shell通用
+"在WSL中发现C-8无法删除了，故增加映射<C-i>
 inoremap <C-d> <Delete>
+autocmd Filetype markdown inoremap <C-i> <Backspace>
 
 "自动插入完整括号,用了一段时间，加了snippet插件后发现不自动补全比较好
 ""inoremap ( ()<Left>
@@ -456,7 +459,7 @@ call plug#begin('~/.vim/plugged')
 
 
 "markdown实时预览
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'iamcco/markdown-preview.nvim'
 
 "用的自己fork的版本，做了点小改动让界面看起来更舒服
 Plug 'chengpengzhao/vim-OpenFoam-syntax'
@@ -774,5 +777,19 @@ augroup vimrc-javascript
 augroup END
 
 "}}}
+"=========================================================================="
+" WSL设置{{{
+"适配Linux子系统，能够正常和windows复制粘贴文本
+"利用/mnt/c/Windows/System32/clip.exe
+func! GetSelectedText()
+    normal gv"xy
+    let result = getreg("x")
+    return result
+endfunc
+"if !has("clipboard") && executable("/mnt/c/Windows/System32/clip.exe")
+noremap <silent><C-C> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>
+noremap <silent><C-X> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>gvx
+"endif
+" }}}
 "=========================================================================="
 

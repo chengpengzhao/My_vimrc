@@ -30,6 +30,52 @@ def math():
     except StopIteration:
         return False
 endglobal
+
+# 创建markdown table用
+priority -500
+global !p
+# A overkill(dirty) table with automatic alignment feature
+def create_table(snip):
+    # retrieving single line from current string and treat it like tabstops count
+    placeholders_string = snip.buffer[snip.line].strip()
+    rows_amount = int(placeholders_string[0])
+    columns_amount = int(placeholders_string[1])
+    prefix_str = "from vimsnippets import display_width;"
+    # erase current line
+    snip.buffer[snip.line] = ""
+    # create anonymous snippet with expected content and number of tabstops
+    anon_snippet_title = "| "
+    anon_snippet_delimiter = "|"
+    for col in range(1, columns_amount+1):
+        sync_rows = [x*columns_amount+col for x in range(rows_amount+1)]
+        sync_str = ",".join(["t[{0}]".format(x) for x in sync_rows])
+        max_width_str = "max(list(map(display_width, [" + sync_str + "])))"
+        cur_width_str = "display_width(t[" + str(col) + "])"
+        rv_val = "(" + max_width_str + "-" + cur_width_str + ")*' '"
+        anon_snippet_title += "${" + str(col)  + ":head" + str(col)\
+            + "}`!p " + prefix_str + "snip.rv=" + rv_val + "` | "
+        anon_snippet_delimiter += ":`!p " + prefix_str + "snip.rv = "\
+            + max_width_str + "*'-'" + "`-|"
+    anon_snippet_title += "\n"
+    anon_snippet_delimiter += "\n"
+    anon_snippet_body = ""
+    for row in range(1, rows_amount+1):
+        body_row = "| "
+        for col in range(1, columns_amount+1):
+            sync_rows = [x*columns_amount+col for x in range(rows_amount+1)]
+            sync_str = ",".join(["t[{0}]".format(x) for x in sync_rows])
+            max_width_str = "max(list(map(display_width, [" + sync_str + "])))"
+            cur_width_str = "display_width(t[" + str(row*columns_amount+col) + "])"
+            rv_val = "(" + max_width_str + "-" + cur_width_str + ")*' '"
+            placeholder = "R{0}C{1}".format(row, col)
+            body_row += "${" + str(row*columns_amount+col)  + ":" + placeholder\
+                + "}`!p " + prefix_str + "snip.rv=" + rv_val + "` | "
+        body_row += "\n"
+        anon_snippet_body += body_row
+    anon_snippet_table = anon_snippet_title + anon_snippet_delimiter + anon_snippet_body
+    # expand anonymous snippet
+    snip.expand_anon(anon_snippet_table)
+endglobal
 #}}}
 #=================================================================================================
 #写博客用{{{
@@ -80,6 +126,11 @@ endsnippet
 #插入img
 snippet img "Image"
 ![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
+endsnippet
+#插入table
+post_jump "create_table(snip)"
+snippet "tb([1-9][1-9])" "Fancy table" br
+`!p snip.rv = match.group(1)`
 endsnippet
 #}}}
 #=================================================================================================
@@ -431,23 +482,3 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
 `
 endsnippet
 #}}}
-
-
-global !p
-def gen_header(snip):
-    placeholders_string = snip.buffer[snip.line].strip()
-    level = int(placeholders_string[0])
-
-    # erase current line
-    snip.buffer[snip.line] = ""
-    line_content = "#"*level + " ${1:Section Name} " + "#"*level
-    line_content += '\n\n$0'
-
-    snip.expand_anon(line_content)
-endglobal
-
-
-post_jump "gen_header(snip)"
-snippet "h([1-6])" "Markdown header" br
-`!p snip.rv = match.group(1)`
-endsnippet
