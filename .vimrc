@@ -110,13 +110,11 @@ set hidden
 " 去除VI一致性,必须要添加
 set nocompatible
 
-"激活/取消paste模式，粘贴出现自动缩进时用
-set pastetoggle=<F9>
+"激活/取消paste模式，粘贴出现自动缩进时用,按键为Alt-p
+set pastetoggle=p
 "一般关闭paste模式，该模式下有的map会出问题
 set nopaste
-"改用normal模式下<Leader>p切换paste
 
-"inoremap <C-V> <ESC>:set paste<CR>
 " 解决插入模式下delete/backspce键失效问题(Mac用户)
 set backspace=indent,eol,start
 
@@ -291,9 +289,6 @@ inoremap <C-f> <C-x><C-k>
 
 "定义全局<Leader>
 let mapleader = ","
-
-"进阶，设置粘贴时开启粘贴完自动关闭
-nmap <Leader>p :setlocal paste! paste?<CR>
 
 "设置ESC切换搜索结果是否高亮
 cnoremap hl  set hlsearch!
