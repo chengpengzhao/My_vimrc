@@ -431,3 +431,23 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
 `
 endsnippet
 #}}}
+
+
+global !p
+def gen_header(snip):
+    placeholders_string = snip.buffer[snip.line].strip()
+    level = int(placeholders_string[0])
+
+    # erase current line
+    snip.buffer[snip.line] = ""
+    line_content = "#"*level + " ${1:Section Name} " + "#"*level
+    line_content += '\n\n$0'
+
+    snip.expand_anon(line_content)
+endglobal
+
+
+post_jump "gen_header(snip)"
+snippet "h([1-6])" "Markdown header" br
+`!p snip.rv = match.group(1)`
+endsnippet

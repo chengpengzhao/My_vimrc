@@ -456,7 +456,7 @@ call plug#begin('~/.vim/plugged')
 
 
 "markdown实时预览
-Plug 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 "用的自己fork的版本，做了点小改动让界面看起来更舒服
 Plug 'chengpengzhao/vim-OpenFoam-syntax'
