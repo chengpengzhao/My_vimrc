@@ -8,7 +8,7 @@ function! HighlightSearch()
     if &hls
         return 'H'
     else
-        return ''
+        return 'noH'
     endif
 endfunction
 "文件大小计算
@@ -30,7 +30,7 @@ function! File_size(f)
 endfunction
 
 "状态栏格式设置"
-set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\ %{&spelllang}\\|\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\%{HighlightSearch()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
 "上面是总的设置，位置可能有所变化
 
 "文件位置
@@ -55,6 +55,12 @@ hi User5 cterm=None ctermfg=11 ctermbg=240
 " }}}
 "=========================================================================="
 "基础设置{{{
+
+"设置功能键超时检测为 50 毫秒，加快vim速度
+set ttimeout ttimeoutlen=50
+
+"ctags 配置，使用：输入 ctags -R生成tag文件
+set tags=./.tags;,.tags
 
 if exists('$SHELL')
     set shell=$SHELL
@@ -87,7 +93,7 @@ set mousehide
 "有时候在windows下编写的python脚本在linux下不能运行，因为^M的原因,设置格式为unix能够自动清除多余的^M
 set fileformat=unix
 
-"Enable hidden buffers
+"Enable hidden buffers, 不保存修改也能跳转buffers
 set hidden
 
 " 去除VI一致性,必须要添加
@@ -108,8 +114,8 @@ set showmatch " 高亮显示匹配的括号
 
 set showmode        " Show current mode
 
-" auto reload vimrc when editing it
-autocmd! bufwritepost .vimrc source ~/.vimrc
+"让vimrc配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 "Right mouse button pops up a menu
 set mousemodel=popup
@@ -156,7 +162,7 @@ inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 "设置标记，三个{定义为标记，可用za折叠展开
 set foldenable
 set foldmethod=marker
-
+autocmd FileType c,cpp,python set foldmethod=indent nofoldenable
 "解决乱码问题
 set encoding=utf-8
 set termencoding=utf-8
@@ -235,6 +241,8 @@ set autoindent   " Indent at the same level of the previous line
 "开启智能对齐
 set smartindent
 
+"设置使用 C/C++ 语言的自动缩进方式
+set cindent
 "设置命令行的高度
 set cmdheight=1
 
@@ -244,7 +252,7 @@ set smartcase
 set infercase
 set smarttab        " insert tabs on the start of a line according to context
 
-"虽然不知道有啥用但help里面推荐设置默认的magic
+"虽然不知道有啥用但help里面推荐设置默认的magic(正则表达式相关)
 set magic
 
 "在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
@@ -267,6 +275,18 @@ inoremap <C-@> <C-x><C-k>
 
 "定义全局<Leader>
 let mapleader = ","
+
+"设置ESC切换搜索结果是否高亮
+cnoremap hl  set hlsearch!
+
+"buffer前后跳转
+noremap <Leader>j :bnext<CR>
+noremap <Leader>k :bpre<CR>
+
+"Tabs，各窗口间切换
+nnoremap <Tab>j gt
+nnoremap <Tab>k gT
+nnoremap <silent> <S-t> :tabnew<CR>
 
 "普通模式用<C-y>复制到系统剪切板，<C-y>y也可用
 noremap <C-y> "+y
@@ -300,12 +320,11 @@ nnoremap  @  @a
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
-"插入模式下移动光标 <C-o>g表示是按屏幕行移动
-inoremap <C-k> <C-o>gk
+"插入模式下移动光标
+inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
-inoremap <C-j> <C-o>gj
-
+inoremap <C-j> <Down>
 "向后删除 *为向前删除，shell通用
 inoremap <C-d> <Delete>
 
@@ -325,12 +344,6 @@ cnoremap sw w !sudo tee >/dev/null %
 "快速编辑vim配置文件,在其他文件界面里呼出配置文件，并方便地source以立即适用改动
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-
-"给单词加双引号,好像是vimscript教程里的一个命令，用处不太大
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-
-"删除括号内的文字dp,同上，没啥太多用
-onoremap p i(
 
 "}}}
 "=========================================================================="
@@ -367,7 +380,8 @@ autocmd BufNewFile,BufRead *.Md set filetype=markdown
 let maplocalleader = "/"
 
 "寻找标记，实现光标快速跳转
-autocmd Filetype markdown inoremap <localLeader>f <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
+"其中/实际上为Alt+/键的组合，输入方式为先按<C-v>，再Alt-/
+autocmd Filetype markdown inoremap / <Esc>/<++><CR>:nohlsearch<CR>i<Del><Del><Del><Del>
 
 "h1~h5标题
 autocmd Filetype markdown inoremap <localLeader>1 <ESC>o#<Space><Enter><++><Esc>kA
@@ -431,90 +445,59 @@ autocmd Filetype markdown inoremap <localLeader><CR> <br><Esc>a
 
 " }}}
 "=========================================================================="
-"vundle插件管理{{{
+"vim-plug插件管理{{{
 
-"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
-filetype off                  " 必须要添加
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-" 设置包括vundle和初始化相关的runtime path
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" 另一种选择, 指定一个vundle安装插件的路径
-"call vundle#begin('~/some/path/here')
+" Make sure you use single quotes
 
-" 让vundle管理插件版本,必须
-Plugin 'VundleVim/Vundle.vim'
 
 "markdown实时预览
-Plugin 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 "用的自己fork的版本，做了点小改动让界面看起来更舒服
-Plugin 'chengpengzhao/vim-OpenFoam-syntax'
+Plug 'chengpengzhao/vim-OpenFoam-syntax'
 
-"高亮显示行头缩进
-Plugin 'nathanaelkane/vim-indent-guides' 
+"显示缩进
+Plug 'Yggdroot/indentLine'
 "超级强大的插件，两个配合使用；第一个为引擎，第二个为snippets集合，自定义功能很棒！
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 "让vim支持很多markdown显示，我基本不用这些功能，安装只因为它能识别markdown中的公式区域，方便snippets使用
-Plugin 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 
 "自动保存插件，免得每次退出编辑模式都要按下保存
-Plugin '907th/vim-auto-save'
+Plug '907th/vim-auto-save'
 
 "文件目录树显示插件，非常强大！！！
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 
 "强大的文件搜索插件，快速定位文件
-Plugin 'Yggdroot/LeaderF'
+Plug 'Yggdroot/LeaderF'
 
 "自动补全插件，很好用，安装也很方便。可能需要安装：pip3 install --user pynvim
 if has('nvim')
-  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plugin 'Shougo/deoplete.nvim'
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
+"用于高效操作与括号、引号或html、xml标签相关的配对符号(surrounding)
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
+" Initialize plugin system
+call plug#end()
 
 "配置自动补全打开文件即启动
 let g:deoplete#enable_at_startup = 1
 
-"=======================================================================================
-" 以下范例用来支持不同格式的插件安装.
-" 请将安装插件的命令放在vundle#begin和vundle#end之间.
-" Github上的插件
-" 格式为 Plugin '用户名/插件仓库名'
-"Plugin 'tpope/vim-fugitive'
-" 来自 http://vim-scripts.org/vim/scripts.html 的插件
-" Plugin '插件名称' 实际上是 Plugin 'vim-scripts/插件仓库名' 只是此处的用户名可以省略
-"Plugin 'L9'
-" 由Git支持但不再github上的插件仓库 Plugin 'git clone 后面的地址'
-""Plugin 'git://git.wincent.com/command-t.git'
-" 本地的Git仓库(例如自己的插件) Plugin 'file:///+本地插件仓库绝对路径'
-""Plugin 'file:///home/gmarik/path/to/plugin'
-" 插件在仓库的子目录中.
-" 正确指定路径用以设置runtimepath. 以下范例插件在sparkup/vim目录下
-""Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" 安装L9，如果已经安装过这个插件，可利用以下格式避免命名冲突
-""Plugin 'ascenator/L9', {'name': 'newL9'}
-
-" 你的所有插件需要在下面这行之前
-call vundle#end()            " 必须
-filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和文件类型相关脚本
-" 忽视插件改变缩进,可以使用以下替代:
-"filetype plugin on
-"
-" 常用的命令
-" :PluginList       - 列出所有已配置的插件
-" :PluginInstall     - 安装插件,追加 `!` 用以更新或使用 :PluginUpdate
-" :PluginSearch foo - 搜索 foo ; 追加 `!` 清除本地缓存
-" :PluginClean      - 清除未使用插件,需要确认; 追加 `!` 自动批准移除未使用插件
-"通过命令行直接安装 vim +PluginInstall +qall
-" vim +BundleInstall! +BundleClean +q
-" 查阅 :h vundle 获取更多细节和wiki以及FAQ
-" 将你自己对非插件片段放在这行之后
 " }}}
 "=========================================================================="
 " markdown-preview settings{{{
@@ -593,11 +576,11 @@ let g:mkdp_page_title = '「${name}」'
 "其他插件设置{{{
 
 "*****************************************************************************
-"indent显示缩进,自定义颜色
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0 
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+" indentline
+
+let g:indentLine_enabled = 1
+let g:indentLine_color_term = 202
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 "*****************************************************************************
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -619,7 +602,7 @@ let g:vim_markdown_math = 1
 "*****************************************************************************
 "autosave
 let g:auto_save = 1  " enable AutoSave on Vim startup
-let g:auto_save_events = ["InsertLeave"]
+let g:auto_save_events = ["CursorHold"] " 改为普通模式下光标updatetime时间不动时保存一次，默认4000ms
 "*****************************************************************************
 "NERDTree
 
@@ -675,16 +658,49 @@ call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 "*****************************************************************************
+" LeaderF
+"By default, <Up> and <Down> are used to recall last/next input pattern from history. If you want to use them to navigate the result list just like <C-K> and <C-J>:
+"let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+
+"搜索文件,ff
+let g:Lf_ShortcutF = "<leader>ff"
+noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+
+noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+" search visually selected text literally
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+noremap go :<C-U>Leaderf! rg --recall<CR>
+
+" should use `Leaderf gtags --update` first
+let g:Lf_GtagsAutoGenerate = 0
+let g:Lf_Gtagslabel = 'native-pygments'
+noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
+noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+"*****************************************************************************
 "}}}
 "=========================================================================="
 "" Functions{{{
 "*****************************************************************************
 if !exists('*s:setupWrapping')
-  function s:setupWrapping()
-    set wrap
-    set wm=2
-    set textwidth=79
-  endfunction
+    function s:setupWrapping()
+        set wrap
+        set wm=2
+        set textwidth=79
+    endfunction
 endif
 "*****************************************************************************
 "" Autocmd Rules
@@ -757,18 +773,6 @@ augroup vimrc-javascript
   autocmd FileType javascript setl tabstop=4|setl shiftwidth=4|setl expandtab softtabstop=4
 augroup END
 
-" python
-" vim-python
-augroup vimrc-python
-  autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
-
-" indentline if等语句的代码块连接线
-let g:indentLine_color_term = 239
-let g:indentLine_char = '¦' " 设置连接线的形状 , ¦, ┆, │, ⎸, or ▏
-
 "}}}
 "=========================================================================="
+
