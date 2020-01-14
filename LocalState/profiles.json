@@ -1,0 +1,135 @@
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+    "initialCols": 120,
+    "initialRows": 30,
+    // 亮色或暗色主题，可选值 "light", "dark", "system"
+    "requestedTheme": "dark",
+    // 合并标题栏和标签栏
+    "showTabsInTitlebar": true,
+    // 如果 showTabsInTitlebar 与本值同为 false 时，自动隐藏标签栏
+    "alwaysShowTabs": true,
+    // 在标题栏上显示当前活动标签页的标题
+    "showTerminalTitleInTitlebar": true,
+    // 双击选择时用于分词的字符
+    "wordDelimiters": "",
+    // 选择时复制到剪贴板
+    "copyOnSelect": false,
+    //这一部分profiles是默认配置
+    "profiles":
+    [
+        {
+            // Make changes here to the powershell.exe profile
+            "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+            "name": "Windows PowerShell",
+            "commandline": "powershell.exe",
+            "hidden": false
+        },
+        {
+            // Make changes here to the cmd.exe profile
+            "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+            "name": "cmd",
+            "commandline": "cmd.exe",
+            "hidden": false
+        },
+        {
+            "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "hidden": false,
+            "name": "Ubuntu",
+            "source": "Windows.Terminal.Wsl"
+        }
+    ],
+
+    // Add custom color schemes to this array
+    //这一部分覆盖上面的一些设置
+"profiles":
+[
+    {
+        // 每个 Profile 的唯一标识符，生成方法见下
+        "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+        // 设置为 true 即可在新建菜单中隐藏
+        "hidden": false,
+        // 名字，会显示在菜单中
+        "name": "Ubuntu",
+        // 启动命令行
+        "commandline": "wsl.exe",
+        // 启动目录,从当前路径启动
+        "startingDirectory": ".",
+
+        // 字体设置,改了一圈回来还是觉得默认的挺好
+        "fontFace": "Consolas",
+        "fontSize": 12,
+
+        // 背景亚克力透明效果（窗口失去焦点时无效）
+        "useAcrylic": true,
+        "acrylicOpacity": 0.75,
+
+        // 背景图片(不能和上面的效果同时用？)
+        //"backgroundImage" : "X:\\assets\\background.png",
+        //"backgroundImageOpacity" : 0.5,
+        // "backgroundImageStretchMode" : "uniformToFill",
+
+        // 菜单与标签中显示的图标
+        //"icon": "X:\\assets\\UbuntuLogo.scale-100.png",
+        // 配色方案，见下
+        "colorScheme": "synthwave",
+        // 光标颜色
+        "cursorColor": "#FFFFFF",
+        // 光标类型，可选值 "vintage" ( ▃ ), "bar" ( ┃ ), "underscore" ( ▁ ), "filledBox" ( █ ), "emptyBox" ( ▯ )
+        "cursorShape": "vintage"
+
+        // ... 其他配置请参见官方文档
+    },
+        {
+            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            "hidden": true,
+            "name": "Azure Cloud Shell",
+            "source": "Windows.Terminal.Azure"
+        }
+],
+"schemes": 
+    [
+        {
+          "name": "synthwave",
+          "black": "#000000",
+          "red": "#f6188f",
+          "green": "#1ebb2b",
+          "yellow": "#fdf834",
+          "blue": "#2186ec",
+          "purple": "#f85a21",
+          "cyan": "#12c3e2",
+          "white": "#ffffff",
+          "brightBlack": "#000000",
+          "brightRed": "#f841a0",
+          "brightGreen": "#25c141",
+          "brightYellow": "#fdf454",
+          "brightBlue": "#2f9ded",
+          "brightPurple": "#f97137",
+          "brightCyan": "#19cde6",
+          "brightWhite": "#ffffff",
+          "background": "#000000",
+          "foreground": "#dad9c7"
+        }
+    ],
+    // Add any keybinding overrides to this array.
+    // To unbind a default keybinding, set the command to "unbound"
+    "keybindings": [
+        //各窗口间移动
+        { "command": { "action": "moveFocus", "direction": "down" }, "keys": [ "alt+j" ] },
+        { "command": { "action": "moveFocus", "direction": "left" }, "keys": [ "alt+h" ] },
+        { "command": { "action": "moveFocus", "direction": "right" }, "keys": [ "alt+l" ] },
+        { "command": { "action": "moveFocus", "direction": "up" }, "keys": [ "alt+k" ] },
+        //分割 ,分割后的窗口好像只能通过exit命令关闭？没有快捷键
+        { "command": "splitHorizontal", "keys": [ "ctrl+shift+o" ] },
+        { "command": "splitVertical", "keys": [ "ctrl+shift+e" ] },
+        //新建标签页
+        { "command": "closeTab", "keys": [ "ctrl+shift+w" ] },
+        { "command": "newTab", "keys": [ "ctrl+alt+t" ] },
+        { "command": "closePane", "keys": [ "unbound" ] },
+        //标签页移动
+        { "command": "nextTab", "keys": [ "alt+2" ] },
+        { "command": "prevTab", "keys": [ "alt+1" ] }
+    ]
+}
