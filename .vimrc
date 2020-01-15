@@ -239,9 +239,6 @@ set expandtab
 "设置编辑时制表符占用空格数
 set tabstop=4
 
-"tab转空格
-set expandtab
-
 "设置格式化时制表符占用空格数
 set shiftwidth=4
 
@@ -669,12 +666,6 @@ augroup vimrc-wrapping
   autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 augroup END
 
-"" make/cmake
-augroup vimrc-make-cmake
-  autocmd!
-  autocmd FileType make setlocal noexpandtab
-  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-augroup END
 
 set autoread
 

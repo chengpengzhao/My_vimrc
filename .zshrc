@@ -68,8 +68,9 @@ ZSH_THEME="ys"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
+# 取消git插件，因为拖慢了速度
 plugins=(
-  git
   autojump
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -104,3 +105,10 @@ source /opt/openfoam7/etc/bashrc
 #  自定义快捷键
 alias st="cmd.exe /c start"
 alias q="exit"
+
+alias gs="git status"
+alias gam="git add -A;git commit -m"
+alias gp="git push"
+alias gc="git checkout"
+alias gb="git branch"
+alias gbc="git checkout -b"

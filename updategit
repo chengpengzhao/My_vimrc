@@ -2,6 +2,7 @@
 
 cp ~/.vimrc ./.vimrc
 cp ~/.vim/UltiSnips/markdown.snippets ./markdown.snippets
+cp ~/.vim/UltiSnips/html.snippets ./html.snippets
 cp -r /mnt/c/Users/Administrator/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState .
 cp ~/.zshrc .
 git add -A
