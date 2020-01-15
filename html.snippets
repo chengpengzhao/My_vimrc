@@ -1,46 +1,52 @@
 # vim:set foldenable foldmethod=marker:
-
-# 定义math区域，snippets只在该区域生效，要求Vim能识别当前区域（安装Vim-markdown等插件）
+# ********************************************************************
 # i 表示片段可在句中被触发。默认是只有在前面有多个空格或者在行首时才会被触发。
 # A 表示片段会被自动触发
 # w 表示片段只会在关键词为单独单词的情况下被触发
 # r 表示关键词使用正则表达式。正则表达式必须用 两个引号' '包围
 # b 表示只有在一行的开头才会被触发
-
+# ********************************************************************
 # 使用该snippets而不是默认文件
 priority 0
-
 #=================================================================================================
-
 #常见html tags{{{
-snippet body "<body>"
-<body>
+
+snippet dtype "HTML - 5.0 (doctype)" b
+<!DOCTYPE html>
+endsnippet
+
+snippet br "<br>" w
+<br>$1
+endsnippet
+
+snippet `(body|div|ul|ol|video|html|head)` "multiple lines" br
+<`!p snip.rv = match.group(1)`>
   ${0:${VISUAL}}
-</body>
+</`!p snip.rv = match.group(1)`>
 endsnippet
 
-snippet p "paragraph" w
-<p>${0:${VISUAL}}</p>
+snippet img "<img>"
+<img src="$1" alt="$2" />
 endsnippet
 
-snippet div "<div>" w
-<div>
-  ${0:${VISUAL}}
-</div>
+snippet `(p|span|h[1-6]|em|strong|li|title)` "inline" wr
+<`!p snip.rv = match.group(1)`>${0:${VISUAL}}</`!p snip.rv = match.group(1)`>
 endsnippet
 
-snippet "h([1-6])" "HTML <h1~6>" wr
-<h`!p snip.rv = match.group(1)`>${0:${VISUAL}}</h`!p snip.rv = match.group(1)`>
-endsnippet
-
-snippet "id" "add id to a tag" wr
+snippet "(id|src|width|height)" "add an attribute" wr
 `!p
 import re
-snip.rv = re.search("(<.*?)>((?:.|\n)*>)",snip.v.text).group(1)
-`  id="$1">`!p
+snip.rv = re.search("(<[^>]*)(>(?:.|\n)*)",snip.v.text).group(1)
+`  `!p snip.rv = match.group(1)`="$1"`!p
 import re
-snip.rv = re.search("(<.*?)>((?:.|\n)*>)",snip.v.text).group(2)
+snip.rv = re.search("(<[^>]*)(>(?:.|\n)*)",snip.v.text).group(2)
 `
 endsnippet
 
+snippet a "Link" w
+<a href="${1:}"${2: target="_blank"}>
+${3:${VISUAL}}</a>
+endsnippet
+
 #}}}
+#=================================================================================================

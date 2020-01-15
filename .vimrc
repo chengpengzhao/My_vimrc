@@ -295,6 +295,9 @@ cnoremap hl  set hlsearch!
 noremap <Leader>j :bnext<CR>
 noremap <Leader>k :bpre<CR>
 
+"选择全文
+noremap a <Esc>ggVG<CR>
+
 "Tabs，各窗口间切换
 "WSL系统可以使用S-tab切换了，故修改为更方便的快捷键
 nnoremap <Tab> gt
