@@ -130,6 +130,7 @@ set showmode        " Show current mode
 "不要开启这项！！！会让vim保存几次后变得贼卡,辣鸡设置一个
 "让vimrc配置变更立即生效
 "autocmd BufWritePost $MYVIMRC source $MYVIMRC
+cnoremap sss source $MYVIMRC
 
 "Right mouse button pops up a menu
 set mousemodel=popup

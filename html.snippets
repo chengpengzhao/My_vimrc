@@ -15,7 +15,7 @@ priority 0
 #常见html tags{{{
 snippet body "<body>"
 <body>
-    ${0:${VISUAL}}
+  ${0:${VISUAL}}
 </body>
 endsnippet
 
@@ -23,6 +23,24 @@ snippet p "paragraph" w
 <p>${0:${VISUAL}}</p>
 endsnippet
 
+snippet div "<div>" w
+<div>
+  ${0:${VISUAL}}
+</div>
+endsnippet
 
+snippet "h([1-6])" "HTML <h1~6>" wr
+<h`!p snip.rv = match.group(1)`>${0:${VISUAL}}</h`!p snip.rv = match.group(1)`>
+endsnippet
+
+snippet "id" "add id to a tag" wr
+`!p
+import re
+snip.rv = re.search("(<.*?)>((?:.|\n)*>)",snip.v.text).group(1)
+`  id="$1">`!p
+import re
+snip.rv = re.search("(<.*?)>((?:.|\n)*>)",snip.v.text).group(2)
+`
+endsnippet
 
 #}}}
