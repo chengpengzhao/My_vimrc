@@ -85,7 +85,7 @@ snippet title "new post"
 ---
 title:    "$1"
 date:    `!v strftime("%Y-%m-%d")`
-author:    "赵cp"
+author:    "zcp"
 img:    "$2"
 top:    ${3:false}
 cover:    ${4:true}
@@ -109,7 +109,7 @@ $0
 endsnippet
 # *****************************************************************************
 #插入行内公式
-snippet /e "Math" wA
+snippet /e "Math" iA
 $${1}$`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
     snip.rv = ' '
@@ -184,152 +184,151 @@ endsnippet
 # Α α
 context "math()"
 snippet '([Aa])lp' "alpha" wr
-\\`!p snip.rv = match.group(1)`lpha
+\\`!p snip.rv = match.group(1)`lpha 
 endsnippet
 
 # Β β
 context "math()"
 snippet '([Bb])et' "beta" wr
-\\`!p snip.rv = match.group(1)`eta
+\\`!p snip.rv = match.group(1)`eta 
 endsnippet
 
 # Γ γ
 context "math()"
 snippet '([Gg])am' "gamma" wr
-\\`!p snip.rv = match.group(1)`amma
+\\`!p snip.rv = match.group(1)`amma 
 endsnippet
 
 # Δ δ
 context "math()"
 snippet '([Dd])el' "delta" wr
-\\`!p snip.rv = match.group(1)`elta
+\\`!p snip.rv = match.group(1)`elta 
 endsnippet
 
 # Δ*Δ
 context "math()"
-context "math()"
 snippet 'nab' "nabla" wr
-\\nabla
+\\nabla 
 endsnippet
 
 # Ε ε
 context "math()"
 snippet '([Ee])ps' "epsilon" wr
-\\`!p snip.rv = match.group(1)`psilon
+\\`!p snip.rv = match.group(1)`psilon 
 endsnippet
 
 # Ζ ζ
 context "math()"
 snippet '([Zz])et' "zeta" wr
-\\`!p snip.rv = match.group(1)`eta
+\\`!p snip.rv = match.group(1)`eta 
 endsnippet
 
 # Η η
 context "math()"
 snippet '([Ee])ta' "eta" wr
-\\`!p snip.rv = match.group(1)`ta
+\\`!p snip.rv = match.group(1)`ta 
 endsnippet
 
 # Θ θ
 context "math()"
 snippet '([Tt])he' "theta" wr
-\\`!p snip.rv = match.group(1)`heta
+\\`!p snip.rv = match.group(1)`heta 
 endsnippet
 
 # Ι ι
 context "math()"
 snippet '([Ii])ot' "Iota" wr
-\\`!p snip.rv = match.group(1)`ota
+\\`!p snip.rv = match.group(1)`ota 
 endsnippet
 
 # Κ κ
 context "math()"
 snippet '([Kk])ap' "kappa" wr
-\\`!p snip.rv = match.group(1)`appa
+\\`!p snip.rv = match.group(1)`appa 
 endsnippet
 
 # Λ λ
 context "math()"
 snippet '([Ll])am' "lambda" wr
-\\`!p snip.rv = match.group(1)`ambda
+\\`!p snip.rv = match.group(1)`ambda 
 endsnippet
 
 # Μ μ
 context "math()"
 snippet '([Mm])u' "mu" wr
-\\`!p snip.rv = match.group(1)`u
+\\`!p snip.rv = match.group(1)`u 
 endsnippet
 
 # Ν ν
 context "math()"
 snippet '([Nn])u' "nu" wr
-\\`!p snip.rv = match.group(1)`u
+\\`!p snip.rv = match.group(1)`u 
 endsnippet
 
 # Ξ ξ
 context "math()"
 snippet '([Xx])i' "xi" wr
-\\`!p snip.rv = match.group(1)`i
+\\`!p snip.rv = match.group(1)`i 
 endsnippet
 
 # Ο ο
 context "math()"
 snippet '([Oo])mi' "Omicron" wr
-\\`!p snip.rv = match.group(1)`micron
+\\`!p snip.rv = match.group(1)`micron 
 endsnippet
 
 # Π π
 context "math()"
 snippet '([Pp])i' "pi" wr
-\\`!p snip.rv = match.group(1)`i
+\\`!p snip.rv = match.group(1)`i 
 endsnippet
 
 # Ρ ρ
 context "math()"
 snippet '([Rr])ho' "rho" wr
-\\`!p snip.rv = match.group(1)`ho
+\\`!p snip.rv = match.group(1)`ho 
 endsnippet
 
 # Σ σ
 context "math()"
 snippet '([Ss])ig' "sigma" wr
-\\`!p snip.rv = match.group(1)`igma
+\\`!p snip.rv = match.group(1)`igma 
 endsnippet
 
 # Τ τ
 context "math()"
 snippet '([Tt])au' "tau" wr
-\\`!p snip.rv = match.group(1)`au
+\\`!p snip.rv = match.group(1)`au 
 endsnippet
 
 # Υ υ
 context "math()"
 snippet '([Uu])ps' "upsilon" wr
-\\`!p snip.rv = match.group(1)`psilon
+\\`!p snip.rv = match.group(1)`psilon 
 endsnippet
 
 # Φ φ
 context "math()"
 snippet '([Pp])hi' "phi" wr
-\\`!p snip.rv = match.group(1)`hi
+\\`!p snip.rv = match.group(1)`hi 
 endsnippet
 
 # Χ χ
 context "math()"
 snippet '([Cc])hi' "chi" wr
-\\`!p snip.rv = match.group(1)`hi
+\\`!p snip.rv = match.group(1)`hi 
 endsnippet
 
 # Ψ ψ
 context "math()"
 snippet '([Pp])si' "psi" wr
-\\`!p snip.rv = match.group(1)`si
+\\`!p snip.rv = match.group(1)`si 
 endsnippet
 
 # Ω ω
 context "math()"
 snippet '([Oo])me' "omega" wr
-\\`!p snip.rv = match.group(1)`mega
+\\`!p snip.rv = match.group(1)`mega 
 endsnippet
 #========================}}}
 # *****************************************************************************
@@ -405,16 +404,22 @@ context "math()"
 snippet ~= "≈" iA
 \\approx
 endsnippet
+
+# 箭头
+context "math()"
+snippet arrow "arrow" w
+\\stackrel{$1}{\longrightarrow} 
+endsnippet
 # *****************************************************************************
 # 乘除积分微分
 context "math()"
-snippet * "times" i
-\\times
+snippet * "times" w
+\\times 
 endsnippet
 
 context "math()"
-snippet dot "dot" i
-\\cdot
+snippet dot "dot" w
+\\cdot 
 endsnippet
 
 context "math()"
@@ -429,7 +434,7 @@ endsnippet
 
 # 导数符号以及其他非斜体
 context "math()"
-snippet `([a-zA-Z])M` "mathrm xxx" ir
+snippet `([^\$\s]*)\.m` "mathrm xxx" ir
 \\mathrm{`!p snip.rv = match.group(1)`}
 endsnippet
 

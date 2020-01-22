@@ -15,11 +15,11 @@ snippet dtype "HTML - 5.0 (doctype)" b
 <!DOCTYPE html>
 endsnippet
 
-snippet br "<br>" w
-<br>$1
+snippet `(br|hr)` "" wr
+<`!p snip.rv = match.group(1)` />$1
 endsnippet
 
-snippet `(body|div|ul|ol|video|html|head)` "multiple lines" br
+snippet `(body|div|ul|ol|video|html|head|pre|script)` "block level elements" wr
 <`!p snip.rv = match.group(1)`>
   ${0:${VISUAL}}
 </`!p snip.rv = match.group(1)`>
@@ -29,11 +29,11 @@ snippet img "<img>"
 <img src="$1" alt="$2" />
 endsnippet
 
-snippet `(p|span|h[1-6]|em|strong|li|title)` "inline" wr
-<`!p snip.rv = match.group(1)`>${0:${VISUAL}}</`!p snip.rv = match.group(1)`>
+snippet `(p|span|h[1-6]|em|strong|li|title|code|pre)` "inline elements" wr
+<`!p snip.rv = match.group(1)`>${1:${VISUAL}}</`!p snip.rv = match.group(1)`>
 endsnippet
 
-snippet "(id|src|width|height)" "add an attribute" wr
+snippet "(id|src|width|height|class|style|title)" "add an attribute" wr
 `!p
 import re
 snip.rv = re.search("(<[^>]*)(>(?:.|\n)*)",snip.v.text).group(1)
@@ -46,6 +46,16 @@ endsnippet
 snippet a "Link" w
 <a href="${1:}"${2: target="_blank"}>
 ${3:${VISUAL}}</a>
+endsnippet
+
+snippet link "link css" w
+<link href="${1:css/${2}}" type="${3:text/css}" rel="${4:stylesheet}">
+endsnippet
+
+snippet // "comments" 
+<!--
+${1:${VISUAL}}
+-->${0}
 endsnippet
 
 #}}}

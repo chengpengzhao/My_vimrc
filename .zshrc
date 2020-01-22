@@ -106,6 +106,7 @@ source /opt/openfoam7/etc/bashrc
 alias st="cmd.exe /c start"
 alias q="exit"
 
+alias gcl="git clone"
 alias gs="git status"
 alias gam="git add -A;git commit -m"
 alias gp="git push"

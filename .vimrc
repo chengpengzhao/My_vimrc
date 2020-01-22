@@ -691,8 +691,8 @@ vmap < <gv
 vmap > >gv
 
 "" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
 
 "*****************************************************************************
 "" Custom configs
@@ -730,7 +730,6 @@ noremap <silent><C-y> :call system('/mnt/c/Windows/System32/clip.exe', GetSelect
 "剪切
 noremap <silent><C-x> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>gvx
 "粘贴<Ctrl+Shift+v>
-"endif
 " }}}
 "=========================================================================="
 "=========================================================================="
