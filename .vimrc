@@ -21,6 +21,11 @@ function! HighlightPaste()
     endif
 endfunction
 
+"计算buffer总数
+function! Buf_total_num()
+    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+endfunction
+
 "文件大小计算
 
 function! File_size(f)
@@ -40,7 +45,7 @@ function! File_size(f)
 endfunction
 
 "状态栏格式设置"
-set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\%{HighlightSearch()}\|\%{HighlightPaste()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %7*[B%-n]/%{Buf_total_num()}\ %6*\%{HighlightSearch()}\|\%{HighlightPaste()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
 "上面是总的设置，位置可能有所变化
 
 "文件位置
@@ -60,8 +65,9 @@ set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %*%6*\%{Highli
 hi User1 cterm=bold ctermfg=232 ctermbg=179
 hi User2 cterm=None ctermfg=214 ctermbg=242
 hi User3 cterm=bold ctermfg=15 ctermbg=9
-hi User4 cterm=None ctermfg=16 ctermbg=33
+hi User4 cterm=None ctermfg=7 ctermbg=33
 hi User5 cterm=None ctermfg=11 ctermbg=240
+hi User7 cterm=None ctermfg=208 ctermbg=238
 " }}}
 "=========================================================================="
 "基础设置{{{
