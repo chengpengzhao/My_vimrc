@@ -102,6 +102,8 @@ source /opt/openfoam7/etc/bashrc
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias python='/usr/bin/python3'
+#
 #  自定义快捷键
 alias st="cmd.exe /c start"
 alias q="exit"

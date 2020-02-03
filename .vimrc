@@ -212,6 +212,7 @@ set history=1000
 
 "命令模式下，底部操作指令按下 Tab 键自动补全。第一次按下 Tab，会显示所有匹配的操作指令的清单；第二次按下 Tab，会依次选择各个指令。
 set wildmenu        " wild char completion menu
+
 set wildmode=longest:list,full
 set wildchar=<TAB>  " start wild expansion in the command line using <TAB>
 
@@ -505,24 +506,16 @@ Plug 'scrooloose/nerdtree'
 "强大的文件搜索插件，快速定位文件
 Plug 'Yggdroot/LeaderF'
 
-"自动补全插件，很好用，安装也很方便。可能需要安装：pip3 install --user pynvim
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
 
 "用于高效操作与括号、引号或html、xml标签相关的配对符号(surrounding)
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
+"自动补全改用youcompleteme，安装详见github
+Plug 'ycm-core/YouCompleteMe'
 " Initialize plugin system
 call plug#end()
 
-"配置自动补全打开文件即启动
-let g:deoplete#enable_at_startup = 1
 
 " }}}
 "=========================================================================="
@@ -643,6 +636,21 @@ noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand
 noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
 noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+"*****************************************************************************
+"YouCompleteMe 设置
+
+"触发补全所需字符数
+let g:ycm_min_num_of_chars_for_completion = 1
+
+"自动开启补全
+let g:ycm_auto_trigger = 1
+
+"映射
+let g:ycm_key_list_stop_completion = ['<space>']
+let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+
+let g:ycm_filetype_blacklist = {}
 "*****************************************************************************
 "}}}
 "=========================================================================="
