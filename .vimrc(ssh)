@@ -117,7 +117,7 @@ set hidden
 set nocompatible
 
 "激活/取消paste模式，粘贴出现自动缩进时用,按键为Alt-p
-set pastetoggle=p
+set pastetoggle=<F4>
 "一般关闭paste模式，该模式下有的map会出问题
 set nopaste
 
@@ -280,6 +280,8 @@ set lazyredraw
 "set clipboard=unnamedplus
 
 "单词自动补全功能,写博客时用,自定义词典可参考网上教程
+""set dictionary+=/usr/share/dict/american-english
+set completeopt+=noinsert
 
 "Ctrl+Space单词补全"
 "WSL系统中此快捷键不管用，故换成下面一条
@@ -467,6 +469,157 @@ autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
 "autocmd Filetype markdown imap <localLeader><CR> <br><Esc>a
 "
 " }}}
+"=========================================================================="
+"vim-plug插件管理{{{
+
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+
+"markdown实时预览
+"WSL中不需要
+"Plug 'iamcco/markdown-preview.nvim'
+
+"用的自己fork的版本，做了点小改动让界面看起来更舒服
+
+"显示缩进
+Plug 'Yggdroot/indentLine'
+"超级强大的插件，两个配合使用；第一个为引擎，第二个为snippets集合，自定义功能很棒！
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+
+"自动保存插件，免得每次退出编辑模式都要按下保存
+Plug '907th/vim-auto-save'
+
+"文件目录树显示插件，非常强大！！！
+Plug 'scrooloose/nerdtree'
+
+"强大的文件搜索插件，快速定位文件
+Plug 'Yggdroot/LeaderF'
+
+
+"用于高效操作与括号、引号或html、xml标签相关的配对符号(surrounding)
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
+" Initialize plugin system
+call plug#end()
+
+
+" }}}
+"=========================================================================="
+"其他插件设置{{{
+
+"*****************************************************************************
+" indentline
+
+let g:indentLine_enabled = 1
+let g:indentLine_color_term = 202
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+"*****************************************************************************
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+"*****************************************************************************
+"*****************************************************************************
+"autosave
+let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save_events = ["CursorHold"] " 改为普通模式下光标updatetime时间不动时保存一次，默认4000ms
+"*****************************************************************************
+"NERDTree
+
+"vim不指定文件名时，自动打开NERDTree
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeWinSize = 30
+let NERDTreeShowBookmarks = 1
+
+"高亮当前行
+let NERDTreeHighlightCursorline = 1
+
+"从NERDTree打开文件后自动关闭NERDTree
+let NERDTreeQuitOnOpen = 1
+
+"显示隐藏文件
+"let g:NERDTreeShowHidden = 1
+
+"忽略特定文件和目录
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '__pycache__', '\.DS_Store' ]
+
+"显示行号
+let NERDTreeShowLineNumbers = 1
+let NERDTreeAutoCenter = 1
+
+"自动打开NERDTree
+"autocmd vimenter * NERDTree
+
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+"*****************************************************************************
+" LeaderF
+"By default, <Up> and <Down> are used to recall last/next input pattern from history. If you want to use them to navigate the result list just like <C-K> and <C-J>:
+"let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+
+"搜索文件,ff
+let g:Lf_ShortcutF = "<leader>ff"
+noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+
+noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+" search visually selected text literally
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+noremap go :<C-U>Leaderf! rg --recall<CR>
+
+" should use `Leaderf gtags --update` first
+let g:Lf_GtagsAutoGenerate = 0
+let g:Lf_Gtagslabel = 'native-pygments'
+noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
+noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+"*****************************************************************************
+"}}}
 "=========================================================================="
 "" Functions{{{
 "*****************************************************************************

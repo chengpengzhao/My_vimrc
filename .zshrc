@@ -102,6 +102,8 @@ source /opt/openfoam7/etc/bashrc
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+export PATH=$PATH:/home/zcp/Leanote_zcp/mongodb-linux-x86_64-3.0.1/bin
+
 alias python='/usr/bin/python3'
 #
 #  自定义快捷键
@@ -110,7 +112,7 @@ alias q="exit"
 
 alias gcl="git clone"
 alias gs="git status"
-alias gam="git add -A;git commit -m"
+alias gac="git add -A;git commit -m"
 alias gp="git push"
 alias gc="git checkout"
 alias gb="git branch"
