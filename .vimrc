@@ -646,7 +646,7 @@ let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_auto_trigger = 1
 
 "映射
-let g:ycm_key_list_stop_completion = ['<Left>']
+let g:ycm_key_list_stop_completion = ['o']
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 
