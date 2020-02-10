@@ -91,7 +91,6 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
-source /opt/openfoam7/etc/bashrc
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -102,7 +101,6 @@ source /opt/openfoam7/etc/bashrc
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH=$PATH:/home/zcp/Leanote_zcp/mongodb-linux-x86_64-3.0.1/bin
 
 alias python='/usr/bin/python3'
 #
