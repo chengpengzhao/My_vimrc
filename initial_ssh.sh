@@ -2,14 +2,19 @@
 
 #用法： yes Yes | ./initial.sh
 # 最开始把软件源先配置好
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install git
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get install git -y
 sudo apt-get install curl -y
-sudo apt-get install vim-gtk3
-sudo apt-get install zsh
-sudo apt install build-essential cmake python3-dev
-sudo apt-get install python3-pip
+sudo apt-get install vim-gtk3 -y
+sudo apt-get install zsh -y
+sudo apt-get install tree -y
+sudo apt install build-essential cmake python3-dev -y
+sudo apt-get install python3-pip -y
+sudo apt-get install nodejs -y
+# sudo apt-get install nodejs-legacy -y
+sudo apt-get install npm -y
+sudo npm install -g hexo-cli
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -24,11 +29,10 @@ exit
 # ==========================================================================
 # 第二步，配置zsh和vim
 cd
-
 sudo apt-get install autojump;git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions;git clone git://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting  #安装autojump、zsh-autosuggestions、zsh-syntax-highlighting三个插件
 
 chsh -s $(which zsh) #设置zsh为默认终端
-git clone https://github.com/chengpengzhao/My_vimrc.git 
+git clone https://github.com/chengpengzhao/My_vimrc.git
 cd My_vimrc
 git checkout dev-WSL
 cp .vimrc ~/.vimrc
@@ -36,7 +40,6 @@ cp .zshrc ~/.zshrc
 mkdir ~/.vim/UltiSnips
 cp *.snippets ~/.vim/UltiSnips/
 # cp ./'.vimrc(ssh)' ../.vimrc
-cd
 source ~/.zshrc
 # 这一步完成后进入vim进行插件配置
 # ==========================================================================
