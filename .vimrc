@@ -447,7 +447,7 @@ autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
 autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 
 "插入时间戳
-autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
+autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<r-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
 
 "插入自动编号的引用
 autocmd Filetype markdown inoremap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Esc>pA: <++><Esc><C-o>f]a
@@ -513,6 +513,34 @@ Plug 'tpope/vim-repeat'
 
 "自动补全改用youcompleteme，安装详见github
 Plug 'ycm-core/YouCompleteMe'
+
+"自动补全括号，引号的插件
+Plug 'Raimondi/delimitMate'
+
+"格式化代码插件
+"sudo apt install clang-format
+"clang-format -dump-config -style=Google > .clang-format
+Plug 'rhysd/vim-clang-format'
+
+"检查语法错误插件
+Plug 'dense-analysis/ale'
+
+"c++高亮插件
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" 文本对象
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
+Plug 'sgur/vim-textobj-parameter'
+
+"Tags管理
+Plug 'ludovicchabant/vim-gutentags'
+
+"异步编译
+Plug 'skywind3000/asyncrun.vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -657,6 +685,70 @@ let g:ycm_filetype_blacklist = {
       \'foam256_general': 1,
       \}
 "*****************************************************************************
+"vim-clang-format设置
+let g:clang_format#command = 'clang-format'
+nmap <F2> :ClangFormat<cr>
+autocmd FileType c ClangFormatAutoEnable
+let g:clang_format#detect_style_file = 1
+"*****************************************************************************
+"ale 设置
+let g:ale_linters_explicit = 1
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
+let g:ale_sign_error = "\ue009\ue009"
+hi! clear SpellBad
+hi! clear SpellCap
+hi! clear SpellRare
+hi! SpellBad gui=undercurl guisp=red
+hi! SpellCap gui=undercurl guisp=blue
+hi! SpellRare gui=undercurl guisp=magenta
+"*****************************************************************************
+"gutentags配置
+
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+" 检测 ~/.cache/tags 不存在就新建 "
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
+
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+"*****************************************************************************
+"Asyncrun
+" 自动打开 quickfix window ，高度为 6
+let g:asyncrun_open = 6
+
+" 任务结束时候响铃提醒
+let g:asyncrun_bell = 1
+
+" 设置 Alt+q 打开/关闭 Quickfix 窗口
+nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
+
+" 编译单文件
+nnoremap <silent> c :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+
+"运行单文件
+nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 "}}}
 "=========================================================================="
 "" Functions{{{
@@ -751,5 +843,3 @@ noremap <silent><C-x> :call system('/mnt/c/Windows/System32/clip.exe', GetSelect
 "粘贴<Ctrl+Shift+v>
 " }}}
 "=========================================================================="
-"=========================================================================="
-
