@@ -169,8 +169,8 @@ nnoremap <F3> : setlocal spell!<CR>
 set spelllang=en_us,en_gb,cjk
 
 "方便拼写检查在单词间跳转
-nnoremap [ [s
-nnoremap ] ]s
+autocmd Filetype markdown nnoremap [ [s
+autocmd Filetype markdown nnoremap ] ]s
 "来自那位用Vim上课记笔记的大佬，insert模式<C-o>自动更正前一个单词
 "zg     把当前单词添加到拼写文件中    
 "zw     把当前单词从拼写文件中删除    
@@ -677,7 +677,6 @@ let g:ycm_auto_trigger = 1
 let g:ycm_key_list_stop_completion = ['o']
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
-
 let g:ycm_filetype_blacklist = {
       \'foam256_bC': 1,
       \'foam256_changeDictionaryDict': 1,
@@ -692,26 +691,18 @@ autocmd FileType c ClangFormatAutoEnable
 let g:clang_format#detect_style_file = 1
 "*****************************************************************************
 "ale 设置
-let g:ale_linters_explicit = 1
-let g:ale_completion_delay = 500
-let g:ale_echo_delay = 20
-let g:ale_lint_delay = 500
+"let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+" use quickfix list instead of the loclist
+nmap <silent> [ <Plug>(ale_previous_wrap)
+nmap <silent> ] <Plug>(ale_next_wrap)
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-let g:ale_c_cppcheck_options = ''
-let g:ale_cpp_cppcheck_options = ''
-let g:ale_sign_error = "\ue009\ue009"
-hi! clear SpellBad
-hi! clear SpellCap
-hi! clear SpellRare
-hi! SpellBad gui=undercurl guisp=red
-hi! SpellCap gui=undercurl guisp=blue
-hi! SpellRare gui=undercurl guisp=magenta
+let g:ale_lint_on_enter = 0
 "*****************************************************************************
 "gutentags配置
 
@@ -738,6 +729,11 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 " 自动打开 quickfix window ，高度为 6
 let g:asyncrun_open = 6
 
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
+
 " 任务结束时候响铃提醒
 let g:asyncrun_bell = 1
 
@@ -745,7 +741,7 @@ let g:asyncrun_bell = 1
 nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 
 " 编译单文件
-nnoremap <silent> c :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
 nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
