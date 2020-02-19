@@ -102,6 +102,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PATH=/home/zcp/.local/bin:$PATH
+source ~/OpenFOAM-v1906/etc/bashrc
 
 alias python='/usr/bin/python3'
 #
