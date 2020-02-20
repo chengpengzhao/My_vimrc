@@ -683,6 +683,7 @@ let g:ycm_filetype_blacklist = {
       \'foam256_thermodynamicProperties': 1,
       \'foam256_general': 1,
       \}
+let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
 "*****************************************************************************
 "vim-clang-format设置
 let g:clang_format#command = 'clang-format'
@@ -740,8 +741,17 @@ let g:asyncrun_bell = 1
 " 设置 Alt+q 打开/关闭 Quickfix 窗口
 nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 
-" 编译单文件
-nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+" GSL安装过程：
+" 1. 下载相关文件到本地，解压缩
+" 2. ./configure && make && sudo make install
+" 3. 添加环境变量到bashrc：
+"export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+"export CFLAGS="-I/usr/local/include"
+"export LDFLAGS="-L/usr/local/lib"
+
+" 编译单文件,加上了GSL库
+nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+"nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
 nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>

@@ -104,6 +104,10 @@ source $ZSH/oh-my-zsh.sh
 export PATH=/home/zcp/.local/bin:$PATH
 source ~/OpenFOAM-v1906/etc/bashrc
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export CFLAGS="-I/usr/local/include"
+export LDFLAGS="-L/usr/local/lib"
+
 alias python='/usr/bin/python3'
 #
 #  自定义快捷键
