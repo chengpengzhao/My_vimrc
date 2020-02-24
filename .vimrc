@@ -118,6 +118,7 @@ set nocompatible
 
 "激活/取消paste模式，粘贴出现自动缩进时用,按键为Alt-p
 set pastetoggle=p
+
 "一般关闭paste模式，该模式下有的map会出问题
 set nopaste
 
@@ -136,6 +137,7 @@ set showmode        " Show current mode
 "不要开启这项！！！会让vim保存几次后变得贼卡,辣鸡设置一个
 "让vimrc配置变更立即生效
 "autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
 cnoremap sss source $MYVIMRC
 
 "Right mouse button pops up a menu
@@ -152,7 +154,7 @@ set cursorline        " 显示cursorline但最好不要高亮，容易把其他�
 set shortmess=filmnrxoOtT       " Abbrev. of messages (avoids 'hit enter')
 set cmdheight=2
 
- " the cursor can be positioned where there is no actual character
+" the cursor can be positioned where there is no actual character
 "set virtual edit=all
 set virtualedit=block "还是不让光标位置无限制了
 
@@ -171,6 +173,7 @@ set spelllang=en_us,en_gb,cjk
 "方便拼写检查在单词间跳转
 autocmd Filetype markdown nnoremap [ [s
 autocmd Filetype markdown nnoremap ] ]s
+
 "来自那位用Vim上课记笔记的大佬，insert模式<C-o>自动更正前一个单词
 "zg     把当前单词添加到拼写文件中    
 "zw     把当前单词从拼写文件中删除    
@@ -183,6 +186,7 @@ inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 set foldenable
 set foldmethod=marker
 autocmd FileType c,cpp,python set foldmethod=indent nofoldenable
+
 "解决乱码问题
 set encoding=utf-8
 set termencoding=utf-8
@@ -198,6 +202,9 @@ set nrformats=
 "依文件类型设置自动缩进
 filetype plugin on
 filetype indent on
+
+"增强%命令功能，可以在配对关键字间跳转
+runtime macros/matchit.vim
 
 "显示当前的行号(相对)：
 set ruler

@@ -2,7 +2,7 @@
 
 cp ~/.vimrc ./.vimrc
 cp ~/.vim/UltiSnips/*.snippets .
-cp -r /mnt/c/Users/Administrator/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState .
+cp -r /mnt/c/Users/Administrator/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/profiles.json .
 cp ~/.zshrc .
 git add -A
 echo -n  "please enter a commit ->"
