@@ -303,7 +303,8 @@ inoremap <C-f> <C-x><C-k>
 let mapleader = ","
 
 "设置ESC切换搜索结果是否高亮
-cnoremap hl  set hlsearch!
+"关闭高亮直到下一次查找
+cnoremap hl  nohlsearch<CR>
 
 "buffer前后跳转
 noremap <Leader>j :bnext<CR>
