@@ -433,6 +433,9 @@ autocmd Filetype markdown inoremap <expr> <localLeader><F12> eval(Count('\[\^\d\
 "行间公式，带自动编号
 autocmd Filetype markdown imap <localLeader>q <ESC>o$$<Enter><Enter> \tag{<localLeader><F11>-<Leader><localLeader><F11>}$$<Enter><BS><++><Esc>2kA
 
+"插入自动编号的引用
+autocmd Filetype markdown imap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<C-r>": <++><Esc><C-o>f]a
+
 "行内公式，由snippets取代，不再用这里的定义，快捷键不变
 "autocmd Filetype markdown inoremap <localLeader>e $$<++><Esc>F$i
 
@@ -457,9 +460,6 @@ autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 "插入时间戳
 autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<r-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
 
-"插入自动编号的引用
-autocmd Filetype markdown inoremap <localLeader>n [^<localLeader><F12>]<Esc>ya[Go<Esc>pA: <++><Esc><C-o>f]a
-
 "WSL下Vim无法直接访问Windows剪切板，故无法自动复制网址,改用snippet实现
 "插入图片，自动复制剪切板网址
 "autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
@@ -470,7 +470,7 @@ autocmd Filetype markdown inoremap <localLeader>n [^<localLeader><F12>]<Esc>ya[G
 "分隔线
 autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
 
-"这两个该到snippets中实现，因为用的不是很多
+"这两个改到snippets中实现，因为用的不是很多
 "空格符号
 "autocmd Filetype markdown inoremap <localLeader>/ &emsp;<Esc>a
 "
@@ -758,6 +758,7 @@ nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 "export LDFLAGS="-L/usr/local/lib"
 
 " 编译单文件,加上了GSL库
+" gcc -Wall选项：打开所有警告提示
 nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 "nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
