@@ -458,7 +458,7 @@ autocmd Filetype markdown inoremap <localLeader>d ~~~~<++><Esc>F~hi
 autocmd Filetype markdown inoremap <localLeader>s ``<++><Esc>F`i
 
 "插入时间戳
-autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<r-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
+autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<C-R>=strftime('%Y-%m-%d %H:%M:%S')<C-M>*<Down><Esc>o<CR>
 
 "WSL下Vim无法直接访问Windows剪切板，故无法自动复制网址,改用snippet实现
 "插入图片，自动复制剪切板网址

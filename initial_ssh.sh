@@ -48,12 +48,12 @@ cd ~/.vim/plugged/YouCompleteMe
 python3 install.py --all
 
 git config --global user.name "chengpengzhao"
-git config --global user.email "chengpengzhao@foxmail.com"
+git config --global user.email "chengpeng_zhao@foxmail.com"
 git config --global core.quotepath false  #防止用tab键自动补全的中文文件名乱码
 git config --global core.autocrlf false
 git config --global core.filemode false
 git config --global core.safecrlf true
-ssh-keygen -t rsa -C "chengpengzhao@foxmail.com"
+ssh-keygen -t rsa -C "chengpeng_zhao@foxmail.com"
 
 vim ~/.ssh/id_rsa.pub     #  复制添加到github
 
