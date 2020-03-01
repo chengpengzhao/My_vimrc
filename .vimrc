@@ -328,13 +328,6 @@ noremap  <Space> :
 "打开OpenFOAM相关文件时为了方便输入命令加了下面这个映射,!表示输入系统shell命令
 autocmd Filetype foam256* noremap  <Space> :!
 
-"映射上下左右的光标移动,刚开始用着还行，但和一些插件快捷键冲突，而且i本身是进入插入模式，不改为好
-"noremap  i   k
-"noremap  j   h
-"noremap  k  j
-"noremap  gk  gj
-"noremap  gi  gk
-
 "行光标移动,这个挺方便的，header与end，也没见有冲突
 noremap H   ^
 noremap E   $
@@ -361,19 +354,23 @@ inoremap <C-j> <Down>
 "在WSL中发现C-8(Backspace)无法删除了,只能用backspace
 inoremap <C-d> <Delete>
 
-"自动插入完整括号,用了一段时间，加了snippet插件后发现不自动补全比较好
-""inoremap ( ()<Left>
-""inoremap（ （）<Left>
-""inoremap [ []<Left>
-""inoremap { {}<Left>
-""inoremap " ""<Left>
-
 "超级用户权限编辑，出现权限不够无法保存时命令模式输入sw即可
 cnoremap sw w !sudo tee >/dev/null %
 
 "快速编辑vim配置文件,在其他文件界面里呼出配置文件，并方便地source以立即适用改动
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
+"可视模式下用*和#查找选中文本
+xnoremap * :<C-u>call <SID>VsetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VsetSearch()<CR>?<C-R>=@/<CR><CR>
+function! s:VsetSearch()
+    let temp=@s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n','g')
+    let @s= temp
+endfunction
+
 
 "}}}
 "=========================================================================="
@@ -498,6 +495,7 @@ Plug 'chengpengzhao/vim-OpenFoam-syntax'
 
 "显示缩进
 Plug 'Yggdroot/indentLine'
+
 "超级强大的插件，两个配合使用；第一个为引擎，第二个为snippets集合，自定义功能很棒！
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
