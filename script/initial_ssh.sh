@@ -1,37 +1,7 @@
 #!/bin/bash
 
-#用法： yes Yes | ./initial.sh
-# 最开始把软件源先配置好
-sudo apt-get update -y
-sudo apt-get upgrade -y
-sudo apt-get install git -y
-sudo apt-get install curl -y
-sudo apt-get install vim-gtk3 -y
-sudo apt-get install zsh -y
-sudo apt-get install tree -y
-sudo apt install build-essential cmake python3-dev -y
-sudo apt-get install python3-pip -y
-sudo apt-get install nodejs -y
-# sudo apt-get install nodejs-legacy -y
-sudo apt-get install npm -y
-sudo npm install -g hexo-cli
-
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
-sudo dpkg -i ripgrep_11.0.2_amd64.deb
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #安装oh-my-zsh
-#安装后会提示进入zsh，后面的命令会被忽略
-echo "============================ \n"
-echo "打开initial.sh查看后续步骤！"
-exit
-# ==========================================================================
 # 第二步，配置zsh和vim
 cd
-sudo apt-get install autojump;git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions;git clone git://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting  #安装autojump、zsh-autosuggestions、zsh-syntax-highlighting三个插件
-
-chsh -s $(which zsh) #设置zsh为默认终端
 git clone https://github.com/chengpengzhao/My_vimrc.git
 cd My_vimrc
 git checkout dev-WSL

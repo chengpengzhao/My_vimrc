@@ -459,10 +459,10 @@ autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<C
 
 "WSL下Vim无法直接访问Windows剪切板，故无法自动复制网址,改用snippet实现
 "插入图片，自动复制剪切板网址
-"autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
+autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
 "
 ""插入地址，使用前确保剪切板已复制url
-"autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
+autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
 
 "分隔线
 autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
@@ -488,7 +488,7 @@ call plug#begin('~/.vim/plugged')
 
 "markdown实时预览
 "WSL中不需要
-"Plug 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim'
 
 "用的自己fork的版本，做了点小改动让界面看起来更舒服
 Plug 'chengpengzhao/vim-OpenFoam-syntax'
@@ -839,20 +839,4 @@ augroup vimrc-javascript
 augroup END
 
 "}}}
-"=========================================================================="
-" WSL设置{{{
-"适配Linux子系统，能够正常和windows复制粘贴文本
-"利用/mnt/c/Windows/System32/clip.exe
-func! GetSelectedText()
-    normal gv"xy
-    let result = getreg("x")
-    return result
-endfunc
-"if !has("clipboard") && executable("/mnt/c/Windows/System32/clip.exe")
-"复制
-noremap <silent><C-y> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>
-"剪切
-noremap <silent><C-x> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>gvx
-"粘贴<Ctrl+Shift+v>
-" }}}
 "=========================================================================="
