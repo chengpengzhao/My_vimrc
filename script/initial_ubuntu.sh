@@ -56,3 +56,32 @@ cp .vimrc ~/.vimrc
 cp .zshrc ~/.zshrc
 mkdir ~/.vim/UltiSnips
 cp ./Snippets/*.snippets ~/.vim/UltiSnips/
+cp engspchk-dict /usr/share/dict/
+vim -c PlugInstall
+wait
+vim -c PlugUpdate
+wait
+sudo apt install clang-format
+wait
+clang-format -dump-config -style=Google > .clang-format
+cd ~/.vim/plugged/YouCompleteMe
+python3 install.py --all
+
+#**************************************************************
+echo
+echo "${Green_font_prefix}Vim插件安装完成${Font_color_suffix}"
+echo "${Green_font_prefix}**************************************************************${Font_color_suffix}"
+echo "${Green_font_prefix}开始配置github${Font_color_suffix}"
+git config --global user.name "chengpengzhao"
+git config --global user.email "chengpeng_zhao@foxmail.com"
+git config --global core.autocrlf false
+git config --global core.filemode false
+git config --global core.safecrlf true
+git config --global core.quotepath false  #防止用tab键自动补全的中文文件名被转义
+git config --global core.pager cat    # 更改Git难受的分页器显示
+git config --global core.editor vim   #修改ecommit的ditor为vim
+git config --global alias.lg "log --color --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"             #让git log 更好看，配置自定义命令 git lg
+
+
+zsh
+source ~/.zshrc
