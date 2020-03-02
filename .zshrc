@@ -68,9 +68,8 @@ ZSH_THEME="ys"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
-# 取消git插件，因为拖慢了速度
 plugins=(
+  git
   autojump
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -91,8 +90,10 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -101,15 +102,30 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH=/home/zcp/.local/bin:$PATH
-source ~/OpenFOAM-v1906/etc/bashrc
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-export CFLAGS="-I/usr/local/include"
-export LDFLAGS="-L/usr/local/lib"
+alias ofv19='source $HOME/OpenFOAM/OpenFOAM-v1906/etc/bashrc ; echo "OpenFOAMv1906 is enabled."'
+alias of40='source $HOME/OpenFOAM/OpenFOAM-4.0/etc/bashrc WM_LABEL_SIZE=64 FOAMY_HEX_MESH=yes; echo "OpenFOAM-4.0 is enabled."'
+alias of5='source /opt/openfoam5/etc/bashrc; echo "OpenFOAM-5 is enabled."'
+alias of7='source /opt/openfoam7/etc/bashrc; echo "OpenFOAM-7 is enabled."'
+alias ofdev='source /opt/openfoam-dev/etc/bashrc; echo "OpenFOAM-dev is enabled."'
+alias of2='source $HOME/OpenFOAM/OpenFOAM-2.2.0/etc/bashrc; echo "OpenFOAM-2.2 is enabled."'
+export PATH=”$PATH:export PATH="$PATH:/usr/local/MATLAB/R2018b/bin/"
+#切换openfoam版本：
+# source $HOME/OpenFOAM/OpenFOAM-v1906/etc/bashrc
+ source /opt/openfoam-dev/etc/bashrc
+#source /opt/openfoam5/etc/bashrc
+alias of18='source $HOME/OpenFOAM/OpenFOAM-v1806/etc/bashrc '
 
-alias python='/usr/bin/python3'
-#
+#JDK-8
+export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_231 ## 这里要注意目录要换成自己解压的jdk 目录
+export JRE_HOME=${JAVA_HOME}/jre  
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
+export PATH=${JAVA_HOME}/bin:$PATH  
+
+
+export PATH=”$PATH:export PATH="$PATH:/home/zcp/DAKOTA/dakota_installation/bin"
+export PATH=”$PATH:export PATH="$PATH:/home/zcp/Desktop/Hexo_Site/node_modules/.bin"
+
 #  自定义快捷键
 alias st="cmd.exe /c start"
 alias q="exit"
