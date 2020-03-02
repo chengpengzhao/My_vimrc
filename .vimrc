@@ -459,10 +459,10 @@ autocmd Filetype markdown inoremap <F2> <br><br><Esc>o> *以下内容更新于<C
 
 "WSL下Vim无法直接访问Windows剪切板，故无法自动复制网址,改用snippet实现
 "插入图片，自动复制剪切板网址
-autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
+"autocmd Filetype markdown inoremap <localLeader>p ![](<C-R>+ "<++>")<++><Esc>F]i
 "
 ""插入地址，使用前确保剪切板已复制url
-autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
+"autocmd Filetype markdown inoremap <localLeader>a [](<C-R>+ "<++>")<++><Esc>F]i
 
 "分隔线
 autocmd Filetype markdown inoremap <localLeader>l <ESC>o--------<Enter>
