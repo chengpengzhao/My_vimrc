@@ -6,5 +6,5 @@ cp ~/.zshrc .
 git add -A
 echo -n  "please enter a commit ->"
 read  commit
-git commit -m "$commit"
+git commit -S -m "$commit"
 git push
