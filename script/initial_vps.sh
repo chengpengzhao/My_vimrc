@@ -57,8 +57,7 @@ then
 fi
 git clone https://github.com/chengpengzhao/My_vimrc.git
 cd My_vimrc
-git checkout ubuntu
-cp .vimrc ~/.vimrc
+cp '.vimrc(ssh)' ~/.vimrc
 cp .zshrc ~/.zshrc
 mkdir ~/.vim/UltiSnips
 cp ./Snippets/*.snippets ~/.vim/UltiSnips/
@@ -67,11 +66,6 @@ vim -c PlugInstall
 wait
 vim -c PlugUpdate
 wait
-sudo apt install clang-format -y
-wait
-clang-format -dump-config -style=Google > .clang-format
-cd ~/.vim/plugged/YouCompleteMe
-python3 install.py --all
 
 #**************************************************************
 echo
