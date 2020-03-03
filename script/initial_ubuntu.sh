@@ -75,7 +75,7 @@ echo "${Green_font_prefix}******************************************************
 echo "${Green_font_prefix}开始配置github${Font_color_suffix}"
 git config --global user.name "chengpengzhao"
 git config --global user.email "z609722559@gmail.com"
-git config --global user.signingkey A472BA0E758FC32B
+git config --global user.signingkey C2BE35A944AC73B1
 git config --global commit.gpgsign true
 git config --global core.autocrlf false
 git config --global core.filemode false
@@ -87,5 +87,9 @@ git config --global alias.lg "log --color --graph --abbrev-commit --decorate --f
 
 
 echo "${Green_font_prefix}github配置完成${Font_color_suffix}"
+
+echo "${Green_font_prefix}开始配置ssh私钥${Font_color_suffix}"
+gpg -o ~/.ssh/id_rsa --decrypt ./keys/ssh_id_rsa_encrypt
+
 zsh
 source ~/.zshrc
