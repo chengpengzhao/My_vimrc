@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cp ~/.vimrc ./.vimrc
+cp ~/.vimrc './.vimrc(WSL)'
 cp ~/.vim/UltiSnips/*.snippets ./Snippets/
-cp ~/.zshrc .
+cp ~/.zshrc '.zshrc(WSL)'
 git add -A
 echo -n  "please enter a commit ->"
 read  commit
