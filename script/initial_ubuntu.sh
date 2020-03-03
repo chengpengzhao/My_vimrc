@@ -88,8 +88,5 @@ git config --global alias.lg "log --color --graph --abbrev-commit --decorate --f
 
 echo "${Green_font_prefix}github配置完成${Font_color_suffix}"
 
-echo "${Green_font_prefix}开始配置ssh私钥${Font_color_suffix}"
-gpg -o ~/.ssh/id_rsa --decrypt ./keys/ssh_id_rsa_encrypt
-
 zsh
 source ~/.zshrc

@@ -14,6 +14,16 @@ ${Green_background_prefix}sudo su${Font_color_suffix} \
 命令获取临时ROOT权限（执行后可能会提示输入当前账号的密码）。\
 " && exit 1
 #******************************************************
+read -p "使用前请确保已经导入了GPG密钥，否则无法解密ssh的私钥文件（y/n）：" chid
+until [[ $chid =~ ^([y]|[n])$ ]]; do
+    read -p "使用前请确保已经导入了GPG密钥，否则无法解密ssh的私钥文件（y/n）："  chid
+done
+if [[ $chid == y ]]; then
+    :
+else [[ $chid == n ]]
+    exit 1;
+fi
+
 read -p "请输入待创建的用户名:" username
 if id -u $username >/dev/null 2>&1; then
 
@@ -36,7 +46,15 @@ else
     mkdir /home/${username}/.ssh
 fi
 cp ./keys/ssh_id_rsa.pub /home/${username}/.ssh/authorized_keys
+
+gpg -o ./keys/id_rsa --decrypt ./keys/ssh_id_rsa_encrypt
+
+wait
+mv ./keys/id_rsa /home/${username}/.ssh/
 chmod 600 /home/${username}/.ssh/authorized_keys
+cp /home/${username}/.ssh/authorized_keys /home/${username}/.ssh/id_rsa.pub
+chmod 777 /home/${username}/.ssh/id_rsa
+chmod 600 /home/${username}/.ssh/id_rsa.pub
 chmod 700 /home/${username}/.ssh
 [ $? == 0 ] && echo "SSH Key installed successfully!"
 
@@ -49,10 +67,17 @@ echo "Disabled empty password."
 sed -i '/PermitEmptyPasswords/c\PermitEmptyPasswords no' /etc/ssh/sshd_config
 echo "Enable SSh Authentication"
 sed -i '/PubkeyAuthentication/c\PubkeyAuthentication yes' /etc/ssh/sshd_config
-sudo bash -c "cat >> /etc/ssh/sshd_config" <<EOF
-RSAAuthentication yes #RSA认证
-UseDNS no        #加快ssh连接速度
-EOF
+if grep "RSAAuthentication" /etc/ssh/sshd_config >/dev/null  2>&1  ;then
+    sed -i '/RSAAuthentication/c\RSAAuthentication yes' /etc/ssh/sshd_config
+else
+    echo "RSAAuthentication yes #RSA认证" >> /etc/ssh/sshd_config
+fi
+if  grep "UseDNS" /etc/ssh/sshd_config >/dev/null  2>&1  ;then
+    sed -i '/UseDNS/c\UseDNS no' /etc/ssh/sshd_config
+else
+    echo "UseDNS no     #加快ssh连接速度" >> /etc/ssh/sshd_config
+fi
+
 echo "Change Port number"
 # 替换Port .*为Port $Port
 read -p "请指定自定义SSH端口号（可用范围为0-65535 推荐使用大端口号）：" Port;Port=${Port:-22233}
@@ -68,4 +93,7 @@ echo "中文化Linux"
 wget -N --no-check-certificate https://raw.githubusercontent.com/chengpengzhao/LocaleCN/master/LocaleCN.sh && bash LocaleCN.sh
 
 wait
-echo "脚本允许完成~"
+su - ${username} -c "eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_rsa "
+su - ${username} -c "ssh -T git@github.com"
+echo "脚本运行完成~"
+su -l ${username}
