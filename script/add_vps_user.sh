@@ -51,11 +51,7 @@ gpg -o ./keys/id_rsa --decrypt ./keys/ssh_id_rsa_encrypt
 
 wait
 mv ./keys/id_rsa /home/${username}/.ssh/
-chmod 600 /home/${username}/.ssh/authorized_keys
 cp /home/${username}/.ssh/authorized_keys /home/${username}/.ssh/id_rsa.pub
-chmod 777 /home/${username}/.ssh/id_rsa
-chmod 600 /home/${username}/.ssh/id_rsa.pub
-chmod 700 /home/${username}/.ssh
 [ $? == 0 ] && echo "SSH Key installed successfully!"
 
 #******************************************************
@@ -90,10 +86,16 @@ service sshd restart
 passwd -d root    #清除root密码,无法用su切换到root
 #******************************************************
 echo "中文化Linux"
-wget -N --no-check-certificate https://raw.githubusercontent.com/chengpengzhao/LocaleCN/master/LocaleCN.sh && bash LocaleCN.sh
+#wget -N --no-check-certificate https://raw.githubusercontent.com/chengpengzhao/LocaleCN/master/LocaleCN.sh && bash LocaleCN.sh
 
 wait
-su - ${username} -c "eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_rsa "
-su - ${username} -c "ssh -T git@github.com"
+sudo -u ${username} /bin/bash -c "sudo chmod -R 777 /home/${username}/.ssh"
+sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_rsa "
+wait
+sudo -u ${username} /bin/bash -c "ssh -T git@github.com"
+sudo -u ${username} /bin/bash -c "chmod 600 /home/${username}/.ssh/authorized_keys"
+sudo -u ${username} /bin/bash -c "chmod 600 /home/${username}/.ssh/id_rsa"
+sudo -u ${username} /bin/bash -c "chmod 600 /home/${username}/.ssh/id_rsa.pub"
+sudo -u ${username} /bin/bash -c "chmod 700 /home/${username}/.ssh"
 echo "脚本运行完成~"
 su -l ${username}
