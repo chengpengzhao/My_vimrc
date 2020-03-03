@@ -21,6 +21,7 @@ sudo apt-get install zsh -y && \
 sudo apt-get install tree -y && \
 sudo apt-get install wget -y && \
 sudo apt install build-essential cmake python3-dev -y && \
+sudo apt install gnupg -y && \
 sudo apt-get install python3-pip -y && \
 sudo apt-get install nodejs -y
 wait
@@ -73,7 +74,7 @@ echo "${Green_font_prefix}Vim插件安装完成${Font_color_suffix}"
 echo "${Green_font_prefix}**************************************************************${Font_color_suffix}"
 echo "${Green_font_prefix}开始配置github${Font_color_suffix}"
 git config --global user.name "chengpengzhao"
-git config --global user.email "chengpeng_zhao@foxmail.com"
+git config --global user.email "z609722559@gmail.com"
 git config --global user.signingkey A472BA0E758FC32B
 git config --global commit.gpgsign true
 git config --global core.autocrlf false
