@@ -93,9 +93,9 @@ sudo -u ${username} /bin/bash -c "sudo chmod -R 777 /home/${username}/.ssh"
 sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_rsa "
 wait
 sudo -u ${username} /bin/bash -c "ssh -T git@github.com"
-sudo -u ${username} /bin/bash -c "chmod 600 /home/${username}/.ssh/authorized_keys"
-sudo -u ${username} /bin/bash -c "chmod 600 /home/${username}/.ssh/id_rsa"
-sudo -u ${username} /bin/bash -c "chmod 600 /home/${username}/.ssh/id_rsa.pub"
-sudo -u ${username} /bin/bash -c "chmod 700 /home/${username}/.ssh"
+sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/authorized_keys"
+sudo -u ${username} /bin/bash -c "sudo chmod 777 /home/${username}/.ssh/id_rsa"
+sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/id_rsa.pub"
+sudo -u ${username} /bin/bash -c "sudo chmod 700 /home/${username}/.ssh"
 echo "脚本运行完成~"
 su -l ${username}

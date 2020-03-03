@@ -32,9 +32,6 @@ sudo dpkg -i ripgrep_11.0.2_amd64.deb
 wait
 yes yes|sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #安装oh-my-zsh
 chsh -s $(which zsh) #设置zsh为默认终端
-sudo apt-get install autojump -y && \
-git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions && \
-git clone git://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting  #安装autojump、zsh-autosuggestions、zsh-syntax-highlighting三个插件
 wait
 echo
 echo "${Green_font_prefix}第一阶段安装完成~${Font_color_suffix}"
@@ -57,7 +54,6 @@ then
 fi
 git clone https://github.com/chengpengzhao/My_vimrc.git
 cd My_vimrc
-git checkout ubuntu
 cp .vimrc ~/.vimrc
 cp .zshrc ~/.zshrc
 mkdir ~/.vim/UltiSnips
@@ -93,5 +89,10 @@ git config --global alias.lg "log --color --graph --abbrev-commit --decorate --f
 
 echo "${Green_font_prefix}github配置完成${Font_color_suffix}"
 cd
+sudo /bin/zsh -c "sudo apt-get install autojump -y "
+sudo /bin/zsh -c " git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions"
+sudo /bin/zsh -c " git clone git://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting  #安装autojump、zsh-autosuggestions、zsh-syntax-highlighting三个插件"
+vim ~/.zshrc
+wait
+sudo /bin/zsh -c "source ~/.zshrc"
 zsh
-source ~/.zshrc
