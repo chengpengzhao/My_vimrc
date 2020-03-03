@@ -55,7 +55,7 @@ then
 fi
 git clone https://github.com/chengpengzhao/My_vimrc.git
 cd My_vimrc
-cp .vimrc ~/.vimrc
+cp '.vimrc(WSL)' ~/.vimrc
 cp .zshrc ~/.zshrc
 mkdir ~/.vim/UltiSnips
 cp ./Snippets/*.snippets ~/.vim/UltiSnips/
