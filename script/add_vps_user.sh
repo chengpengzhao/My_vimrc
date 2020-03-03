@@ -85,7 +85,8 @@ echo "中文化Linux"
 wget -N --no-check-certificate https://raw.githubusercontent.com/chengpengzhao/LocaleCN/master/LocaleCN.sh && bash LocaleCN.sh
 wait
 #******************************************************
-sudo -u ${username} /bin/bash -c "sudo chmod -R 777 /home/${username}/.ssh"
+# username=zcp && \
+sudo -u ${username} /bin/bash -c "sudo chmod -R 700 /home/${username}/.ssh"
 wait
 sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_rsa "
 wait
@@ -93,7 +94,6 @@ sudo -u ${username} /bin/bash -c "ssh -T git@github.com"
 wait
 sudo -u ${username} /bin/bash -c "sudo chown -R ${username}:${username} /home/${username}/.ssh" && \
 sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/authorized_keys" && \
-sudo -u ${username} /bin/bash -c "sudo chmod 777 /home/${username}/.ssh/id_rsa" && \
 sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/id_rsa.pub" && \
 sudo -u ${username} /bin/bash -c "sudo chmod 700 /home/${username}/.ssh"
 echo 重启SSH服务...
