@@ -79,7 +79,7 @@ read -p "请指定自定义SSH端口号（可用范围为0-65535 推荐使用大
 until  [[ $Port =~ ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-5]{2}[0-3][0-5])$ ]];do
     read -p "请重新键入SSH自定义端口号：" Port;Port=${Port:-22233};
 done
-sed -i "s/Port .*/Port $Port/" /etc/ssh/sshd_config
+sed -i "/Port/c\Port $Port/" /etc/ssh/sshd_config
 #******************************************************
 echo "中文化Linux"
 wget -N --no-check-certificate https://raw.githubusercontent.com/chengpengzhao/LocaleCN/master/LocaleCN.sh && bash LocaleCN.sh
@@ -89,12 +89,13 @@ sudo -u ${username} /bin/bash -c "sudo chmod -R 777 /home/${username}/.ssh" && \
 sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_rsa "
 wait
 sudo -u ${username} /bin/bash -c "ssh -T git@github.com" && \
+sudo chown -R ${username}:${username} /home/${username}/.ssh
 sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/authorized_keys" && \
 sudo -u ${username} /bin/bash -c "sudo chmod 777 /home/${username}/.ssh/id_rsa" && \
 sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/id_rsa.pub" && \
 sudo -u ${username} /bin/bash -c "sudo chmod 700 /home/${username}/.ssh"
 echo 重启SSH服务...
-service sshd restart
+sudo service sshd restart
 passwd -d root    #清除root密码,无法用su切换到root
 echo "脚本运行完成~"
 su -l ${username}
