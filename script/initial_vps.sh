@@ -30,7 +30,7 @@ wait
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb &&\
 sudo dpkg -i ripgrep_11.0.2_amd64.deb
 wait
-yes yes|sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #安装oh-my-zsh
+sudo -u ${USER} /bin/bash -c 'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #安装oh-my-zsh'
 chsh -s $(which zsh) #设置zsh为默认终端
 wait
 echo
