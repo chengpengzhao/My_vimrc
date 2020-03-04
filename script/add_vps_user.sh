@@ -88,7 +88,7 @@ wait
 # username=zcp && \
 sudo -u ${username} /bin/bash -c "sudo chmod -R 700 /home/${username}/.ssh"
 wait
-sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_rsa "
+sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa "
 wait
 sudo -u ${username} /bin/bash -c "ssh -T git@github.com"
 wait
