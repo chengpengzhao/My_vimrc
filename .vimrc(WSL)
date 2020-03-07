@@ -679,6 +679,9 @@ let g:ycm_min_num_of_chars_for_completion = 1
 "自动开启补全
 let g:ycm_auto_trigger = 1
 
+"关闭YCM的自动诊断，避免和ALE冲突
+let g:ycm_show_diagnostics_ui = 0
+
 "映射
 let g:ycm_key_list_stop_completion = ['o']
 let g:ycm_key_list_select_completion = ['<Down>']
@@ -698,18 +701,20 @@ autocmd FileType c ClangFormatAutoEnable
 let g:clang_format#detect_style_file = 1
 "*****************************************************************************
 "ale 设置
-"let g:ale_sign_column_always = 1
+let g:ale_sign_column_always = 0
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %code: %%s [%severity%]'
 " use quickfix list instead of the loclist
-nmap <silent> [ <Plug>(ale_previous_wrap)
-nmap <silent> ] <Plug>(ale_next_wrap)
+nnoremap <silent> [ <Plug>(ale_previous_wrap)
+nnoremap <silent> ] <Plug>(ale_next_wrap)
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_enter = 0
+let g:ale_lint_on_enter = 1
 "*****************************************************************************
 "gutentags配置
 
@@ -735,11 +740,6 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 "Asyncrun
 " 自动打开 quickfix window ，高度为 6
 let g:asyncrun_open = 6
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
-" if you don't want linters to run on opening a file
-let g:ale_lint_on_enter = 0
 
 " 任务结束时候响铃提醒
 let g:asyncrun_bell = 1
