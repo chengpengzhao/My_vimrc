@@ -537,7 +537,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " 文本对象
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-syntax'
+"下面这个好像没啥效果
+"Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
 Plug 'sgur/vim-textobj-parameter'
 
@@ -681,7 +682,12 @@ let g:ycm_auto_trigger = 1
 
 "关闭YCM的自动诊断，避免和ALE冲突
 let g:ycm_show_diagnostics_ui = 0
-
+" 在注释输入中也能补全
+let g:ycm_complete_in_comments = 1
+" 在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1
+" 注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
 "映射
 let g:ycm_key_list_stop_completion = ['o']
 let g:ycm_key_list_select_completion = ['<Down>']
@@ -693,6 +699,7 @@ let g:ycm_filetype_blacklist = {
       \'foam256_general': 1,
       \}
 let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
+
 "*****************************************************************************
 "vim-clang-format设置
 let g:clang_format#command = 'clang-format'
@@ -757,11 +764,11 @@ nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 
 " 编译单文件,加上了GSL库
 " gcc -Wall选项：打开所有警告提示
-nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT).o" <cr>
 "nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
-nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT).o" <cr>
 "}}}
 "=========================================================================="
 "" Functions{{{
