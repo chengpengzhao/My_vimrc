@@ -102,8 +102,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PATH=/home/zcp/.local/bin:$PATH
-source $HOME/PATO_v2.3.0/bashrc
-source $HOME/OpenFOAM/OpenFOAM-7/etc/bashrc
+#source $HOME/PATO_v2.3.0/bashrc
+#source $HOME/OpenFOAM/OpenFOAM-7/etc/bashrc
 export GPG_TTY=$(tty)
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export CFLAGS="-I/usr/local/include"
