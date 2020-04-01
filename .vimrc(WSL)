@@ -815,6 +815,9 @@ augroup END
 
 set autoread
 
+"pip3 install --upgrade fprettify
+"用法： 选中全部，输入gq
+autocmd Filetype fortran setlocal formatprg=fprettify\ --silent
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
