@@ -102,15 +102,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PATH=/home/zcp/.local/bin:$PATH
-#source $HOME/PATO_v2.3.0/bashrc
-#source $HOME/OpenFOAM/OpenFOAM-7/etc/bashrc
+source $HOME/PATO_v2.3.0/bashrc
+source $HOME/OpenFOAM-7/etc/bashrc
 export GPG_TTY=$(tty)
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export CFLAGS="-I/usr/local/include"
 export LDFLAGS="-L/usr/local/lib"
 
 alias python='/usr/bin/python3'
-#
+
 #  自定义快捷键
 alias st="cmd.exe /c start"
 alias q="exit"
@@ -122,3 +122,6 @@ alias gp="git push"
 alias gc="git checkout"
 alias gb="git branch"
 alias gbc="git checkout -b"
+
+# 子系统用
+alias wf='explorer.exe .'
