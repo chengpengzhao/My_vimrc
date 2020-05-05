@@ -110,6 +110,12 @@ export NODE_PATH=$NODE_HOME/lib/node_modules
 source $HOME/OpenFOAM/OpenFOAM-4.0/etc/bashrc
 source $HOME/OpenFOAM/PATO_v2.2.0/bashrc
 alias ofv19="source $HOME/OpenFOAM/OpenFOAM-v1906/etc/bashrc"
+
+export MPP_DIRECTORY=/home/zcp/Desktop/Mutationpp
+export MPP_DATA_DIRECTORY=$MPP_DIRECTORY/data
+export PATH=$MPP_DIRECTORY/install/bin:$PATH
+export LD_LIBRARY_PATH=$MPP_DIRECTORY/install/lib:$LD_LIBRARY_PATH  # Change <LIBDIR> with `lib` or `lib64`
+
 #  自定义快捷键
 alias q="exit"
 

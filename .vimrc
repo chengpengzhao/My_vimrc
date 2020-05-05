@@ -1,6 +1,6 @@
 "status line settings{{{
 
-"总是显示状态栏"
+"总是显示状态栏
 set laststatus=2
 
 "显示当前搜索时是否高亮
@@ -326,7 +326,7 @@ noremap <C-y> "+y
 noremap  <Space> :
 
 "打开OpenFOAM相关文件时为了方便输入命令加了下面这个映射,!表示输入系统shell命令
-autocmd Filetype foam256* noremap  <Space> :!
+"autocmd Filetype foam256* noremap  <Space> :!
 
 "行光标移动,这个挺方便的，header与end，也没见有冲突
 noremap H   ^
@@ -370,6 +370,9 @@ function! s:VsetSearch()
     let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n','g')
     let @s= temp
 endfunction
+
+"快速删除当前缓冲区并返回上一缓冲区（不关闭窗口)
+nnoremap <silent> d :bprevious<bar>bdelete #<CR>
 
 
 "}}}
