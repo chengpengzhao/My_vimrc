@@ -338,7 +338,7 @@ nnoremap  qw    :wq<CR>
 nnoremap  qq    :q!<CR>
 
 "宏名称统一用a，简化按键,qa开始记录，q结束，再按@即可
-nnoremap  @  @a
+"nnoremap  @  @a
 
 "模仿shell快捷键
 cnoremap <C-a> <Home>
