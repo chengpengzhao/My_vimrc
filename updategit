@@ -4,6 +4,7 @@
 cp ~/.vimrc ./.vimrc
 cp ~/.vim/UltiSnips/*.snippets ./Snippets/
 cp ~/.zshrc '.zshrc(ubuntu)'
+cp -r ~/.config/terminator .
 git add -A
 echo -n  "please enter a commit ->"
 read  commit
