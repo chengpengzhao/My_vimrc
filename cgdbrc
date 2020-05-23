@@ -1,0 +1,10 @@
+set ignorecase
+set tabstop=4
+set winsplitorientation=vertical
+set executinglinedisplay=shortarrow
+set hlsearch
+map n :next<cr>
+map s :step<cr>
+map r :run<cr>
+map c :continue<cr>
+map f :finish<cr>

@@ -2,6 +2,7 @@
 
 #cp ~/.vimrc './.vimrc(WSL)'
 cp ~/.vimrc ./.vimrc
+cp ~/.cgdb/cgdbrc ./cgdbrc
 cp ~/.vim/UltiSnips/*.snippets ./Snippets/
 cp ~/.zshrc '.zshrc(ubuntu)'
 cp -r ~/.config/terminator .

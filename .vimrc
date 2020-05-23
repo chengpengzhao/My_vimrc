@@ -209,10 +209,13 @@ runtime macros/matchit.vim
 "显示当前的行号(相对)：
 set ruler
 set number
-set relativenumber
+"set relativenumber
+augroup relative_numbser
+    autocmd!
+    autocmd InsertEnter * :set norelativenumber
+    autocmd InsertLeave * :set relativenumber
+augroup END
 
-""autocmd InsertEnter * :set norelativenumber "插入模式下撤下相对行号
-""autocmd InsertLeave * :set relativenumber   "普通模式下加上相对行号
 
 "需要记住多少次历史操作
 set history=1000
@@ -655,8 +658,8 @@ noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
-noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
-noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+"noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+"noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
 " search visually selected text literally
 xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
 noremap go :<C-U>Leaderf! rg --recall<CR>
@@ -763,8 +766,8 @@ nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 
 " 编译单文件,加上了GSL库
 " gcc -Wall选项：打开所有警告提示
-nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-"nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+"nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
 nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
