@@ -3,8 +3,19 @@ set tabstop=4
 set winsplitorientation=vertical
 set executinglinedisplay=shortarrow
 set hlsearch
+set timeoutlen=250
 map n :next<cr>
 map s :step<cr>
 map r :run<cr>
 map c :continue<cr>
 map f :finish<cr>
+map u iuntil<space>
+map q :quit<cr>
+map b iinfo<space>break<cr>
+map w i<space>watch<space>
+map iw iinfo<space>watch<cr>
+map ip iinfo<space>program<cr>
+map id iinfo<space>display<cr>
+map de i<space>delete<space>
+map db i<space>disable<space>
+map di i<space>display<space>
