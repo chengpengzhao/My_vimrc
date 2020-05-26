@@ -19,3 +19,4 @@ map id iinfo<space>display<cr>
 map de i<space>delete<space>
 map db i<space>disable<space>
 map di i<space>display<space>
+map y i<space>y<cr>

@@ -209,7 +209,7 @@ runtime macros/matchit.vim
 "显示当前的行号(相对)：
 set ruler
 set number
-"set relativenumber
+set relativenumber
 augroup relative_numbser
     autocmd!
     autocmd InsertEnter * :set norelativenumber
