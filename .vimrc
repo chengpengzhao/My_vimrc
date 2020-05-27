@@ -78,6 +78,7 @@ set timeout ttimeoutlen=1000
 
 "ctags 配置，使用：输入 ctags -R生成tag文件
 set tags=./.tags;,.tags
+set tags+=$HOME/.cache/tags/home-zcp-Desktop-zcppp-petsc-.tags
 
 if exists('$SHELL')
     set shell=$SHELL

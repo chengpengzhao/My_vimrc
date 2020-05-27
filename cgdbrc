@@ -11,12 +11,12 @@ map c :continue<cr>
 map f :finish<cr>
 map u iuntil<space>
 map q :quit<cr>
-map b iinfo<space>break<cr>
+map b iinfo<space>break<cr><Esc>
 map w i<space>watch<space>
-map iw iinfo<space>watch<cr>
-map ip iinfo<space>program<cr>
-map id iinfo<space>display<cr>
+map iw iinfo<space>watch<cr><Esc>
+map ip iinfo<space>program<cr><Esc>
+map id iinfo<space>display<cr><Esc>
 map de i<space>delete<space>
 map db i<space>disable<space>
 map di i<space>display<space>
-map y i<space>y<cr>
+map y iy<cr><Esc>
