@@ -37,8 +37,8 @@ XTerm*fontMenu*fontdefault*Label: Default
 XTerm*faceName: Ubuntu Mono:antialias=True:pixelsize=16
 XTerm*boldFont: Ubuntu Mono:antialias=True:style=Bold:pixelsize=16
 ! Chinese Font
-XTerm*faceNameDoublesize: WenQuanYi Zen Hei Mono:pixelsize=15:antialias=True
-XTerm*XimFont: WenQuanYi Zen Hei Mono
+XTerm*faceNameDoublesize: AR PL SungtiL GB:pixelsize=15:antialias=True
+XTerm*XimFont: AR PL SungtiL GB
 
 
 ! Themes
