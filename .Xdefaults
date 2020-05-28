@@ -1,0 +1,71 @@
+! Xterm Configration Version 1.0
+! A mixed version for XTerm setting from Internet
+! @author 小指
+! @email qingzz@qingzz.cn
+! ~/.Xdefaults
+
+! xrdb -load ~/.Xdefaults
+
+! Information
+XTerm*termName: Xterm-256Color
+
+
+! Attribute
+XTerm*loginShell: True
+XTerm.borderLess: True
+XTerm.cursorBlink: False
+XTerm*visualBell: False
+XTerm*marginBell: False
+XTerm*alwaysHighlight: True
+XTerm*SaveLines: 2048
+XTerm.geometry: 80x40
+XTerm*colorUL: #FFFF00
+XTerm*colorBD: #FFFFFF
+XTerm*preeditType: Root
+
+
+! Fonts & Locale
+XTerm.utf8: True
+XTerm*locale: True
+XTerm.cjkWidth: True
+XTerm*utf8Title: True
+XTerm*xftAntialias: True
+! Chinese Input
+XTerm*inputMethod: fcitx
+XTerm*fontMenu*fontdefault*Label: Default
+! English Font
+XTerm*faceName: Ubuntu Mono:antialias=True:pixelsize=16
+XTerm*boldFont: Ubuntu Mono:antialias=True:style=Bold:pixelsize=16
+! Chinese Font
+XTerm*faceNameDoublesize: WenQuanYi Zen Hei Mono:pixelsize=15:antialias=True
+XTerm*XimFont: WenQuanYi Zen Hei Mono
+
+
+! Themes
+XTerm*scrollBar: False
+XTerm*jumpScroll: True
+XTerm*scrollKey: False
+XTerm*rightScrollBar: False
+XTerm*scrollTtyOutput: False
+XTerm*faceSize: 12
+XTerm*faceSize1: 12
+XTerm*faceSize2: 12
+XTerm*faceSize3: 12
+XTerm*faceSize4: 12
+XTerm*faceSize5: 12
+XTerm*faceSize6: 12
+XTerm*background: #363636
+XTerm*foreground: #FFFFFF
+
+
+! print color and bold/underline attributes
+XTerm*printAttributes: 2
+XTerm*printerCommand: cat > ~/xtermdump
+
+
+! Mouse selecting to copy, ctrl-v to paste
+! Ctrl p to print screen content to file
+XTerm*VT100.Translations: #override \
+Ctrl <KeyPress> V: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+<BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+Ctrl <KeyPress> P: print() \n

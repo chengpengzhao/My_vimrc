@@ -1,6 +1,6 @@
 set ignorecase
 set tabstop=4
-set winsplitorientation=vertical
+#set winsplitorientation=vertical
 set executinglinedisplay=shortarrow
 set hlsearch
 set timeoutlen=250
@@ -19,4 +19,6 @@ map id iinfo<space>display<cr><Esc>
 map de i<space>delete<space>
 map db i<space>disable<space>
 map di i<space>display<space>
-map y iy<cr><Esc>
+
+imap VV call<space>VecView(,0)<left><left><left>
+imap MV call<space>MatView(,0)<left><left><left>
