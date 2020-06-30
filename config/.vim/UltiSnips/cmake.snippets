@@ -1,0 +1,209 @@
+# i 表示片段可在句中被触发。默认是只有在前面有多个空格或者在行首时才会被触发。
+# A 表示片段会被自动触发
+# w 表示片段只会在关键词为单独单词的情况下被触发
+# r 表示关键词使用正则表达式。正则表达式必须用 两个引号' '包围
+# b 表示只有在一行的开头才会被触发
+#=================================================================================================
+priority 10000
+snippet min  "minimum required " b
+cmake_minimum_required(VERSION ${1:3.5.0} FATAL_ERROR)
+$0
+endsnippet
+# *****************************************************************************
+snippet pro "create a project " b
+project (${1:NAME} VERSION ${2:1.0} DESCRIPTION "${3:description}" LANGUAGES ${4:CXX})
+$0
+endsnippet
+# *****************************************************************************
+snippet exe "add executable " b
+add_executable(${1:NAME} ${2:bin})
+$0
+endsnippet
+# *****************************************************************************
+priority 10000
+snippet lib "add a library" b
+add_library(${1:NAME} ${2:STATIC} ${3:name.cpp})
+$0
+endsnippet
+# *****************************************************************************
+priority 10000
+snippet link "link a library" b
+target_link_libraries(${1:EXE_NAME} ${2:PUBLIC} ${3:LIB_NAME})
+$0
+endsnippet
+# *****************************************************************************
+snippet if "if else" b
+if(${1:VAR_NAME})
+    $2
+else(${3: })
+    $4
+endif()
+$0
+endsnippet
+# *****************************************************************************
+snippet fore "for each" b
+foreach(${1:VAR_NAME} ${2: }})
+    $3
+endforeach()
+$0
+endsnippet
+# *****************************************************************************
+priority 10000
+snippet incl "include directories" b
+target_include_directories(${1:NAME} ${2:PUBLIC} ${3:INCLUDE_DIR})
+$0
+endsnippet
+# *****************************************************************************
+snippet conf "configure file" b
+configure_file(${1:NAME.h.in} ${2:NAME.h})
+$0
+endsnippet
+# *****************************************************************************
+snippet aux "aux source directory" b
+aux_source_directory(${1:PATH} ${2:VAR})
+$0
+endsnippet
+# *****************************************************************************
+snippet opt "option" b
+option(${1:VAR} "${2:DESCRIPTION}" ${3:OFF})
+$0
+endsnippet
+# *****************************************************************************
+snippet sub "sub directory" b
+add_subdirectory(${1:src})
+$0
+endsnippet
+# *****************************************************************************
+snippet li "list" b
+list(${1:APPEND} ${2:VAR} ${3:TARGET})
+$0
+endsnippet
+# *****************************************************************************
+snippet ins "install" b
+install(${1:TARGETS} ${2:NAME} ${3:DESTINATION} ${4:lib})
+$0
+endsnippet
+# *****************************************************************************
+priority 10000
+snippet test "add a test" b
+enable_testing()
+add_test(${1:NAME} ${2:test_name} ${3:COMMAND} ${4:your_command})
+set_tests_properties($2 PROPERTIES ${5:PASS_REGULAR_EXPRESSION} ${6:"Usage:.*number"})
+$0
+endsnippet
+snippet tes "just add a test" b
+add_test(${1:NAME} ${2:test_name} ${3:COMMAND} ${4:your_command})
+$0
+endsnippet
+# *****************************************************************************
+snippet func "function" b
+function(${1:NAME} ${2:args})
+    $3
+endfunction($1)
+$0
+endsnippet
+# *****************************************************************************
+snippet checks "check symbol exists" b
+include(CheckSymbolExists)
+check_symbol_exists(${1:sym_name} ${2:"file_name.h"} ${3:VAR_NAME})
+$0
+endsnippet
+snippet chs "just check symbol exists" b
+check_symbol_exists(${1:sym_name} ${2:"file_name.h"} ${3:VAR_NAME})
+$0
+endsnippet
+# *****************************************************************************
+snippet cust "add custom command" b
+add_custom_command(
+  OUTPUT ${1:output_position}
+  COMMAND ${2:command_name})
+$0
+endsnippet
+# *****************************************************************************
+snippet pack "build an installer" b
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set(CPACK_PACKAGE_VERSION_MAJOR "${${1:NAME}_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${$1_VERSION_MINOR}")
+include(CPack)
+$0
+endsnippet
+# *****************************************************************************
+snippet cust "add custom command" b
+add_custom_command(
+  OUTPUT ${1:output_position}
+  COMMAND ${2:command_name})
+$0
+endsnippet
+# *****************************************************************************
+snippet mes "add an output message" b
+message(STATUS "${1:your_message}")
+$0
+endsnippet
+# *****************************************************************************
+snippet depen "NAME_1 depends on NAME_2" b
+cmake_dependent_option(
+${1:NAME_1} "${2:name1_description}" ${3:ON}
+"${2:NAME_2}" ${4:ON})
+$0
+endsnippet
+# *****************************************************************************
+snippet compi "compile options" b
+list(APPEND ${1:flags} "${2:-Wall}")
+target_compile_options(${3:TARGET} ${4:PRIVATE} $1 )
+$0
+endsnippet
+# *****************************************************************************
+snippet tarp "target properties" b
+set_target_properties(${1:TARGET}
+    PROPERTIES
+    ${2:CXX_STANDARD} ${3:14}
+    $4)
+$0
+endsnippet
+# *****************************************************************************
+snippet fore "for each" b
+foreach(${1:i} IN LISTS ${2:list_name})
+    $3
+endforeach()
+$0
+endsnippet
+# *****************************************************************************
+snippet sys_detect "print current system" b
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  message(STATUS "Configuring on/for Linux")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+  message(STATUS "Configuring on/for macOS")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  message(STATUS "Configuring on/for Windows")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "AIX")
+  message(STATUS "Configuring on/for IBM AIX")
+else()
+  message(STATUS "Configuring on/for ${CMAKE_SYSTEM_NAME}")
+endif()
+$0
+endsnippet
+# *****************************************************************************
+snippet cpub "detect cpu bits" b
+# let the preprocessor know about the size of void *
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  message(STATUS "Target is 64 bits")
+else()
+  message(STATUS "Target is 32 bits")
+endif()
+$0
+endsnippet
+# *****************************************************************************
+snippet cput "detect cpu type" b
+# let the preprocessor know about the host processor architecture
+if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i386")
+  message(STATUS "i386 architecture detected")
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i686")
+  message(STATUS "i686 architecture detected")
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
+  message(STATUS "x86_64 architecture detected")
+else()
+  message(STATUS "host processor architecture is unknown")
+endif()
+$0
+endsnippet

@@ -1,26 +1,21 @@
 #!/usr/bin/env bash
 cd ~ && mkdir bitwarden && cd bitwarden
 cat >> docker-compose.yml << EOF
-version: '3'
+version: "3"
 
 services:
   bitwarden:
-    image: bitwardenrs/server:latest
-    container_name: bitwarden
+    image: bitwardenrs/server
     restart: always
-    volumes:
-      - ./data:/data
-    env_file:
-      - config.env
     ports:
-      - "8081:80"
-EOF
-cat >> config.env << EOF
-DOMAIN=https://bw.example.com
-DATABASE_URL=/data/bitwarden.db
-ROCKET_WORKERS=10
-WEB_VAULT_ENABLED=true
-SIGNUPS_ALLOWED=true
+    - "8080:80"
+    - "8081:3012"
+    volumes:
+      - ./bw-data:/data
+    environment:
+      WEBSOCKET_ENABLED: "true"
+      SIGNUPS_ALLOWED: "true"
+      WEB_VAULT_ENABLED: "true"
 EOF
 docker-compose up -d
 wait

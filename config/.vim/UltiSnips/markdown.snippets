@@ -1,0 +1,497 @@
+# vim:set foldenable foldmethod=marker:
+
+# 定义math区域，snippets只在该区域生效，要求Vim能识别当前区域（安装Vim-markdown等插件）
+# i 表示片段可在句中被触发。默认是只有在前面有多个空格或者在行首时才会被触发。
+# A 表示片段会被自动触发
+# w 表示片段只会在关键词为单独单词的情况下被触发
+# r 表示关键词使用正则表达式。正则表达式必须用 两个引号' '包围
+# b 表示只有在一行的开头才会被触发
+# Functions{{{
+global !p
+texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C',
+'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS',
+'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+
+texIgnoreMathZones = ['texMathText']
+
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+
+ignore = texIgnoreMathZoneIds[0]
+
+def math():
+    synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+    try:
+        first = next(
+            i for i in reversed(synstackids)
+            if i in texIgnoreMathZoneIds or i in texMathZoneIds
+        )
+        return first != ignore
+    except StopIteration:
+        return False
+endglobal
+
+# 创建markdown table用
+priority 500
+global !p
+# A overkill(dirty) table with automatic alignment feature
+def create_table(snip):
+    # retrieving single line from current string and treat it like tabstops count
+    placeholders_string = snip.buffer[snip.line].strip()
+    rows_amount = int(placeholders_string[0])
+    columns_amount = int(placeholders_string[1])
+    prefix_str = "from vimsnippets import display_width;"
+    # erase current line
+    snip.buffer[snip.line] = ""
+    # create anonymous snippet with expected content and number of tabstops
+    anon_snippet_title = "| "
+    anon_snippet_delimiter = "|"
+    for col in range(1, columns_amount+1):
+        sync_rows = [x*columns_amount+col for x in range(rows_amount+1)]
+        sync_str = ",".join(["t[{0}]".format(x) for x in sync_rows])
+        max_width_str = "max(list(map(display_width, [" + sync_str + "])))"
+        cur_width_str = "display_width(t[" + str(col) + "])"
+        rv_val = "(" + max_width_str + "-" + cur_width_str + ")*' '"
+        anon_snippet_title += "${" + str(col)  + ":head" + str(col)\
+            + "}`!p " + prefix_str + "snip.rv=" + rv_val + "` | "
+        anon_snippet_delimiter += ":`!p " + prefix_str + "snip.rv = "\
+            + max_width_str + "*'-'" + "`-|"
+    anon_snippet_title += "\n"
+    anon_snippet_delimiter += "\n"
+    anon_snippet_body = ""
+    for row in range(1, rows_amount+1):
+        body_row = "| "
+        for col in range(1, columns_amount+1):
+            sync_rows = [x*columns_amount+col for x in range(rows_amount+1)]
+            sync_str = ",".join(["t[{0}]".format(x) for x in sync_rows])
+            max_width_str = "max(list(map(display_width, [" + sync_str + "])))"
+            cur_width_str = "display_width(t[" + str(row*columns_amount+col) + "])"
+            rv_val = "(" + max_width_str + "-" + cur_width_str + ")*' '"
+            placeholder = "R{0}C{1}".format(row, col)
+            body_row += "${" + str(row*columns_amount+col)  + ":" + placeholder\
+                + "}`!p " + prefix_str + "snip.rv=" + rv_val + "` | "
+        body_row += "\n"
+        anon_snippet_body += body_row
+    anon_snippet_table = anon_snippet_title + anon_snippet_delimiter + anon_snippet_body
+    # expand anonymous snippet
+    snip.expand_anon(anon_snippet_table)
+endglobal
+#}}}
+#=================================================================================================
+#写博客用{{{
+
+#插入标题
+snippet title "new post"
+---
+title:    "$1"
+date:    `!v strftime("%Y-%m-%d")`
+author:    "zcp"
+img:    "$2"
+top:    ${3:false}
+cover:    ${4:true}
+coverImg:    "$2"
+password:    ${5:}
+toc:    ${6:true}
+mathjax:    ${7:false}
+summary:    ${8:}
+categories:
+    -  [ ${9: ${10: $13 ]
+    -  [ $12 } ]
+    -  [ $11 } ]
+tags: 
+    -  ${14: ${15: $18 
+    -  $17 } 
+    -  $16 } 
+
+---
+
+$0
+endsnippet
+# *****************************************************************************
+#插入行内公式
+snippet /e "Math" iA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$2
+endsnippet
+# *****************************************************************************
+#插入link
+snippet /a "Link to something" i
+[${1:${VISUAL:Text}}](${2:http://www.url.com})$0
+endsnippet
+
+#插入img
+snippet /p "Image"  i
+![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
+endsnippet
+#插入table
+post_jump "create_table(snip)"
+snippet "tb([1-9][1-9])" "Fancy table" br
+`!p snip.rv = match.group(1)`
+endsnippet
+
+snippet em "markdown空格"  i
+&emsp;
+endsnippet
+
+snippet br "markdown换行"  i
+<br>
+endsnippet
+#}}}
+#=================================================================================================
+# LaTeX公式部分：
+
+# *****************************************************************************
+# 上下标{{{
+
+#输入字母加一个数字，自动将数字作为下标
+context "math()"
+snippet '([A-Za-z])(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+endsnippet
+
+#下标,多于1个字符时加括号
+context "math()"
+snippet '([^\s])_([^\s\{\}])' "auto subscript2" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`$1}
+endsnippet
+
+#上标
+context "math()"
+snippet '([^\s])\^([^\s\{\}])' "superscript" wrA
+`!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`$1}
+endsnippet
+
+# 平均数（上方一横）
+context "math()"
+snippet 'avg\((.*)\)' "average" wrA
+\\overline{`!p snip.rv = match.group(1)`}
+endsnippet
+
+# 矢量符号
+context "math()"
+snippet 'vec\((.*)\)' "vector" wrA
+\\boldsymbol{`!p snip.rv = match.group(1)`}
+endsnippet
+
+#}}}
+# *****************************************************************************
+# 希腊字母{{{
+
+# Α α
+context "math()"
+snippet '([Aa])lp' "alpha" wr
+\\`!p snip.rv = match.group(1)`lpha 
+endsnippet
+
+# Β β
+context "math()"
+snippet '([Bb])et' "beta" wr
+\\`!p snip.rv = match.group(1)`eta 
+endsnippet
+
+# Γ γ
+context "math()"
+snippet '([Gg])am' "gamma" wr
+\\`!p snip.rv = match.group(1)`amma 
+endsnippet
+
+# Δ δ
+context "math()"
+snippet '([Dd])el' "delta" wr
+\\`!p snip.rv = match.group(1)`elta 
+endsnippet
+
+# Δ*Δ
+context "math()"
+snippet 'nab' "nabla" wr
+\\nabla 
+endsnippet
+
+# Ε ε
+context "math()"
+snippet '([Ee])ps' "epsilon" wr
+\\`!p snip.rv = match.group(1)`psilon 
+endsnippet
+
+# Ζ ζ
+context "math()"
+snippet '([Zz])et' "zeta" wr
+\\`!p snip.rv = match.group(1)`eta 
+endsnippet
+
+# Η η
+context "math()"
+snippet '([Ee])ta' "eta" wr
+\\`!p snip.rv = match.group(1)`ta 
+endsnippet
+
+# Θ θ
+context "math()"
+snippet '([Tt])he' "theta" wr
+\\`!p snip.rv = match.group(1)`heta 
+endsnippet
+
+# Ι ι
+context "math()"
+snippet '([Ii])ot' "Iota" wr
+\\`!p snip.rv = match.group(1)`ota 
+endsnippet
+
+# Κ κ
+context "math()"
+snippet '([Kk])ap' "kappa" wr
+\\`!p snip.rv = match.group(1)`appa 
+endsnippet
+
+# Λ λ
+context "math()"
+snippet '([Ll])am' "lambda" wr
+\\`!p snip.rv = match.group(1)`ambda 
+endsnippet
+
+# Μ μ
+context "math()"
+snippet '([Mm])u' "mu" wr
+\\`!p snip.rv = match.group(1)`u 
+endsnippet
+
+# Ν ν
+context "math()"
+snippet '([Nn])u' "nu" wr
+\\`!p snip.rv = match.group(1)`u 
+endsnippet
+
+# Ξ ξ
+context "math()"
+snippet '([Xx])i' "xi" wr
+\\`!p snip.rv = match.group(1)`i 
+endsnippet
+
+# Ο ο
+context "math()"
+snippet '([Oo])mi' "Omicron" wr
+\\`!p snip.rv = match.group(1)`micron 
+endsnippet
+
+# Π π
+context "math()"
+snippet '([Pp])i' "pi" wr
+\\`!p snip.rv = match.group(1)`i 
+endsnippet
+
+# Ρ ρ
+context "math()"
+snippet '([Rr])ho' "rho" wr
+\\`!p snip.rv = match.group(1)`ho 
+endsnippet
+
+# Σ σ
+context "math()"
+snippet '([Ss])ig' "sigma" wr
+\\`!p snip.rv = match.group(1)`igma 
+endsnippet
+
+# Τ τ
+context "math()"
+snippet '([Tt])au' "tau" wr
+\\`!p snip.rv = match.group(1)`au 
+endsnippet
+
+# Υ υ
+context "math()"
+snippet '([Uu])ps' "upsilon" wr
+\\`!p snip.rv = match.group(1)`psilon 
+endsnippet
+
+# Φ φ
+context "math()"
+snippet '([Pp])hi' "phi" wr
+\\`!p snip.rv = match.group(1)`hi 
+endsnippet
+
+# Χ χ
+context "math()"
+snippet '([Cc])hi' "chi" wr
+\\`!p snip.rv = match.group(1)`hi 
+endsnippet
+
+# Ψ ψ
+context "math()"
+snippet '([Pp])si' "psi" wr
+\\`!p snip.rv = match.group(1)`si 
+endsnippet
+
+# Ω ω
+context "math()"
+snippet '([Oo])me' "omega" wr
+\\`!p snip.rv = match.group(1)`mega 
+endsnippet
+#========================}}}
+# *****************************************************************************
+# 常用运算符{{{
+
+# 累加符号
+context "math()"
+snippet sum "sum" w
+\sum_{ ${1:} }^{ ${2:} } ${3:}
+endsnippet
+# 连乘符号
+context "math()"
+snippet prod "prod" w
+\prod_{ ${1:} }^{ ${2:} } ${3:}
+endsnippet
+# *****************************************************************************
+#分号
+context "math()"
+snippet \\ "Fraction" i
+\\frac{$1}{$2}$0
+endsnippet
+# *****************************************************************************
+# 括号(加上left right使括号更美观，要求前面有一个空格)
+context "math()"
+snippet '\s(\(|\[|\{)' "left beackets" irA
+\\left`!p snip.rv = match.group(1)`
+endsnippet 
+context "math()"
+snippet '\s(\)|\]|\})' "right beackets" irA
+\\right`!p snip.rv = match.group(1)`
+endsnippet 
+# *****************************************************************************
+# LaTex语法:   &分割各个对齐单元，\\换行
+# 跨行公式
+snippet ali "Aligned" i
+\begin{aligned}
+    ${1:${VISUAL}}
+\end{aligned}
+endsnippet
+
+# 矩阵 &对齐 \\换行
+snippet matrix "matrix" i
+\left[
+\begin{matrix}
+    ${1:${VISUAL}}
+\end{matrix}
+\right]
+endsnippet
+# *****************************************************************************
+#根号
+context "math()"
+snippet sqr "\sqrt{}" i
+\sqrt[$1]{ ${2:${VISUAL}} }$0
+endsnippet
+# *****************************************************************************
+#不等号
+context "math()"
+snippet <= "<=" iA
+\\leqslant
+endsnippet
+
+context "math()"
+snippet >= ">=" iA
+\\geqslant
+endsnippet
+
+context "math()"
+snippet <> "≠" iA
+\\neq
+endsnippet
+
+context "math()"
+snippet ~= "≈" iA
+\\approx
+endsnippet
+
+# 箭头
+context "math()"
+snippet arrow "arrow" w
+\\stackrel{$1}{\longrightarrow} 
+endsnippet
+# *****************************************************************************
+# 乘除积分微分
+context "math()"
+snippet * "times" w
+\\times 
+endsnippet
+
+context "math()"
+snippet dot "dot" w
+\\cdot 
+endsnippet
+
+context "math()"
+snippet deg "degree" i
+^{\\circ}
+endsnippet
+# 偏导符号
+context "math()"
+snippet dp "partial" i
+\\partial 
+endsnippet
+
+# 导数符号以及其他非斜体
+context "math()"
+snippet `([^\$\s]*)\.m` "mathrm xxx" ir
+\\mathrm{`!p snip.rv = match.group(1)`}
+endsnippet
+
+# 积分(o表示封闭积分)
+context "math()"
+snippet `(o?i+)nt` "integerate" ir
+\\`!p snip.rv = match.group(1)`nt_{ ${1:} }^{ ${2:} } ${3:}
+endsnippet
+#}}}
+# *****************************************************************************
+# 标准函数{{{
+
+# 基本三角函数
+context "math()"
+snippet `((?:arc)?(?:(?:cosh?)|(?:sinh?)|(?:coth?)|(?:tanh?)))` "三角函数" irA
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+# 其他
+context "math()"
+snippet `((?:(?:lg)|(?:ln)|(?:log)|(?:sec)|(?:csc)|(?:max)|(?:min)))` "标准函数" irA
+\\`!p snip.rv = match.group(1)`
+endsnippet
+#}}}
+
+
+
+
+#=================================================================================================
+# 其他
+# {{{
+
+# 插入一个box
+snippet box "Box"
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+│ $1 │
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
+endsnippet
+
+# 插入一个python脚本区域，内部写算式可以直接求得值
+snippet sympy "sympy block " w
+sympy $1 sympy$0
+endsnippet
+
+priority 10000
+snippet 'sympy(.*)sympy' "evaluate sympy" wr
+`!p
+from sympy import *
+x, y, z, t = symbols('x y z t')
+k, m, n = symbols('k m n', integer=True)
+f, g, h = symbols('f g h', cls=Function)
+init_printing()
+snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
+    .replace('^', '**') \
+    .replace('{', '(') \
+    .replace('}', ')') + ')')
+`
+endsnippet
+#}}}
