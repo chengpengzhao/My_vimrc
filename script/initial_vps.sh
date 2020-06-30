@@ -11,63 +11,26 @@ Tip="[${Green_font_prefix}注意${Font_color_suffix}]"
 #**************************************************************
 echo -e "${Tip} \
 请不要在root帐号下运行该脚本！"
-sudo apt-get update
-wait
-sudo apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y
-wait
-sudo apt-get upgrade -y && \
-sudo apt-get install git -y && \
-sudo apt-get install curl -y && \
-sudo apt-get install vim-gtk3 -y && \
-sudo apt-get install zsh -y && \
-sudo apt-get install tree -y && \
-sudo apt-get install wget -y && \
-sudo apt install build-essential cmake python3-dev -y && \
-sudo apt install gnupg -y && \
-sudo apt-get install python3-pip -y && \
-sudo apt-get install nodejs -y
+
+read -p "是否需要配置vim（y/n）：" chid
+until [[ $chid =~ ^([y]|[n])$ ]]; do
+    read -p "输入错误！请重新键入（y/n）：" chid
+done
+if [[ $chid == y ]]; then
+    bash ./install_vim.sh
+fi
 wait
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb &&\
 sudo dpkg -i ripgrep_11.0.2_amd64.deb
 wait
-sudo -u ${USER} /bin/bash -c 'yes yes| sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #安装oh-my-zsh'
+sudo yes yes| sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #安装oh-my-zsh
 wait
 chsh -s $(which zsh) #设置zsh为默认终端
 wait
-echo
 echo "${Green_font_prefix}第一阶段安装完成~${Font_color_suffix}"
 echo "${Green_font_prefix}**************************************************************${Font_color_suffix}"
-echo
-echo "${Green_font_prefix}接下来配置Vim${Font_color_suffix}"
 
 #**************************************************************
-if [ -d ~/.vim ]
-then
-    rm -rf ~/.vim
-fi
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-cd
-
-if [ -d ~/My_vimrc ]
-then
-    rm -rf ~/My_vimrc
-fi
-git clone https://github.com/chengpengzhao/My_vimrc.git
-cd My_vimrc
-cp '.vimrc(ssh)' ~/.vimrc
-cp .zshrc ~/.zshrc
-mkdir ~/.vim/UltiSnips
-cp ./Snippets/*.snippets ~/.vim/UltiSnips/
-cp engspchk-dict /usr/share/dict/
-vim -c PlugInstall
-wait
-vim -c PlugUpdate
-wait
-
-#**************************************************************
-echo
-echo "${Green_font_prefix}Vim插件安装完成${Font_color_suffix}"
 echo "${Green_font_prefix}**************************************************************${Font_color_suffix}"
 echo "${Green_font_prefix}开始配置github${Font_color_suffix}"
 git config --global user.name "chengpengzhao"
@@ -85,11 +48,9 @@ git config --global alias.lg "log --color --graph --abbrev-commit --decorate --f
 
 echo "${Green_font_prefix}github配置完成${Font_color_suffix}"
 cd
-sudo -u ${USER}   /usr/bin/zsh -c "sudo apt-get install autojump -y "
-sudo -u ${USER}   /usr/bin/zsh -c " git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions"
-sudo -u ${USER}   /usr/bin/zsh -c " git clone git://github.com/zsh-users/zsh-syntax-highlighting $ZSH/custom/plugins/zsh-syntax-highlighting  #安装autojump、zsh-autosuggestions、zsh-syntax-highlighting三个插件"
-vim ~/.zshrc
+sudo apt-get install autojump -y
+git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
+git clone git://github.com/zsh-users/zsh-syntax-highlighting $ZSH/custom/plugins/zsh-syntax-highlighting  #安装autojump、zsh-autosuggestions、zsh-syntax-highlighting三个插件
 wait
 zsh
 wait
-sudo -u ${USER}  /usr/bin/zsh -c "source ~/.zshrc"

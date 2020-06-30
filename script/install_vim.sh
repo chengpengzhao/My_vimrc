@@ -10,7 +10,7 @@ Error="[${Red_font_prefix}错误${Font_color_suffix}]"
 Tip="[${Green_font_prefix}注意${Font_color_suffix}]"
 #**************************************************************
 echo -e "${Tip} \
-开始安装vim配置！"
+开始安装vim配置~"
 
 sudo apt-get update
 wait
@@ -30,11 +30,21 @@ sudo apt-get install python3-pip -y && \
 sudo apt install clang-format -y && \
 sudo apt install ctags -y && \
 #-----------------------------------------------------------------
+read -p "是否需选择简化版Vim插件（y/n）：" chid
+until [[ $chid =~ ^([y]|[n])$ ]]; do
+    read -p "输入错误！请重新键入（y/n）：" chid
+done
+if [[ $chid == y ]]; then
+    cp ../'.vimrc(ssh)' ~/.vimrc
+else
 cp ../.vimrc  ~/.vimrc
+
+fi
 cp -rf ../config/.vim  ~
 cp ../Snippets/*.snippets ~/.vim/UltiSnips/
-cp ../engspchk-dict /usr/share/dict/
+sudo cp ../engspchk-dict /usr/share/dict/
 wait
+vim -c PlugInstall
 clang-format -dump-config -style=Google > .clang-format
 cd ~/.vim/plugged/YouCompleteMe
 python3 install.py --all
