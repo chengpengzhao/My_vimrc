@@ -29,18 +29,12 @@ cp ./keys/ssh_id_rsa.pub ~/.ssh/authorized_keys
 gpg -o ./keys/id_rsa --decrypt ./keys/ssh_id_rsa_encrypt
 wait
 mv ./keys/id_rsa ~/.ssh/
-sudo chown -R  ~/.ssh && \
 sudo chmod 600 ~/.ssh/authorized_keys && \
-sudo chmod 600 ~/.ssh/id_rsa.pub && \
 sudo chmod 700 ~/.ssh
-echo 重启SSH服务...
-sudo service sshd restart
 
-echo "${Green_font_prefix}**************************************************************${Font_color_suffix}"
-echo "${Green_font_prefix}开始配置github${Font_color_suffix}"
 git config --global user.name "chengpengzhao"
-git config --global user.email "z609722559@gmail.com"
-git config --global user.signingkey C2BE35A944AC73B1
+git config --global user.email "cavsarpwgnckamekerokardank89@gmail.com"
+git config --global user.signingkey A11C5129AAE5BA77
 git config --global commit.gpgsign true
 git config --global core.autocrlf false
 git config --global core.filemode false
@@ -49,3 +43,5 @@ git config --global core.quotepath false  #防止用tab键自动补全的中文�
 git config --global core.pager cat    # 更改Git难受的分页器显示
 git config --global core.editor vim   #修改ecommit的ditor为vim
 git config --global alias.lg "log --color --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"             #让git log 更好看，配置自定义命令 git lg
+wait
+ssh -T git@github.com

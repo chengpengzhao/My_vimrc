@@ -36,8 +36,8 @@ echo "${Green_font_prefix}******************************************************
 echo "${Green_font_prefix}**************************************************************${Font_color_suffix}"
 echo "${Green_font_prefix}开始配置github${Font_color_suffix}"
 git config --global user.name "chengpengzhao"
-git config --global user.email "z609722559@gmail.com"
-git config --global user.signingkey C2BE35A944AC73B1
+git config --global user.email "cavsarpwgnckamekerokardank89@gmail.com"
+git config --global user.signingkey A11C5129AAE5BA77
 git config --global commit.gpgsign true
 git config --global core.autocrlf false
 git config --global core.filemode false
