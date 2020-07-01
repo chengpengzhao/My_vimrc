@@ -1,0 +1,500 @@
+1 tortuosity
+1 卷」為單行本的
+1 An energy balance around the control volume shown in Fig. 2 results in Eq. (22
+1 For a one-dimensional planar material, the energy equation can be simplified and written in a coordinate system 𝑦  fixed to the ablating surface, as shown in Eq
+1 For a one-dimensional planar material, the energy equation can be simplified and written in a coordinate system 𝑦  fixed to the ablating surface, as shown in Eq. (20
+1 where ℎ0 is the enthalpy of formation at the reference temperature 𝑇0 (taken to be 298.15 K). The enthalpy for a  partially-pyrolyzed material, Eq. (16), uses the same mixing rule for specific heat and thermal conductivity as seen in  Eqs. (10) and (11
+1 The tables represent a three-dimensional relationship between the normalized char mass loss 𝐵𝑐′⁡and  the pressure⁡𝑝, normalized pyrolysis mass loss rate 𝐵𝑔′, and surface temperature 𝑇𝑠
+1 Typically, the relationship expressed in Equation (4) is obtained using a set of tables providing the normalized  mass loss rate 𝐵′⁡as a function of surface pressure, surface temperature, and char gas mass flowrate calculated from a  separate program
+1 If equilibrium conditions between the solid and the gas can be assumed, however, then the relationship in Eq. (3)  can be reduced by one dimension by normalizing the mass loss rates by the mass transfer coefficient 𝜌𝑒𝑢𝑒𝐶𝑀 such that  Eq
+1 resin
+1 If equilibrium conditions between the solid and the gas can be assumed, however, then the relationship in Eq. (3)  can be reduced by one dimension by normalizing the mass loss rates by the mass transfer coefficient 𝜌𝑒𝑢𝑒𝐶𝑀 such that  Eq. (4
+1 e residual or terminal density
+1 Each of the three components can decompose following a general relation as proposed by Goldstein25 and shown  as Eq. (2
+1 The resin filler is presumed to consist of two components which  decompose separately
+1 In this section we review the fundamental modeling assumptions and associated mathematical description of  pyrolyzing ablators
+1 activation energy
+1 Euclidean
+1 Bow shock
+1 Transpiration  blocking eect
+1 Surface recession, erosion, spallation  Surface chemistry: combustion, corrosion,  dissociation, oxidation, sublimation,  vaporization, wall catalysis
+1 Under thermal equilibrium assumption, the energy  conservation may be written as
+1 For creeping flows, the volume-averaged momentum  conservation equation reduces to Darcy’s equation. The  volume-averaged gas velocity is given as
+1 This paper  presents computational results for thermal response of  ablative material of TPS of a submerged rocket nozzle
+1 Computational models are used to calculate material  response and peak temperature of the bondline at the  interface of the TPS and the substructure
+1 eroded
+1 progressively carbonizes and loses pyrolysis  gases
+1 often a polymer  matrix
+1 pyrolyzing
+1 Specific Enthalpy
+1 Fraction of mass lost through pyrolysis reaction
+1 Nomenclature
+1 The pleasant consequence of this  hypothesis is that there exist a bijective relation between density and porosity
+1 is species transformed in species j during its pyrolysis (we assume  that there may be competing reactions). The true densities of the intermediate solid products of pyrolysis are  difficult to measure
+1 The description of the reactions is in principle similar to that of a gas mixture. The molar mass of solid  compounds is unknown (large), it is included in the reaction constants. Many of these constants correspond t
+1 previously dried. We can distinguish [8] three sets of reactions (temperatures quoted correspond to experiments  carried out at very slow rise in temperature), identified by infrared spectrometry of the gases formed
+1 The experiments we use are conducted in a neutral atmosphere, on samples
+1 Note first that the gases formed during pyrolysis are driven to the surface and that, consequently, the decomposition takes place in an atmosphere formed by the pyrolysis gases themselves in the absence of any other  component from the atmosphere
+1 depolymerization
+1 impure
+1 Again there is practically an unique resin for this type of application: the phenolic resin described roughly by  the structure
+1 The density vary between 1400 and 2000 kg · m−3 [3, 6].  The transversal conductivity of these fibers is lower due to their structural organization.  The conductivities of different fibers is given in Figure 2. We see
+1 Even if different fibers are available all these materials were made with rayon fibers used for their low conductivity despite their low mechanical properties. These fibers have an irregular section with a mean diameter  form 7 to 15µm
+1 Fibers and resin conductivities [3–5]. The values for charred resin were obtained by identification of measurements on a TWCP and are  imprecise
+1 More recently lightweight materials (ρ < 400 kg · m−1) have been developed for medium or  moderately high fluxes
+1 Galileo and Hayabusa  probes but also for booster nozzles. This kind of material is constituted of draped 2D weaved yarns (except in  singular points like stagnation region of probes), each yarn being constituted by an ensemble of some hundred  long fibers
+1 Tape Wrapped  Carbon Phenolics (TWCP) are dense materials
+1 More of the materials used for medium-to-high heat fluxes reentries are carbon phenolics
+1 composition and permeation of these gases
+1 composition
+1 porosity
+1 endothermic
+1 on the aircraft with special caution. As TPS material, SLA-561V is chosen because there  are plenty of reference data in various space exploration programs including Mars  Pathfinder program, Viking program, and Space Shuttle program
+1 vicinity
+1 pyrolysis
+1 convection
+1 conduction
+1 collision
+1 fortify
+1 generalized
+1 contravariant
+1 entropy
+1 partial heat of charring
+1 a dilemma between what is demanded  for HIMICO as engineering and what is valuable in terms of academic
+1 dilemma
+1 empirical formulas
+1 adiabatic
+1 that the blockage effect is caused  by the low heat conduction rate gas covers the surface, not because “cool” film covers
+1 控制体内的能量传输机理非常复杂，包括： 物质能量存储， 对流、辐射和  导热形式的等效热传导， 热解气体平流和扩散的传质传热， 温度变化和热解化  学反应引起的焓变效应， 以及微尺度孔隙中热解气流动的粘性耗散效应等
+1 The initial gas composition in the material is left  open
+1 incorporated
+1 In practice, neither the maximum (initial) values ρ0;i, nor the char values ρc;i, are known a priori and  it’s not always possible to use
+1 a priori
+1 priori
+1 Eq. 14 is the classical formulation used for the pyrolysis of TPMs. It is assumed that  several reactions Ri;j are occurring independently from each other at different temperatures starting from
+1 the classical formulation used for the pyrolysis of TPMs
+1 Comparative analysis of pyrolysis models
+1 cumulative
+1 monotonic
+1 depolimerization
+1 extrapolation
+1 A competitive scheme can be seen as a ramification tree. A solid component Si in the tree may generated  by its parents in the tree at a rate given by
+1 Basic example of competing scheme: one reactant produces two different product plus  two gases
+1 A competitive mechanism on the solid phase  Sr can be described as
+1 The density evolution of the solid can be computed as the contribution of each advancement of reaction χi;j  scaled by the density loss fraction Fi;j
+1 The density evolution of the solid can be computed as the contribution of each advancement of reaction χi;j  scaled by the density loss fraction Fi;j. This constant expresses the fraction of density that is lost when
+1 where the reaction rate kr is defined by the pre-exponential factor A and the activation energy
+1 ramification
+1 different kinetic pathways
+1 independent
+1 Using multicomponent volatilization mechanisms, one may assume that products which have production  peaks at the same location, are produced by the same reaction and can thus be grouped
+1 Similarly, the gas production rate of Ak (element or species) can be expressed as
+1 where the advancement of reaction (χi;j 2 [0; 1]) evolves as function of the kinetic parameters (Ai;j; Ei;j; ni;j)  and the temperature. The initial (or virgin) density of the solid is expressed as the sum of each sub-phase  as
+1 function of the kinetic parameters
+1 Fraction density loss of reaction j in phase i
+1 Mass stoichiometric coefficient for devolatilization model
+1 Pseudo-F parameter
+1 proportion
+1 Devolatilization
+1 competitive reaction mechanisms
+1 we first provide a brief review the  state-of-the-art on the modeling of thermal degradation of solid materials. Then, we present results obtained  applying the aforementioned models to the high temperature decomposition of PICA
+1 the (competing) models developed for biomass pyrolysis  seem appropriate to model the decomposition of phenolic
+1 competing
+1 The thermal decomposition of the phenolic resin is  similar to that of biomass [13, 14], which has different kinetic pathways under different heating conditions
+1 biomass
+1 compiling information from the aforementioned experiments
+1 polymeric
+1 endothermic  thermal degradation
+1 A good example of such material is the Phenolic Impregnated  Carbon Ablator (PICA) developed by NASA, which has been successfully used in missions such as Mars  Science Laboratory (MSL), and the Stardust Sample Return Capsule (SRC
+1 with a phenolic resin
+1 scenarios
+1 Ambient
+1 Universal
+1 stoichiometric
+1 devolatili
+1 irreversible
+1 competitive
+1 traditional and competitive  reaction models
+1 counterclockwise
+1 从 图 2-6 可以清晰的看出高硅氧／盼醒复合材料在热流作用下有烧蚀现象出  现，烧蚀表面存在大量 的孔洞和微裂纹，还有球状颗粒附在表面 ， 经推断应该是  高硅氧纤维 的熔融物在空气环境中冷却后形成的 。这也说明硅基防热复合材料表  面烧蚀过程中有一层很薄的液态物质附在表面，因此采用液态层烧蚀模型（3.2.1  节）预报该类型防热材料的烧蚀性能是合理的
+1 A cell is considered a neighbor if one of its faces shares all nodes in common with the selected cell, or if it  is identified as a neighbor by face neighbor data in the dataset. The face numbers for cells in the various  zone types are defined below
+1 d pyramid element
+1 The first line in a zone, text, geometry, custom label, data set auxiliary data record or variable auxiliary  record begins with the keyword ZONE, TEXT, GEOMETRY, CUSTOMLABELS, DATASETAUXDATA, or VARAUXDATA
+1 A cell is considered a neighbor if one of its faces shares all nodes in common with the selected cell, or if it  is identified as a neighbor by face neighbor data in the dataset. The face numbers for cells in the various  zone types are defined below
+1 连接列表用于定义哪些节点包含在有序或基于单元的每个元素中 有限元区域。您应该知道您的区域类型和每个区域中的元素数，以便 创建您的连接列表
+1 A connectivity list is used to define which nodes are included in each element of an ordered or cell-based  finite element zone. You should know your zone type and the number of elements in each zone in order to  create your connectivity list
+1 jis
+1 initial
+1 initialed
+1 uninitiated
+1 Before we consider the implementation of numerical boundary conditions, we have  to address the treatment of non-orthogonality on the boundary. Consider a control  volume with a boundary face b, shown in Fig. 3.7. In this situation, the vector d
+1 Unfortunately, mesh orthogonality is more an exception than a rule. In order to  make use of the higher accuracy of Eqn. (3.25), the product S:(r`)f is split into  two parts
+1 Generation of a computer program to compute these formulas requires the use of  connectivity data. Understanding of this process can be facilitated by using the following code snippets to compute each of the above three quantities
+1 Thus, the  source term in Eq. (7.95) has a negative sign. The term, Sskew,O, denotes the net socalled skew source contributed by the summation of tangential fluxes. Comparing  Eq. (7.95) with Eq. (7.58) yields the following relationships
+1 As discussed in Chapter 3, the coefficient  matrix is generally assembled in a way in which the diagonal is positive
+1 Therefore, we need to know which way (inward or outward) the surface normal  at each face of cell 1 is pointing and flip its direction if necessary
+1 scenario
+1 where the cell-to-vertex interpolation function, wv,i, represents the contribution of the  ith surrounding cell to the vertex, v. Once the interpolation function has been computed and stored, the vertex (or nodal) value of φ can be computed using
+1 First, let us  consider the case of cell-to-face interpolation
+1 chematic Representation Showing Storage of Data in a Computer’s Memory with  Two Different Data Structures
+1 There are  several options that may be explored to perform this task. Many commercial mesh  generators provide a library of application programming interfaces (APIs
+1 privy
+1 Prior to performing this final step for an irregular cell
+1 Since the cell in question is bounded by a set of discrete planar faces, the surface  integral on the left-hand side of Eq. (7.15) may be written as a discrete summation  over faces to yield
+1 because most mesh generators generate meshes that are comprised  of cells that are bounded by a finite number of discrete straight edges or planar faces  rather than continuous curves or warped surfaces
+1 reinserted
+1 Current conduction
+1 complexities
+1 As was done in Chapter 2 for the FDM, we start our derivation of the finite  volume equations by considering a spatially 1D ordinary differential equation, written as
+1 Schematic Representation of Finite Volume Discretization of a Rectangular  Domain Showing Cell Centers, Cell Faces, and Cell Vertices (Nodes
+1 The cell centers to be used for the finite volume method are denoted by hollow squares. The  nodes, denoted by solid circles, are what are used in the finite difference method, and are  the vertices of the cells
+1 It is evident from Eq. (B.1) that the del operator is a vector operator. When operating on a scalar, it yields the gradient of the scalar. Thus, the gradient of a scalar, φ, in  the above three coordinate systems may be written as
+1 Pennsylvania
+1 straddle
+1 Successive
+1 To solve a linear system with a direct solver (currently supported by PETSc for sequential  matrices, and by several external solvers through PETSc interfaces (see Section 4.7)) one may use  the options -ksp_type preonly -pc_type lu (see below
+1 Here comm is the MPI communicator, and ksp is the newly formed solver context. Before actually  solving a linear system with KSP, the user must call the following routine to set the matrices  associated with the linear system
+1 Several of the sparse implementations do not currently support the column-oriented  option
+1 expression mapping an existing array of dat
+1 The Euler Implicit method expresses the face-values in terms of the new  time-level cell value
+1 The flnal form of the discretised difiusion term is the same for all three approaches
+1 uses a larger computational molecule. The flrst term of the  truncation error is now four times larger than in the flrst method, which in turn  cannot be used on non-orthogonal meshes
+1 collinear
+1 All coefficients appear in the equation as this is an internal element. The  main coefficient and source term are calculated as
+1 connectivity
+1 n the above discretized equation, the diffusion coefficients C/ e ; C/ w; C/ n , and C/ s have  been used to represent the value of C/ at the e, w, n and s faces of the element,  respectively. When the diffusion coefficient C/ varies with position
+1 between cell centroids (Fig. 8.2), the gradient at face e along the i direction may be  written as
+1 Following the first stage discretization presented in Chap. 5, Eq. (8.1) can be  formulated as
+1 requiring distinct interpolation profiles with disparate considerations
+1 Then, using the divergence theorem, the volume integral is transformed into a  surface integral yielding
+1 While the above terms can be discretized with any specified number of integration  points, it is customary for the finite volume method to use one integration point,  yielding second order accuracy
+1 PETSc type that represents an integer, used primarily to represent size of arrays and indexing into arrays. Its size can be configured with the option --with-64-bit-indices to be either 32-bit (default) or 64-bit
+1 hexahedral
+1 recognize
+1 studying
+1 release
+1 relase
+1 释放内存
+1 centroid
+1 Find out to what extent the DMPlex is topologically interpolated (in collective manner
+1 ke in a cell-vertex mesh and return one with all intermediate faces, edges, etc
+1 canonical
+1 et the tree that describes the hierarchy of non-conforming mesh points. Collective on dm Synopsis
+1 owned
+1 Get an array for the meet of the set of points
+1 he points on the in-edges of several points in the DAG
+1 polytope
+1 DMPlexDistribute
+1 e appropriate FEM reference cel
+1 Object which encapsulates a subset of the mesh from this DM
+1 hierarchical
+1 isotropic
+1 This should greatly improve the performance of the closure operations, at the cost of additional memory
+1 refCoords -(numPoints x dimension) array of reference coordinates
+1 numPoints x coordinate dimension) array of coordinates
+1 the number of points to locate
+1 as an affine map for simplicial elements, or as a multilinear map for tensor-product elements
+1 s + continuum residual functions
+1 c object that manages a graph partitioner
+1 PetscPartitionerCreate
+1 reate support (out-edge) information from cone (in-edge) information
+1 reachable
+1 partially interpolated mesh
+1 fully interpolated meshes
+1 cell-vertex
+1 cell-vertex meshe
+1 Concretely
+1 This grade can be seen as the height (or depth) of the point in the DAG
+1 and this function calculates the strata
+1 The strata group all points of the same grade
+1 and can be illustrated by a Hasse Diagram
+1 The DAG for most topologies is a graded poset
+1 Stratify
+1 prescription
+1 Restore
+1 Setting options for algorithms and data structures
+1 transitive
+1 traversal
+1 in-edge
+1 in-edges
+1 Set the orientations on the in-edges for this point in the DAG
+1 n array of orientations which are on the in-edges for point p. An orientation is an integer giving the prescription for cone traversal
+1 Return the orientations on the in-edges for this point in the DAG
+1 DMPlexGetChart Return the interval for all mesh points [pStart, pEnd
+1 DMPlexCreateWedgeCylinderMesh Creates a mesh on the tensor product of the unit interval with the circle (cylinder) using wedges
+1 Creates a 3-D mesh tesselating the (x,y) plane and extruding in the third direction using wedge cells
+1 reates a 1D mesh the is the boundary of a square lattice
+1 DMPlexCreateHexCylinderMesh Creates a mesh on the tensor product of the unit interval with the circle (cylinder) using hexahedra
+1 Precompute cell geometry for the entire mesh
+1 intermediate
+1 Take in a cell-vertex mesh and return one with all intermediate faces, edges, etc
+1 ets up the data structures inside a DM object
+1 simplices
+1 vertex
+1 PetscMemcpy Copies n bytes, beginning at location b, to the space beginning at location a. The two memory regions CANNOT overlap, use PetscMemmove() in that case
+1 pointer to the section
+1 PetscSection Mapping from integers in a designated range to contiguous sets of integers
+1 Entry
+1 Entries
+1 Create support (out-edge) information from cone (in-edge) information
+1 he ExternalProject_Add() function creates a custom target to drive download, update/patch, configure, build, install and test steps of an external project
+1 n-source builds are not allowed
+1 can tweak some common (for all subprojects) stuff here. For example
+1 Firedrake is an automated system for the portable solution of partial differential equations using the finite element method (FEM
+1 Here is the numbering returned for 2 faces in each direction for tensor cells
+1 simplex
+1 Creates a mesh on the tensor product of unit intervals (box) using simplices or tensor cells (hexahedra
+1 PetscMalloc1 Allocates an array of memory aligned to PETSC_MEMALIGN
+1 First executable line of each PETSc function, used for error handling. Final line of PETSc functions should be PetscFunctionReturn(0
+1 PetscFunctionBegin First executable line of each PETSc function, used for error handling. Final line of PETSc functions should be PetscFunctionReturn(0
+1 Two types of distributed array communication data structures can be created, as specified by  st
+1 Box-type stencil Star-type stencil
+1 global dimension in each direction of the array
+1 DMCreateLocalVector
+1 arrays containing the number of nodes in each cell along the x and y coordinates, or NULL
+1 stencil
+1 stencil width
+1 ike periodic, only glued backwards like a Mobius strip
+1 the ghost value is the same as the value 1 grid point in; that is, the 0th grid point in the real mesh acts like a mirror to define the ghost point value; not yet implemented for 3d
+1 ghost vertices/cells exist but aren't filled; you can put values into them and then apply a stencil that uses those ghost locations
+1 Scales a vector
+1 PetscOptionsGetBool Gets the Logical (true or false) value for a particular option in the database
+1 Determines if the stencil extends only along the coordinate directions, or also to the northeast, northwest etc
+1 migration
+1 particles
+1 DMSwarm
+1 particle methods
+1 3星
+1 his operation is so common that we have built a convenience method around it which returns the  values in a contiguous array, correctly taking into account the orientations of various mesh points:  165
+1 closure
+1 on the transitive closure of the in-edges or out-edges for this point in the DAG
+1 The closure of  the element can be expressed discretely as the transitive closure of the element point in the mesh  DAG, where each point also has an orientation. Then we can retrieve the data using PetscSection  methods
+1 The most common mesh traversal is the transitive closure of a point, which is exactly the  transitive closure of a point in the DAG using the covering relation
+1 modularity
+1 The TS library provides a framework for the scalable solution of ODEs and DAEs arising from the  discretization of time-dependent PDEs
+1 Singular
+1 Empower
+1 A preconditioner P is a method for constructing a matrix P−1 = P(A;Ap)  using a matrix A and extra information Ap, such that the spectrum of P−1A (or  AP−1) is well-behaved
+1 spectrum
+1 What can we do with a matrix that doesn’t have entries
+1 Definition (Matrix)  A matrix is a linear transformation between finite dimensional vector spaces.  Definition (Forming a matrix)  Forming or assembling a matrix means defining it’s action in terms of entries  (usually stored in a sparse format
+1 The easiest way to make software scalable  is to make it sequentially inefficient
+1 implementation
+1 opaque
+1 slope reconstruction and limiters for irregular grids
+1 Spectral
+1 Influence of Variables on One Another
+1 Partitioning and Ordering
+1 Lookup is typically using accessors or routines like VecGetValuesSection
+1 These ranges are frequently interpreted as domains of other array-like objects, especially other PetscSections, Vecs, and ISs
+1 PetscSection Mapping from integers in a designated range to contiguous sets of integers
+1 Mapping from integers in a designated range to contiguous sets of integers
+1 DMPlexInterpolate Take in a cell-vertex mesh and return one with all intermediate faces, edges, etc
+1 topological codimension
+1 Stratum
+1 HeightStratum
+1 DMPlexGetChart Return the interval for all mesh points [pStart, pEnd
+1 chart
+1 out-edge
+1 out-edges
+1 dual relation
+1 cone
+1 preallocate
+1 An array of points which are on the in-edges for point p
+1 The point, which must lie in the chart set with
+1 Set the points on the in-edges for this point in the DAG; that is these are the points that cover the specific point
+1 interval
+1 encapsulates
+1 Pragmatic
+1 Abstract PETSc object that manages an abstract grid object and its interactions with the algebraic solvers
+1 Built on top of DMPlex, the DMNetwork subclass provides abstractions for representing general  unstructured networks such as communication networks, power grid, computer networks, transportation networks, electrical circuits, graphs, and others
+1 in the same way that a fiber bundle is a generalization of the  normal Euclidean basis used in linear algebra
+1 generalization
+1 To enable modularity, we encode the operations above in simple data structures that can be understood by the linear algebra engine in PETSc without any reference to the mesh (topology) or  discretization (analysis
+1 In order to support efficient queries, we also want to construct fast search structures and indices  for the different types of points, which is done using
+1 but this can be calculated automatically by calling
+1 We then define the  covering relation, which we call the cone, which are also the in-edges in the DAG. In order to  preallocate correctly, we first setup sizes
+1 which are also the in-edges in the DAG. In order to  preallocate correctly, we first setup sizes
+1 ote that a chart here corresponds to a semi-closed interval
+1 First, we declare the set of points present in a mesh
+1 To use the PETSc API, we first consecutively number the mesh pieces
+1 convention
+1 consecutively
+1 encode
+1 The graph edges represent the relation, which also encodes  a partially ordered set (poset
+1 cell complex using the covering relation
+1 Directed Acyclic Graph
+1 Hasse Diagram
+1 covering" relation among the points
+1 in particular specifying a \covering" relation among the points
+1 Not only does this preclude the kind of comparison that is necessary for scientific investigation, but  it makes library (as opposed to monolithic application) development impossible
+1 the discretization was so closely  tied to the data layout and solver that switching discretizations in the same code was not possible
+1 DMPlex was created to remedy  a huge problem in all current PDE simulation codes
+1 This chapter introduces the DMPLEX subclass of DM, which allows the user to handle unstructured  grids using the generic DM interface for hierarchy and multi-physics
+1 is used to define scatters,  gathers, and similar operations on vectors and matrices
+1 generalization of a set of integer indices
+1 To facilitate general vector scatters and gathers used
+1 Staggered
+1 partitioner
+1 It is also possible to create vectors that use an array provided by the user, rather than having  PETSc internally allocate the array space. Such vectors can be created with the routines
+1 In order to allow the overlap of  communication and calculation, the user’s code can perform any series of other actions between  these two calls while the messages are in transition
+1 Assigning values to individual components of the vector is more complicated, in order to make it  possible to write efficient parallel code. Assigning a set of components is a two-step process: one  first calls
+1 Entries need not be generated locally  Local meaning the process on which they are stored
+1 Processes may set an arbitrary entry
+1 Each process locally owns a subvector of contiguous global data
+1 Retrieve
+1 stages
+1 scatter
+1 x	- vector to insert in ni	- number of elements to add ix	- indices where to add y	- array of values
+1 Since PETSc  does not allow the simultaneous use of INSERT_VALUES and ADD_VALUES this nondeterministic  behavior will not occur in PETSc
+1 intervening
+1 componentwise
+1 In order to allow the overlap of  communication and calculation, the user’s code can perform any series of other actions between  these two calls while the messages are in transition
+1 In addition, if a sequence of VecCreateXXX()  routines is used, they must be called in the same order on each process in the communicator
+1 routines
+1 Assembling
+1 The user could  alternatively specify each processes’ number of local rows and columns using m and n
+1 parallel or sequential
+1 substantial
+1 To put our discussion of message passing in perspective, we briefly review informally  the principal parallel computational models. We focus then on the advantages of  the message-passing model
+1 partitioning
+1 which initializes PETSc and MPI. The arguments argc and argv are the command line arguments  delivered in all C and C++ programs
+1 find_package (PETSc REQUIRED
+1 PETSc
+1 home/zcp/OneDrive/PETSc Manual
+1 contiguous
+1 propagate
+1 We do not seize
+1 Reduction or scan operations
+1 subcomm
+1 A context (or scope) for parallel communication (“Who can I talk to
+1 infrastructure
+1 silver bullet
+1 consolidate
+1 Each PETSc program must specify  an include file that corresponds to the highest level PETSc objects needed within the program
+1 MPI provides routines for generating new communicators consisting of subsets of processors,  though most users rarely need to use these
+1 a communicator is a way of indicating a collection of processes  that will be involved together in a calculation or communication
+1 MPICH  implementation
+1 and the computation of adjoints (sensitivities/gradients of the solutions);  and
+1 dozens of preconditioners, including multigrid, block solvers, and sparse direct solvers (PC);  • nonlinear solvers
+1 Krylov subspace methods
+1 permutations
+1 Excerpt of the code defined inside the fvMatrix class returning as object a scalar field
+1 represent the discretized set of algebraic equations defined over each element of the  computational domain
+1 Interpolation
+1 bricks
+1 necessitates
+1 In all preceding derivations it has been implicitly assumed that certain geometric and topological information is readily available
+1 However two important disadvantages of the method are its treatment of  non-conjunctional elements and the manner the diffusion term is discretized on  non-orthogonal cells
+1 element field consists of an array of  values defined at the centroid of each element, designated by the interior element  field, which is represented by one array of size equal to the total number of interior  and boundary elements
+1 Vertices
+1 buoyant
+1 Boltzmann
+1 Lattice
+1 Lattice Boltzmann
+1 the devolatilization  model currently used in the aerospace sector, and the competitive reaction model commonly applied in  biomass
+1 Experimentally, composite material properties are more conveniently measured in mixed fiber-and-matrix virgin (v) and char (c)  states. The enthalpy of the matrix
+1 Theoretical study on the micro-scale oxidation of resin-infused carbon  ablators
+1 absolute enthalpy
+1 bulk density
+1 overall extent-of-reaction
+1 there are no distinctly distinguishable  materials A, B, and C in a general decomposable resin/binder  composite
+1 the resin volume fraction in the virgin composite
+1 binder
+1 trailing
+1 physicochemical
+1 DiffusionMatrix yields diffusion fluxes which sum to
+1 Below the input file when a single catalytic reaction is presented. Only the recombination of atomic into molecular oxygen is considered modeled with the gamma γ model, with reaction probability equal to 1
+1 Collision Integral Database
+1 As an example of how to create a mechanism file, consider the following example reaction mechanism for a 5-species Nitrogen mixture of N2, N2+, N, N+ and e- with each reaction controlled by an Arrhenius rate law
+1 thirdbody
+1 Any efficiency factors which are not specified default to a value of 1. Free electrons do not participate in thirdbody reactions
+1 each separated by commas such as in the example above
+1 colon-separated pairs
+1 Below is an example reaction element
+1 diatomic
+1 stoichiometry
+1 igid-Rotator Harmonic-Oscillators
+1 compositions
+1 A good way to see how the species are actually ordered in Mutation++ is to check the mixture with the checkmix program
+1 A good way to see how the species are actually ordered in Mutation++ is to check the mixture with the checkmix program.   Named Elemen
+1 electronic energy level
+1 xample: N2(3) is the 4th electronic level of N2 because the index begins at 0
+1 electronic
+1 Many of these files are written in a simplified version of the Extensible Markup Language (XML). XML provides a human readable, yet complex and extensible format for data to be stored with only a few, limited rules. An example XML fragment is shown below
+1 gas-surface interaction mechanism
+1 collisions
+1 Miscellaneous
+1 An advanced variable will not be displayed in any of the cmake GUIs unless the show advanced option is on. In script mode, the advanced/non-advanced state has no effect
+1 IONized
+1 detect
+1 人工智能搜书机器人: 知书AI-人工智能搜书www.dongciapp.com
+1 舌尖上的健康：正确买、洗、烹，摆脱食品安全隐患
+1 intrinsically
+1 A nice pattern is to associate this information to an INTERFACE target allowing this information to propagate
+1 Expanding on the previous example, if one first wants to check if the INCLUDE_DIRECTORIES property is non-empty, then it is advisable to introduce a helper variable to keep the code readable
+1 Generator expressions are evaluated during build system generation to produce information specific to each build configuration
+1 PIC
+1 tinker
+1 refactor
+1 dashboard
+1 22
+1 Introspection
+1 Introspection (Step 5)¶
+1 aerointelligence
+1 The next test makes use of the PASS_REGULAR_EXPRESSION test property to verify that the output of the test contains certain strings. In this case, verifying that the usage message is printed when an incorrect number of arguments are provided
+1 で
+1 The install rules are fairly simple: for MathFunctions we want to install the library and header file and for the application we want to install the executable and configured header
+1 Usage requirements allow for far better control over a library or executable’s link and include line while also giving more control over the transitive property of targets inside CMake. The primary commands that leverage usage requirements are
+1 artifacts
+1 是因为万圣兔的那下群体攻击和511的U
+1 packaging scenarios
+1 This variable may be set to a path to install to when cross-compiling. This can be useful if the path in CMAKE_SYSROOT is read-only, or otherwise should remain pristine
+1 The file extension is built into the name of the target because another file with the same name but a different extension may exist. However, build-targets without the file extension are also provided
+1 Some buildsystems omit details of command lines invoked during the build. The --verbose flag can be used to cause those command lines to be shown
+1 The --config option has no effect if the generator generates a buildsystem specific to a configuration which is chosen when invoking cmake with the CMAKE_BUILD_TYPE variable
+1 Invoking the Buildsystem¶
+1 relevant
+1 inspiration
+1 acetylene
+1 FORD
+1 Xylenol
+1 Toluene
+1 millipoise
+1 nly volume loss due to shrinkage during the pyrolysis
+1 intrinsic
+1 hyp: intrinsic densities of virgin and charred matrix are equal (only volume loss due to shrinkage during the pyrolysis
+1 degradation
+1 DECOMPOSITION CHARACTERISTICS OF A CHAR-FORMING PHENOLIC POLYMER USED FOR ABLATIVE COMPOSITES
+1 formation
+1 indication
+1 indications
+1 ex-novolac/formaldehyde
+1 microns
+1 ex-cellulose
+1 Intercalibration
+1 atmospheric
+1 calibration
+1 material stack
+1 stack
+1 advice
+1 advices
+1 advise
+1 aadvise
+1 suggestion
+1 suggesetion
+1 Mister
+1 Brunswick
+1 intermediately
+1 permeation
+1 Stanton
+1 accommodate
+1 accommodates
+1 conservative
+1 Demise
+1 fibrous
+1 heterogeneous
+1 Grab
+1 volScalarField
+1 pTraits
+1 threshold
