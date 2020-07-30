@@ -20,12 +20,11 @@ if [[ $chid == y ]]; then
     bash ./install_vim.sh
 fi
 wait
-curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb &&\
-sudo dpkg -i ripgrep_11.0.2_amd64.deb
+sudo dpkg -i ../config/ripgrep_11.0.2_amd64.deb
 wait
 sudo apt-get install zsh
 wait
-sudo yes yes| sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #安装oh-my-zsh
+bash ./install_ohmyzsh.sh
 wait
 chsh -s $(which zsh) #设置zsh为默认终端
 wait

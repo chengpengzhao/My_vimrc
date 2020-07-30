@@ -35,16 +35,18 @@ until [[ $chid =~ ^([y]|[n])$ ]]; do
     read -p "输入错误！请重新键入（y/n）：" chid
 done
 if [[ $chid == y ]]; then
-    cp ../'.vimrc(ssh)' ~/.vimrc
+    sudo cp ../'.vimrc(ssh)' ~/.vimrc
 else
-cp ../.vimrc  ~/.vimrc
+sudo cp ../.vimrc  ~/.vimrc
 
 fi
-cp -rf ../config/.vim  ~
-cp ../Snippets/*.snippets ~/.vim/UltiSnips/
-sudo cp ../engspchk-dict /usr/share/dict/
+sudo cp -rf ../config/.vim  ~
+sudo cp ../Snippets/*.snippets ~/.vim/UltiSnips/
+sudo cp ../config/engspchk-dict /usr/share/dict/
 wait
 vim -c PlugInstall
-clang-format -dump-config -style=Google > .clang-format
-cd ~/.vim/plugged/YouCompleteMe
-python3 install.py --all
+if [[ $chid == n ]]; then
+    clang-format -dump-config -style=Google > .clang-format
+    cd ~/.vim/plugged/YouCompleteMe
+    python3 install.py --all
+fi

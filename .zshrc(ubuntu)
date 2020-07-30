@@ -101,6 +101,20 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export NODE_HOME=/opt/node-v14.0.0-linux-x64  #你的node目录的路径
+export PATH=$PATH:$NODE_HOME/bin
+export NODE_PATH=$NODE_HOME/lib/node_modules
+
+export PATH=$PATH:/usr/local/tecplot/360ex_2017r2/bin
+
+source $HOME/OpenFOAM/OpenFOAM-7/etc/bashrc
+source $HOME/OpenFOAM/PATO_v2.2.0/bashrc
+#source $HOME/OpenFOAM/PATO_v2.3.0/bashrc
+alias of4="source $HOME/OpenFOAM/OpenFOAM-4.0/etc/bashrc"
+alias ofv19="source $HOME/OpenFOAM/OpenFOAM-v1906/etc/bashrc"
+
+source $HOME/Desktop/zcppp/CMake-log4cpp-gdb_example/bashrc
 # =========== 自定义快捷键 ===============
 
 # 快速关闭窗口

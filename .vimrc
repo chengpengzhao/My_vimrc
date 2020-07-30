@@ -45,7 +45,7 @@ function! File_size(f)
 endfunction
 
 "状态栏格式设置"
-set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %7*[B%-n]/%{Buf_total_num()}\ %6*\%{HighlightSearch()}\|\%{HighlightPaste()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %7*[B%-n]/%{Buf_total_num()}\ %6*\%{HighlightSearch()}\|\%{HighlightPaste()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
 "上面是总的设置，位置可能有所变化
 
 "文件位置
@@ -332,9 +332,9 @@ noremap  <Space> :
 "打开OpenFOAM相关文件时为了方便输入命令加了下面这个映射,!表示输入系统shell命令
 "autocmd Filetype foam256* noremap  <Space> :!
 
-"行光标移动,这个挺方便的，header与end，也没见有冲突
-noremap H   ^
-noremap E   $
+    "行光标移动,这个挺方便的，header与end，也没见有冲突
+"noremap H   ^
+"noremap E   $
 
 "文件保存与退出quick write ,quick quit的缩写，很实用
 nnoremap <Leader>w  :w<CR>
@@ -347,6 +347,8 @@ nnoremap  qq    :q!<CR>
 "模仿shell快捷键
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 "插入模式下移动光标
 inoremap <C-k> <Up>
@@ -406,6 +408,8 @@ endfunction
 ".Md文件也能被识别为markdown
 autocmd BufNewFile,BufRead *.Md set filetype=markdown
 
+"ejs识别为html
+autocmd BufNewFile,BufRead *.ejs set filetype=html
 "*****************************************************************************
 "Markdown快捷键
 "*****************************************************************************
@@ -768,7 +772,7 @@ nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 " 编译单文件,加上了GSL库
 " gcc -Wall选项：打开所有警告提示
 "nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O0 -ggdb "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
 nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>

@@ -72,15 +72,13 @@ done
 sed -i "/Port/c\Port ${Port}" /etc/ssh/sshd_config
 #******************************************************
 echo "中文化Linux"
-wget -N --no-check-certificate https://raw.githubusercontent.com/chengpengzhao/LocaleCN/master/LocaleCN.sh && bash LocaleCN.sh
+bash ./LocaleCN.sh
 wait
 #******************************************************
 # username=zcp && \
 sudo -u ${username} /bin/bash -c "sudo chmod -R 700 /home/${username}/.ssh"
 wait
 sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa "
-wait
-sudo -u ${username} /bin/bash -c "ssh -T git@github.com"
 wait
 sudo -u ${username} /bin/bash -c "sudo chown -R ${username}:${username} /home/${username}/.ssh" && \
 sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/authorized_keys" && \
@@ -90,6 +88,10 @@ echo 重启SSH服务...
 sudo service sshd restart
 passwd -d root    #清除root密码,无法用su切换到root
 echo "脚本运行完成~"
+wait
+mv /root/My_vimrc /home/${username}/My_vimrc
+sudo chmod -R 777 /home/${username}/My_vimrc
+wait
 su -l ${username}
 wait
 #******************************************************
@@ -97,10 +99,9 @@ wait
 sudo apt-get install ufw
 wait
 sudo ufw enable && sudo ufw default deny
+wait
 sudo ufw enable && sudo ufw allow ssh && sudo ufw allow http && sudo ufw allow https && sudo ufw allow ${Port}/tcp
 wait
+echo "防火墙设置完成~"
 sudo ufw reload && sudo ufw status
-cd
-git clone https://github.com/chengpengzhao/My_vimrc
 wait
-cd My_vimrc/script
