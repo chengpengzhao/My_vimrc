@@ -87,21 +87,10 @@ sudo -u ${username} /bin/bash -c "sudo chmod 700 /home/${username}/.ssh"
 echo 重启SSH服务...
 sudo service sshd restart
 passwd -d root    #清除root密码,无法用su切换到root
-echo "脚本运行完成~"
 wait
-mv /root/My_vimrc /home/${username}/My_vimrc
+mv ../../My_vimrc   /home/${username}/
 sudo chmod -R 777 /home/${username}/My_vimrc
 wait
 su -l ${username}
 wait
-#******************************************************
-#防火墙设置
-sudo apt-get install ufw
-wait
-sudo ufw enable && sudo ufw default deny
-wait
-sudo ufw enable && sudo ufw allow ssh && sudo ufw allow http && sudo ufw allow https && sudo ufw allow ${Port}/tcp
-wait
-echo "防火墙设置完成~"
-sudo ufw reload && sudo ufw status
-wait
+echo "脚本运行完成~"

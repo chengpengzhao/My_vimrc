@@ -93,14 +93,6 @@ setup_ohmyzsh() {
 		exit 1
 	fi
 
-	git clone -c core.eol=lf -c core.autocrlf=false \
-		-c fsck.zeroPaddedFilemode=ignore \
-		-c fetch.fsck.zeroPaddedFilemode=ignore \
-		-c receive.fsck.zeroPaddedFilemode=ignore \
-		--depth=1 --branch "$BRANCH" "$REMOTE" "$ZSH" || {
-		error "git clone of oh-my-zsh repo failed"
-		exit 1
-	}
 
 	echo
 }
