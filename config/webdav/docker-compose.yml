@@ -1,0 +1,14 @@
+version: '3'
+services:
+  webdav:
+    image: bytemark/webdav
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      AUTH_TYPE: Digest
+      USERNAME: zcp
+      PASSWORD: z609722559
+    volumes:
+      - /srv/dav:/var/lib/dav
+
