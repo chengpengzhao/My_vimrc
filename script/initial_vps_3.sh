@@ -23,20 +23,14 @@ sudo apt-get install ufw -y
 wait
 sudo ufw enable -y && sudo ufw default deny -y
 wait
-sudo ufw enable && sudo ufw allow ssh && sudo ufw allow http && sudo ufw allow https && sudo ufw allow ${Port}/tcp -y
+sudo ufw allow ssh && sudo ufw allow http && sudo ufw allow https
+wait
+sudo ufw allow ${Port}/tcp
 wait
 echo "防火墙设置完成~"
 sudo ufw reload && sudo ufw status
 wait
 sudo apt-get install nginx -y
-wait
-read -p "是否需要配置vim（y/n）：" chid
-until [[ $chid =~ ^([y]|[n])$ ]]; do
-    read -p "输入错误！请重新键入（y/n）：" chid
-done
-if [[ $chid == y ]]; then
-    bash ./install_vim.sh
-fi
 wait
 sudo dpkg -i ../config/ripgrep_11.0.2_amd64.deb
 wait
@@ -44,7 +38,7 @@ sudo apt-get install zsh -y
 wait
 tar -xzvf ../config/oh-my-zsh.tar.gz
 wait
-cp -rf ../config/.oh-my-zsh ~
+cp -rf .oh-my-zsh ~
 bash ./install_ohmyzsh.sh
 wait
 echo "${Green_font_prefix}第一阶段安装完成~${Font_color_suffix}"
@@ -67,7 +61,7 @@ git config --global alias.lg "log --color --graph --abbrev-commit --decorate --f
 
 
 echo "${Green_font_prefix}github配置完成${Font_color_suffix}"
-cp   /'.zshrc(ubuntu)' ~/.zshrc
+cp   ../'.zshrc(ubuntu)' ~/.zshrc
 wait
 sudo apt-get install autojump -y
 wait

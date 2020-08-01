@@ -79,4 +79,4 @@ mv ../../My_vimrc   /home/${username}/
 sudo chmod -R 777 /home/${username}/My_vimrc
 wait
 echo "脚本运行完成~接下来记得运行下一个脚本修改ssh文件权限"
-su -l ${username}
+su  ${username}
