@@ -60,10 +60,9 @@ git config --global alias.lg "log --color --graph --abbrev-commit --decorate --f
 
 
 echo "${Green_font_prefix}github配置完成${Font_color_suffix}"
-cd
-sudo apt-get install autojump -y
+cp   /'.zshrc(ubuntu)' ~/.zshrc
 wait
-cp ../'.zshrc(ubuntu)' ~/.zshrc
+sudo apt-get install autojump -y
 wait
 vim ~/.zshrc
 wait

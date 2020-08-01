@@ -41,6 +41,7 @@ sudo cp ../.vimrc  ~/.vimrc
 
 fi
 sudo cp -rf ../config/.vim  ~
+sudo chmod 777 -R ~/.vim/*
 sudo cp ../Snippets/*.snippets ~/.vim/UltiSnips/
 sudo cp ../config/engspchk-dict /usr/share/dict/
 wait
