@@ -75,22 +75,8 @@ echo "中文化Linux"
 bash ./LocaleCN.sh
 wait
 #******************************************************
-# username=zcp && \
-sudo -u ${username} /bin/bash -c "sudo chmod -R 700 /home/${username}/.ssh"
-wait
-sudo -u ${username} /bin/bash -c "eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa "
-wait
-sudo -u ${username} /bin/bash -c "sudo chown -R ${username}:${username} /home/${username}/.ssh" && \
-sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/authorized_keys" && \
-sudo -u ${username} /bin/bash -c "sudo chmod 600 /home/${username}/.ssh/id_rsa.pub" && \
-sudo -u ${username} /bin/bash -c "sudo chmod 700 /home/${username}/.ssh"
-echo 重启SSH服务...
-sudo service sshd restart
-passwd -d root    #清除root密码,无法用su切换到root
-wait
 mv ../../My_vimrc   /home/${username}/
 sudo chmod -R 777 /home/${username}/My_vimrc
 wait
+echo "脚本运行完成~接下来记得运行下一个脚本修改ssh文件权限"
 su -l ${username}
-wait
-echo "脚本运行完成~"

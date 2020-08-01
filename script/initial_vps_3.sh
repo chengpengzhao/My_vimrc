@@ -13,6 +13,11 @@ echo -e "${Tip} \
 请不要在root帐号下运行该脚本！"
 
 #******************************************************
+read -p "请指定过的SSH端口号（默认为26700）：" Port;Port=${Port:-26700}
+until  [[ $Port =~ ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-5]{2}[0-3][0-5])$ ]];do
+    read -p "请重新键入SSH自定义端口号：" Port;Port=${Port:-26700};
+done
+
 #防火墙设置
 sudo apt-get install ufw -y
 wait
@@ -36,6 +41,8 @@ wait
 sudo dpkg -i ../config/ripgrep_11.0.2_amd64.deb
 wait
 sudo apt-get install zsh -y
+wait
+tar -xzvf ../config/oh-my-zsh.tar.gz
 wait
 cp -rf ../config/.oh-my-zsh ~
 bash ./install_ohmyzsh.sh
@@ -64,7 +71,7 @@ cp   /'.zshrc(ubuntu)' ~/.zshrc
 wait
 sudo apt-get install autojump -y
 wait
-vim ~/.zshrc
-wait
 chsh -s $(which zsh) #设置zsh为默认终端
+wait
+vim ~/.zshrc
 wait
