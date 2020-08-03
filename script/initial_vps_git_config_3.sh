@@ -50,7 +50,16 @@ echo "${Green_font_prefix}开始配置github${Font_color_suffix}"
 git config --global user.name "chengpengzhao"
 git config --global user.email "cavsarpwgnckamekerokardank89@gmail.com"
 git config --global user.signingkey A11C5129AAE5BA77
-git config --global commit.gpgsign true
+
+read -p "github是否设置必须gpg签名(y/n，默认n)" choice;choice=${choice:n}
+until [[ $choice =~ ^([y]|[n])$ ]]; do
+    read -p "输入错误！请重新键入（y/n）：" choice
+done
+if [[ $choice == y ]]; then
+    git config --global commit.gpgsign true
+else
+    git config --global commit.gpgsign false
+fi
 git config --global gpg.program gpg
 git config --global core.autocrlf false
 git config --global core.filemode false
@@ -67,6 +76,9 @@ wait
 sudo apt-get install autojump -y
 wait
 chsh -s $(which zsh) #设置zsh为默认终端
+wait
+#解决github的gpg签名错误问题
+echo "export GPG_TTY=$(tty)">~/.zshrc && source ~/.zshrc
 wait
 vim ~/.zshrc
 wait
