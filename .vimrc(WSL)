@@ -1,6 +1,6 @@
 "status line settings{{{
 
-"总是显示状态栏"
+"总是显示状态栏
 set laststatus=2
 
 "显示当前搜索时是否高亮
@@ -45,7 +45,7 @@ function! File_size(f)
 endfunction
 
 "状态栏格式设置"
-set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %7*[B%-n]/%{Buf_total_num()}\ %6*\%{HighlightSearch()}\|\%{HighlightPaste()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(row:%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
+set statusline=%1*\ %F\ %*%2*\ %{File_size(@%)}\ %*%3*\ %m%r%w%y\ %7*[B%-n]/%{Buf_total_num()}\ %6*\%{HighlightSearch()}\|\%{HighlightPaste()}\%=%5*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}%*%4*\ %{&ff}\ \|\ %{\"\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"\ \|\"}\ %-14.(%l/%L\(%p%%)\ col:%c\ %{wordcount().words}words%)%*
 "上面是总的设置，位置可能有所变化
 
 "文件位置
@@ -78,6 +78,7 @@ set timeout ttimeoutlen=1000
 
 "ctags 配置，使用：输入 ctags -R生成tag文件
 set tags=./.tags;,.tags
+set tags+=$HOME/.cache/tags/home-zcp-Desktop-zcppp-petsc-.tags
 
 if exists('$SHELL')
     set shell=$SHELL
@@ -210,9 +211,12 @@ runtime macros/matchit.vim
 set ruler
 set number
 set relativenumber
+augroup relative_numbser
+    autocmd!
+    autocmd InsertEnter * :set norelativenumber
+    autocmd InsertLeave * :set relativenumber
+augroup END
 
-""autocmd InsertEnter * :set norelativenumber "插入模式下撤下相对行号
-""autocmd InsertLeave * :set relativenumber   "普通模式下加上相对行号
 
 "需要记住多少次历史操作
 set history=1000
@@ -326,11 +330,11 @@ noremap <C-y> "+y
 noremap  <Space> :
 
 "打开OpenFOAM相关文件时为了方便输入命令加了下面这个映射,!表示输入系统shell命令
-autocmd Filetype foam256* noremap  <Space> :!
+"autocmd Filetype foam256* noremap  <Space> :!
 
-"行光标移动,这个挺方便的，header与end，也没见有冲突
-noremap H   ^
-noremap E   $
+    "行光标移动,这个挺方便的，header与end，也没见有冲突
+"noremap H   ^
+"noremap E   $
 
 "文件保存与退出quick write ,quick quit的缩写，很实用
 nnoremap <Leader>w  :w<CR>
@@ -338,11 +342,13 @@ nnoremap  qw    :wq<CR>
 nnoremap  qq    :q!<CR>
 
 "宏名称统一用a，简化按键,qa开始记录，q结束，再按@即可
-nnoremap  @  @a
+"nnoremap  @  @a
 
 "模仿shell快捷键
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 "插入模式下移动光标
 inoremap <C-k> <Up>
@@ -370,6 +376,9 @@ function! s:VsetSearch()
     let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n','g')
     let @s= temp
 endfunction
+
+"快速删除当前缓冲区并返回上一缓冲区（不关闭窗口)
+nnoremap <silent> d :bprevious<bar>bdelete #<CR>
 
 
 "}}}
@@ -399,6 +408,8 @@ endfunction
 ".Md文件也能被识别为markdown
 autocmd BufNewFile,BufRead *.Md set filetype=markdown
 
+"ejs识别为html
+autocmd BufNewFile,BufRead *.ejs set filetype=html
 "*****************************************************************************
 "Markdown快捷键
 "*****************************************************************************
@@ -488,7 +499,7 @@ call plug#begin('~/.vim/plugged')
 
 "markdown实时预览
 "WSL中不需要
-"Plug 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 "用的自己fork的版本，做了点小改动让界面看起来更舒服
 Plug 'chengpengzhao/vim-OpenFoam-syntax'
@@ -537,8 +548,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " 文本对象
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
-"下面这个好像没啥效果
-"Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
 Plug 'sgur/vim-textobj-parameter'
 
@@ -555,10 +565,8 @@ call plug#end()
 " }}}
 "=========================================================================="
 "其他插件设置{{{
-
 "*****************************************************************************
 " indentline
-
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 202
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
@@ -586,11 +594,9 @@ let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_events = ["CursorHold"] " 改为普通模式下光标updatetime时间不动时保存一次，默认4000ms
 "*****************************************************************************
 "NERDTree
-
 "vim不指定文件名时，自动打开NERDTree
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
 "close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -657,8 +663,8 @@ noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
-noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
-noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+"noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+"noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
 " search visually selected text literally
 xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
 noremap go :<C-U>Leaderf! rg --recall<CR>
@@ -679,7 +685,6 @@ let g:ycm_min_num_of_chars_for_completion = 1
 
 "自动开启补全
 let g:ycm_auto_trigger = 1
-
 "关闭YCM的自动诊断，避免和ALE冲突
 let g:ycm_show_diagnostics_ui = 0
 " 在注释输入中也能补全
@@ -688,6 +693,7 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 " 注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
 "映射
 let g:ycm_key_list_stop_completion = ['o']
 let g:ycm_key_list_select_completion = ['<Down>']
@@ -699,7 +705,6 @@ let g:ycm_filetype_blacklist = {
       \'foam256_general': 1,
       \}
 let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
-
 "*****************************************************************************
 "vim-clang-format设置
 let g:clang_format#command = 'clang-format'
@@ -714,6 +719,7 @@ let g:ale_sign_warning = '--'
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s [%severity%]'
+
 " use quickfix list instead of the loclist
 nnoremap <silent> [ <Plug>(ale_previous_wrap)
 nnoremap <silent> ] <Plug>(ale_next_wrap)
@@ -748,6 +754,7 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 " 自动打开 quickfix window ，高度为 6
 let g:asyncrun_open = 6
 
+
 " 任务结束时候响铃提醒
 let g:asyncrun_bell = 1
 
@@ -764,22 +771,96 @@ nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 
 " 编译单文件,加上了GSL库
 " gcc -Wall选项：打开所有警告提示
-"nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT).o" <cr>
-nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT).o" <cr>
+"nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O0 -ggdb "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
-nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT).o" <cr>
+nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+"*****************************************************************************
+"markdown-preview插件
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
 
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
 
-"暂时改用fortran了
-"nnoremap <silent> c :AsyncRun gfortran -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT).exe" <cr>
-"nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT).exe" <cr>
-"nnoremap <silent> <F5> :AsyncRun gfortran -Wall -O2 ./*.f90 -o "output.exe" <cr>
-let fortran_free_source=1
-let fortran_have_tabs=1
-let fortran_more_precise=1
-let fortran_do_enddo=1
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
 
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {}
+    \ }
+
+" use a custom markdown style must be absolute path
+" like '/Users/username/markdown.css' or expand('~/markdown.css')
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+" like '/Users/username/highlight.css' or expand('~/highlight.css')
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+"*****************************************************************************
 "}}}
 "=========================================================================="
 "" Functions{{{
@@ -815,9 +896,6 @@ augroup END
 
 set autoread
 
-"pip3 install --upgrade fprettify
-"用法： 选中全部，输入gq
-autocmd Filetype fortran setlocal formatprg=fprettify\ --silent
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************

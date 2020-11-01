@@ -27,6 +27,7 @@ sudo apt-get install wget -y && \
 sudo apt install build-essential cmake python3-dev -y && \
 sudo apt install gnupg -y && \
 sudo apt-get install python3-pip -y && \
+sudo apt install clang -y && \
 sudo apt install clang-format -y && \
 sudo apt install ctags -y && \
 #-----------------------------------------------------------------
@@ -40,6 +41,7 @@ else
 sudo cp ../.vimrc  ~/.vimrc
 
 fi
+# 注意要先解压config里的压缩包!
 sudo cp -rf ../config/.vim  ~
 sudo chmod 777 -R ~/.vim/*
 sudo cp ../Snippets/*.snippets ~/.vim/UltiSnips/
@@ -49,5 +51,5 @@ vim -c PlugInstall
 if [[ $chid == n ]]; then
     clang-format -dump-config -style=Google > .clang-format
     cd ~/.vim/plugged/YouCompleteMe
-    python3 install.py --all
+    python3 install.py
 fi

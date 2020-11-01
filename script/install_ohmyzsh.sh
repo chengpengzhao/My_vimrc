@@ -2,8 +2,10 @@
 #
 # This script should be run via curl:
 #   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-# or wget:
+# or via wget:
 #   sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# or via fetch:
+#   sh -c "$(fetch -o - https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #
 # As an alternative, you can first download the install script and run it afterwards:
 #   wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -30,6 +32,8 @@
 #   --keep-zshrc: sets KEEP_ZSHRC to 'yes'
 # For example:
 #   sh install.sh --unattended
+# or:
+#   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 #
 set -e
 
@@ -51,6 +55,10 @@ command_exists() {
 
 error() {
 	echo ${RED}"Error: $@"${RESET} >&2
+}
+
+underline() {
+	echo "$(printf '\033[4m')$@$(printf '\033[24m')"
 }
 
 setup_color() {
@@ -93,6 +101,14 @@ setup_ohmyzsh() {
 		exit 1
 	fi
 
+	git clone -c core.eol=lf -c core.autocrlf=false \
+		-c fsck.zeroPaddedFilemode=ignore \
+		-c fetch.fsck.zeroPaddedFilemode=ignore \
+		-c receive.fsck.zeroPaddedFilemode=ignore \
+		--depth=1 --branch "$BRANCH" "$REMOTE" "$ZSH" || {
+		error "git clone of oh-my-zsh repo failed"
+		exit 1
+	}
 
 	echo
 }
@@ -261,11 +277,13 @@ main() {
 		                        /____/                       ....is now installed!
 
 
-		Before your scream Oh My Zsh! please look over the ~/.zshrc file to select plugins, themes, and options.
+	EOF
+	cat <<-EOF
+		Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugins, themes, and options.
 
-		• Follow us on Twitter: https://twitter.com/ohmyzsh
-		• Join our Discord server: https://discord.gg/ohmyzsh
-		• Get stickers, shirts, coffee mugs and other swag: https://shop.planetargon.com/collections/oh-my-zsh
+		• Follow us on Twitter: $(underline https://twitter.com/ohmyzsh)
+		• Join our Discord server: $(underline https://discord.gg/ohmyzsh)
+		• Get stickers, shirts, coffee mugs and other swag: $(underline https://shop.planetargon.com/collections/oh-my-zsh)
 
 	EOF
 	printf "$RESET"

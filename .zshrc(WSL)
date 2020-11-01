@@ -1,6 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+ZSH_DISABLE_COMPFIX="true"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/zcp/.oh-my-zsh"
 
@@ -68,8 +68,6 @@ ZSH_THEME="ys"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
-# 取消git插件，因为拖慢了速度
 plugins=(
   autojump
   zsh-autosuggestions
@@ -91,8 +89,10 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -101,20 +101,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH=/home/zcp/.local/bin:$PATH
-source $HOME/PATO_v2.3.0/bashrc
-source $HOME/OpenFOAM-7/etc/bashrc
-export GPG_TTY=$(tty)
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-export CFLAGS="-I/usr/local/include"
-export LDFLAGS="-L/usr/local/lib"
+# =========== 自定义快捷键 ===============
 
-alias python='/usr/bin/python3'
-
-#  自定义快捷键
-alias st="cmd.exe /c start"
+# 快速关闭窗口
 alias q="exit"
 
+# git操作
 alias gcl="git clone"
 alias gs="git status"
 alias gac="git add -A;git commit -m"
@@ -123,5 +115,14 @@ alias gc="git checkout"
 alias gb="git branch"
 alias gbc="git checkout -b"
 
-# 子系统用
-alias wf='explorer.exe .'
+#设置代理
+alias pr="proxychains4 "
+#alias rss="export HTTP_PROXY="http://127.0.0.1:8888;export HTTPS_PROXY="https://127.0.0.1:8888"
+
+#简化cmake编译操作
+alias cmk="cmake -H. -Bbuild && cd build && make"
+alias rmk="cd .. && cmake -H. -Bbuild && cd build && make"
+
+#简化find命令
+alias fd='_find(){find . -name $1};_find'
+alias b='cd ..'

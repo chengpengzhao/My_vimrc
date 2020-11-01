@@ -939,3 +939,19 @@ augroup END
 
 "}}}
 "=========================================================================="
+" WSL设置{{{
+"适配Linux子系统，能够正常和windows复制粘贴文本
+"利用/mnt/c/Windows/System32/clip.exe
+func! GetSelectedText()
+    normal gv"xy
+    let result = getreg("x")
+    return result
+endfunc
+"if !has("clipboard") && executable("/mnt/c/Windows/System32/clip.exe")
+"复制
+noremap <silent><C-y> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>
+"剪切
+noremap <silent><C-x> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>gvx
+"粘贴<Ctrl+Shift+v>
+" }}}
+"=========================================================================="

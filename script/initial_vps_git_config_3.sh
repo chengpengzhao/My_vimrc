@@ -78,7 +78,7 @@ wait
 chsh -s $(which zsh) #设置zsh为默认终端
 wait
 #解决github的gpg签名错误问题
-echo "export GPG_TTY=$(tty)">~/.zshrc && source ~/.zshrc
+echo "export GPG_TTY=$(tty)">>~/.zshrc && source ~/.zshrc
 wait
 vim ~/.zshrc
 wait

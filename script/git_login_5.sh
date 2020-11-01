@@ -22,7 +22,8 @@ fi
 
 gpg -o ./keys/id_rsa --decrypt ./keys/ssh_id_rsa_encrypt
 wait
-mv ./keys/id_rsa ~/.ssh/
+sudo chmod 777 -R ~/.ssh
+sudo mv ./keys/id_rsa ~/.ssh/
 sudo chmod 600 ~/.ssh/id_rsa && \
 sudo chmod 700 ~/.ssh
 wait
