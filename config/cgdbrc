@@ -22,9 +22,9 @@ map di i<space>display<space>
 map y iy<cr><Esc>
 
 # can't run properly in MPI mode
-imap VV call<space>VecView(,0)<left><left><left>
-imap MV call<space>MatView(,0)<left><left><left>
+# imap VV call<space>VecView(,0)<left><left><left>
+# imap MV call<space>MatView(,0)<left><left><left>
 
 # to display vector only
-imap dp p<space>((Vec_Seq*)<space>->data)\<left><left><left><left><left><left><left><left>
-imap ve ->array[0]@->map.n<left><left><left><left><left><left><left>
+# imap dp p<space>((Vec_Seq*)<space>->data)\<left><left><left><left><left><left><left><left>
+# imap ve ->array[0]@->map.n<left><left><left><left><left><left><left>

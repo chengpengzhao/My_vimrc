@@ -78,7 +78,7 @@ set timeout ttimeoutlen=1000
 
 "ctags 配置，使用：输入 ctags -R生成tag文件
 set tags=./.tags;,.tags
-set tags+=$HOME/.cache/tags/home-zcp-Desktop-zcppp-petsc-.tags
+"set tags+=$HOME/.cache/tags/home-zcp-Desktop-zcppp-petsc-.tags
 
 if exists('$SHELL')
     set shell=$SHELL
@@ -131,7 +131,7 @@ set autochdir
 
 set autoread        " auto read when file is changed from outside
 
-set showmatch " 高亮显示匹配的括号
+set showmatch       " 高亮显示匹配的括号
 
 set showmode        " Show current mode
 
@@ -171,15 +171,15 @@ autocmd Filetype markdown setlocal spell
 nnoremap <F3> : setlocal spell!<CR>
 set spelllang=en_us,en_gb,cjk
 
-"方便拼写检查在单词间跳转
-autocmd Filetype markdown nnoremap [ [s
-autocmd Filetype markdown nnoremap ] ]s
+"方便拼写检查在单词间跳转Alt-[ or Alt-]
+autocmd Filetype markdown nnoremap [ [s
+autocmd Filetype markdown nnoremap ] ]s
 
 "来自那位用Vim上课记笔记的大佬，insert模式<C-o>自动更正前一个单词
-"zg     把当前单词添加到拼写文件中    
-"zw     把当前单词从拼写文件中删除    
-"z=     为当前单词提供更正建议    
-"插入模式下使用 <Ctrl-x>-s 获得的自动补全单词列表 
+"zg     把当前单词添加到拼写文件中
+"zw     把当前单词从拼写文件中删除
+"z=     为当前单词提供更正建议
+"插入模式下使用 <Ctrl-x>-s 获得的自动补全单词列表
 inoremap <C-o> <c-g>u<Esc>[s1z=`]a<c-g>u
 "<c-g>u的含义 ：don't break undo with next left/right cursor *i_CTRL-G_U* movement (but only if the cursor stays within same the line)
 
@@ -281,13 +281,19 @@ set smartcase
 set infercase
 set smarttab        " insert tabs on the start of a line according to context
 
-"虽然不知道有啥用但help里面推荐设置默认的magic(正则表达式相关)
+"magic模式，使用\m前缀，其后模式的解释方式为'magic'选项。^，$，.，*和[]等字符含有特殊意义；而+、?、()、和{}等其它字符则按字面意义解释。magic为默认设置，表达式中的\m前缀可以省略；
+"no magic模式，使用\M前缀，其后模式的解释方式为'nomagic'选项。除了^和$之外的特殊字符，都将被视为普通文本；
+"very magic模式，使用\v前缀，其后模式中除 '0'-'9'，'a'-'z'，'A'-'Z' 和 '_' 之外的字符都当作特殊字符解释；
+"very
+"nomagic模式，使用\V前缀，其后模式中只有反斜杠（\）具有特殊意义，用于原义查找。
 set magic
+nnoremap / /\v
+cnoremap %s/ %s/\v
 
 "在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
 set lazyredraw
 
-"设置文件间复制粘贴，访问系统剪切板(这个还是算了，会托慢Vim反应速度）
+"设置文件间复制粘贴，访问系统剪切板(这个还是算了，会拖慢Vim反应速度）
 "set clipboard=unnamedplus
 
 "单词自动补全功能,写博客时用,自定义词典可参考网上教程
@@ -342,7 +348,8 @@ nnoremap  qw    :wq<CR>
 nnoremap  qq    :q!<CR>
 
 "宏名称统一用a，简化按键,qa开始记录，q结束，再按@即可
-"nnoremap  @  @a
+"改为：alt+@重复宏a，避免和@:命令冲突
+nnoremap @  @a
 
 "模仿shell快捷键
 cnoremap <C-a> <Home>
@@ -772,7 +779,7 @@ nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 " 编译单文件,加上了GSL库
 " gcc -Wall选项：打开所有警告提示
 "nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> c :AsyncRun gcc -lstdc++ -Wall -O0 -ggdb "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> c :AsyncRun gcc "$(VIM_FILEPATH)" -lstdc++ -Wall -O0 -ggdb  -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
 nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
@@ -938,20 +945,4 @@ augroup vimrc-javascript
 augroup END
 
 "}}}
-"=========================================================================="
-" WSL设置{{{
-"适配Linux子系统，能够正常和windows复制粘贴文本
-"利用/mnt/c/Windows/System32/clip.exe
-func! GetSelectedText()
-    normal gv"xy
-    let result = getreg("x")
-    return result
-endfunc
-"if !has("clipboard") && executable("/mnt/c/Windows/System32/clip.exe")
-"复制
-noremap <silent><C-y> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>
-"剪切
-noremap <silent><C-x> :call system('/mnt/c/Windows/System32/clip.exe', GetSelectedText())<CR>gvx
-"粘贴<Ctrl+Shift+v>
-" }}}
 "=========================================================================="

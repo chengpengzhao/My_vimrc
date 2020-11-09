@@ -102,6 +102,24 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export NODE_HOME=/opt/node-v14.0.0-linux-x64  #你的node目录的路径
+export PATH=$PATH:$NODE_HOME/bin
+export NODE_PATH=$NODE_HOME/lib/node_modules
+
+export PATH=$PATH:/usr/local/tecplot/360ex_2017r2/bin
+
+source $HOME/OpenFOAM/OpenFOAM-7/etc/bashrc
+#source $HOME/OpenFOAM/PATO_v2.2.0/bashrc
+alias of4="source $HOME/OpenFOAM/OpenFOAM-4.0/etc/bashrc"
+alias ofv19="source $HOME/OpenFOAM/OpenFOAM-v1906/etc/bashrc"
+
+#和pato顺序不能变，会把mutationpp位置覆盖
+source $HOME/OpenFOAM/PATO_v2.3.0/bashrc
+source $HOME/Desktop/zcppp/CMake-log4cpp-gdb_example/bashrc
+#export GDBOFPATH=/home/zcp/Desktop/gdbof
+
+export PATH=”$PATH:export PATH="$PATH:$HOME/DAKOTA/dakota_installation/bin"
+
 # =========== 自定义快捷键 ===============
 
 # 快速关闭窗口
@@ -117,7 +135,7 @@ alias gb="git branch"
 alias gbc="git checkout -b"
 
 #设置代理
-alias pr="proxychains4 "
+alias pr="proxychains "
 #alias rss="export HTTP_PROXY="http://127.0.0.1:8888;export HTTPS_PROXY="https://127.0.0.1:8888"
 
 #简化cmake编译操作
@@ -127,4 +145,3 @@ alias rmk="cd .. && cmake -H. -Bbuild && cd build && make"
 #简化find命令
 alias fd='_find(){find . -name $1};_find'
 alias b='cd ..'
-export GPG_TTY=/dev/tty3
