@@ -40,9 +40,9 @@ cp ./keys/ssh_id_rsa.pub /home/${username}/.ssh/authorized_keys
 #gpg -o ./keys/id_rsa --decrypt ./keys/ssh_id_rsa_encrypt
 
 wait
-mv ./keys/id_rsa /home/${username}/.ssh/
+#mv ./keys/id_rsa /home/${username}/.ssh/
 cp /home/${username}/.ssh/authorized_keys /home/${username}/.ssh/id_rsa.pub
-[ $? == 0 ] && echo "SSH Key installed successfully!"
+[ $? == 0 ] && echo "SSH Public Key installed successfully!"
 
 #******************************************************
 echo "Disabled password login in SSH."

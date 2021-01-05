@@ -42,8 +42,10 @@ sudo cp ../.vimrc  ~/.vimrc
 
 fi
 # 注意要先解压config里的压缩包!
-sudo cp -rf ../config/.vim  ~
-sudo chmod 777 -R ~/.vim/*
+tar -xvf ../config/vim.tar.gz
+wait
+sudo chmod 777 -R .vim
+sudo cp -rf .vim  ~
 sudo cp ../Snippets/*.snippets ~/.vim/UltiSnips/
 sudo cp ../config/engspchk-dict /usr/share/dict/
 wait
