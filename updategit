@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #cp ~/.vimrc './.vimrc(WSL)'
-#cp ~/.vimrc ./.vimrc
-#cp -f ~/.cgdb/cgdbrc ./config/cgdbrc
-#cp ~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py .
-#cp ~/.vim/UltiSnips/*.snippets ./Snippets/
-#cp ~/.zshrc '.zshrc(ubuntu)'
-#cp -r ~/.config/terminator .
-#cp ~/.Xdefaults ./config/.Xdefaults
+cp ~/.vimrc ./.vimrc
+cp -f ~/.cgdb/cgdbrc ./config/cgdbrc
+cp ~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py .
+cp ~/.vim/UltiSnips/*.snippets ./Snippets/
+cp ~/.zshrc '.zshrc(ubuntu)'
+cp -r ~/.config/terminator .
+cp ~/.Xdefaults ./config/.Xdefaults
 git add -A
 echo -n  "please enter a commit ->"
 read  commit

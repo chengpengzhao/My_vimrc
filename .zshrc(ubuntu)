@@ -115,7 +115,7 @@ alias ofv19="source $HOME/OpenFOAM/OpenFOAM-v1906/etc/bashrc"
 
 #和pato顺序不能变，会把mutationpp位置覆盖
 source $HOME/OpenFOAM/PATO_v2.3.0/bashrc
-source $HOME/Desktop/zcppp/CMake-log4cpp-gdb_example/bashrc
+source $HOME/Desktop/zcppp/Ablation_zcp/bashrc
 #export GDBOFPATH=/home/zcp/Desktop/gdbof
 
 export PATH=”$PATH:export PATH="$PATH:$HOME/DAKOTA/dakota_installation/bin"

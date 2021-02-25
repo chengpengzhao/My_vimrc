@@ -565,6 +565,10 @@ Plug 'ludovicchabant/vim-gutentags'
 "异步编译
 Plug 'skywind3000/asyncrun.vim'
 
+"记账软件插件
+"需要vim 8.0.1630以上版本
+Plug 'jonsmithers/vim-beancount'
+
 " Initialize plugin system
 call plug#end()
 
@@ -779,7 +783,7 @@ nnoremap q :call asyncrun#quickfix_toggle(6)<cr>
 " 编译单文件,加上了GSL库
 " gcc -Wall选项：打开所有警告提示
 "nnoremap <silent> c :AsyncRun gcc -lm -lgsl -lgslcblas -lstdc++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> c :AsyncRun gcc "$(VIM_FILEPATH)" -lstdc++ -Wall -O0 -ggdb  -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> c :AsyncRun g++ "$(VIM_FILEPATH)" -lstdc++ -Wall -O0 -ggdb  -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 "运行单文件
 nnoremap <silent> r :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
@@ -867,6 +871,22 @@ let g:mkdp_port = ''
 " preview page title
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
+"*****************************************************************************
+"vim-beanCount
+
+"path to your root beancount file
+let b:beancount_root= '~/Desktop/zcppp/beanCount_zcp/zcp.bean'
+" default or chunks
+let g:beancount_account_completion= 'default'
+let g:beancount_separator_col= 10
+" If non-zero, accounts higher down the hierarchy will be listed first as completions.
+let g:beancount_detailed_first = 1
+
+autocmd Filetype beancount inoremap . .<C-\><C-O>:AlignCommodity<CR>
+autocmd Filetype beancount inoremap <C-o> <C-x><C-O>
+
+
+
 "*****************************************************************************
 "}}}
 "=========================================================================="
