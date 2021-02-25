@@ -172,8 +172,9 @@ nnoremap <F3> : setlocal spell!<CR>
 set spelllang=en_us,en_gb,cjk
 
 "方便拼写检查在单词间跳转Alt-[ or Alt-]
-autocmd Filetype markdown nnoremap [ [s
-autocmd Filetype markdown nnoremap ] ]s
+"这个快捷键在vim8.2好像有bug，按alt会进入插入模式，不好用
+"autocmd Filetype markdown nnoremap [ [s
+"autocmd Filetype markdown nnoremap ] ]s
 
 "来自那位用Vim上课记笔记的大佬，insert模式<C-o>自动更正前一个单词
 "zg     把当前单词添加到拼写文件中

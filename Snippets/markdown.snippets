@@ -494,4 +494,8 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
     .replace('}', ')') + ')')
 `
 endsnippet
+
+snippet rb "注音" i
+{% ruby ${1:${VISUAL:Text}}|${2: } %}
+endsnippet
 #}}}
