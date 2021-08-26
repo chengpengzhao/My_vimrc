@@ -418,6 +418,17 @@ autocmd BufNewFile,BufRead *.Md set filetype=markdown
 
 "ejs识别为html
 autocmd BufNewFile,BufRead *.ejs set filetype=html
+
+"Scons相关脚本识别为python
+autocmd BufNewFile,BufRead SConstruct set filetype=python
+autocmd BufNewFile,BufRead SConscript set filetype=python
+
+"需要安装black(pip3 install black)
+autocmd Filetype python nnoremap <F8> :call PyFormat()<CR><CR>
+func! PyFormat()
+      exec "!python3 -m black %"
+endfunc
+
 "*****************************************************************************
 "Markdown快捷键
 "*****************************************************************************
@@ -569,6 +580,7 @@ Plug 'skywind3000/asyncrun.vim'
 "记账软件插件
 "需要vim 8.0.1630以上版本
 Plug 'jonsmithers/vim-beancount'
+
 
 " Initialize plugin system
 call plug#end()
@@ -886,7 +898,7 @@ let g:beancount_detailed_first = 1
 autocmd Filetype beancount inoremap . .<C-\><C-O>:AlignCommodity<CR>
 autocmd Filetype beancount inoremap <C-o> <C-x><C-O>
 
-
+"*****************************************************************************
 
 "*****************************************************************************
 "}}}
